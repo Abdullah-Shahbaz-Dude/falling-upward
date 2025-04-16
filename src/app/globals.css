@@ -1,0 +1,109 @@
+/* 
+ * These are Tailwind CSS directives that may show as linting errors in some editors.
+ * They are valid and required for Tailwind CSS to work properly.
+ * The @tailwind and @apply directives are processed by the Tailwind CSS compiler.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0f766e;
+  --primary-dark: #0e6c64;
+  --secondary: #f59e0b;
+  --background: #f8fafc;
+  --text: #1e293b;
+}
+
+body {
+  color: var(--text);
+  background: var(--background);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-md transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-4 rounded-md transition-colors;
+  }
+  
+  .btn-outline {
+    @apply border border-teal-600 text-teal-600 hover:bg-teal-50 font-medium py-2 px-4 rounded-md transition-colors;
+  }
+  
+  .input-field {
+    @apply w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent;
+  }
+  
+  .section {
+    @apply py-16 px-4 md:px-8;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .card {
+    @apply bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --text: #f1f5f9;
+    --primary: #14b8a6;
+    --primary-dark: #0d9488;
+    --secondary: #fbbf24;
+  }
+  
+  .card {
+    @apply bg-gray-800 border border-gray-700;
+  }
+  
+  .input-field {
+    @apply bg-gray-800 border-gray-700 text-white focus:ring-teal-400;
+  }
+}
+
+/* Additional Utility Classes */
+.prose {
+  @apply text-gray-700 leading-relaxed;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply font-bold text-gray-900 my-4;
+}
+
+.prose p {
+  @apply my-3;
+}
+
+.prose ul {
+  @apply list-disc pl-5 my-3;
+}
+
+.prose ol {
+  @apply list-decimal pl-5 my-3;
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
