@@ -13,8 +13,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'Falling Upward - Physiotherapy Consultation',
-  description: 'Professional physiotherapy consultation services to help you recover and thrive.',
+  title: 'Falling Upwards - Psychology-Driven Solutions',
+  description: 'We provide psychology-driven solutions for individuals and organizations, including digital evolution, executive mentoring, therapy, and neurodiversity services.',
 };
 
 export default function RootLayout({

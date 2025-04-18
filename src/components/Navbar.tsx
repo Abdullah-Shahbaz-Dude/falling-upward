@@ -89,9 +89,9 @@ export function Navbar() {
       <div className="container-custom mx-auto flex justify-between items-center bg-transparent">
         <Link href="/" className="flex items-center" onClick={closeMenu}>
           {isScrolled ? ( 
-              <Image src="/images/logo.png" alt="Falling Upward Logo" width={50} height={60} className="h-50 w-auto" />   
+              <Image src="/images/logo.png" alt="Falling Upward Logo" width={50} height={60} className="h-50 w-auto sm:h-50 max-h-[40px] sm:max-h-[50px]" />   
           ) : (
-            <Image src="/images/logo.png" alt="Falling Upward Logo" width={50} height={50} className="h-50 w-auto" />
+            <Image src="/images/logo.png" alt="Falling Upward Logo" width={80} height={80} className="h-50 w-auto sm:h-50 max-h-[50px] sm:max-h-[130px]" />
           )}
         </Link>
 

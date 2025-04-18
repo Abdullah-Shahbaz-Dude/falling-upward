@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CookieConsent } from "@/components/CookieConsent";
 
 export default function MainLayoutWrapper({
   children,
@@ -17,6 +18,7 @@ export default function MainLayoutWrapper({
       {!isAdminOrDashboard && <Navbar />}
       <main className="flex-grow">{children}</main>
       {!isAdminOrDashboard && <Footer />}
+      {!isAdminOrDashboard && <CookieConsent />}
     </div>
   );
 }
