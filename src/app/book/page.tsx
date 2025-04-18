@@ -306,12 +306,12 @@ function BookPageContent({ type }: BookPageContentProps) {
   );
 }
 
-export default function BookPage({ type }: BookPageContentProps) {
+export default function BookPage() {
   return (
     <Suspense fallback={<div className="min-h-screen pt-32 pb-16 flex items-center justify-center">
       <div className="animate-pulse text-xl text-gray-600">Loading booking page...</div>
     </div>}>
-      <BookPageContent type={type} />
+      <BookPageContent />
     </Suspense>
   );
 }
