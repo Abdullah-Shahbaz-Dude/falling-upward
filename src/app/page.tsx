@@ -427,19 +427,18 @@ export default function Home() {
       </div>
     </div>
     
-    {/* Center Image */}
-    <div className="max-w-4xl mx-auto my-12">
-      <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-lg">
-        <Image
-          src="/images/HomePage/dji_0355.jpg" 
-          alt="Falling Upwards" 
-          width={1200}
-          height={562}
-          className="object-cover w-full h-full"
-        />
-      </div>
-    </div>
-
+   {/* Full Width Image Strip */}
+<div className="w-full my-12">
+  <div className="rounded-xl overflow-hidden shadow-lg" style={{ height: '300px' }}> {/* Adjust height as needed */}
+    <Image
+      src="/images/HomePage/dji_0355.jpg" 
+      alt="Falling Upwards" 
+      width={1920}  // Larger width for full-width display
+      height={200}  // Matches the container height
+      className="object-cover w-full h-full"
+    />
+  </div>
+</div>
     {/* Dual Cards */}
     <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mt-10">
       {/* Individual */}
@@ -458,7 +457,7 @@ export default function Home() {
         </div>
         
         <p className="text-gray-700 text-lg leading-relaxed">
-        For individuals, we aspire that you don’t just wake up to repeat yesterday, or live a life built around who others want you to be but instead live each day with a sense of momentum, clarity, and connection.
+        For individuals, we aspire that you don't just wake up to repeat yesterday, or live a life built around who others want you to be but instead live each day with a sense of momentum, clarity, and connection.
         </p>
       </div>
 
@@ -577,7 +576,7 @@ export default function Home() {
       
       {/* Digital Evolution and AI Adoption */}
       <div className="flex flex-col items-center bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-        <Link href="/services/digital-evolution" className="group w-full">
+        <Link href="/our-services/digital-evolution" className="group w-full">
           <div className="w-full aspect-square relative overflow-hidden">
             <Image 
               src="/images/services/digital-evolution.jpg" 
@@ -613,7 +612,7 @@ export default function Home() {
       
       {/* Psychological Therapy */}
       <div className="flex flex-col items-center bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-        <Link href="/services/psychological-therapy" className="group w-full">
+        <Link href="/our-services/psychological-therapy" className="group w-full">
           <div className="w-full aspect-square relative overflow-hidden">
             <Image 
               src="/images/services/psychological-therapy.jpg" 
@@ -629,20 +628,20 @@ export default function Home() {
         </Link>
       </div>
       
-      {/* ADHD Coaching */}
+      {/* neurodiversity */}
       <div className="flex flex-col items-center bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-        <Link href="/services/adhd-coaching" className="group w-full">
+        <Link href="/our-services/neurodiversity" className="group w-full">
           <div className="w-full aspect-square relative overflow-hidden">
             <Image 
               src="/images/services/adhd-coaching.jpg" 
-              alt="ADHD Coaching" 
+              alt="neurodiversity" 
               width={300} 
               height={300}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
           </div>
           <div className="p-6 bg-white">
-            <h3 className="text-center font-medium text-gray-800 text-lg">ADHD Coaching</h3>
+            <h3 className="text-center font-medium text-gray-800 text-lg">Neurodiversity as a strategic advantage</h3>
           </div>
         </Link>
       </div>
@@ -652,7 +651,7 @@ export default function Home() {
     {/* See More Button */}
     <div className="text-center mt-12">
       <Link 
-        href="/services" 
+        href="/our-services" 
         className="inline-flex items-center text-[#0B4073] bg-[#D6E2EA]/30 px-6 py-3 rounded-full hover:bg-[#D6E2EA]/50 transition-colors duration-300 font-medium"
       >
         <span>See More</span>
@@ -713,11 +712,11 @@ export default function Home() {
               { type: 'digital', title: 'Digital Evolution & AI Adoption' },
               { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
               { type: 'psychological', title: 'Psychological Therapy' },
-              { type: 'adhd', title: 'ADHD Coaching' }
+              { type: 'neurodiversity', title: 'Neurodiversity as a strategic advantage' }
             ].map(({ type, title }) => (
               <Link 
                 key={type} 
-                href={`/book?type=${type}`} 
+                href={`/book/${type}`} 
                 className="group w-full"
               >
                 <div className="bg-[#0B4073]/90 backdrop-blur-sm hover:bg-[#0B4073] text-white rounded-full py-3 md:py-5 px-5 md:px-8 flex items-center justify-between transition-all duration-300 w-full">

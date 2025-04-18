@@ -19,7 +19,7 @@ const offersData = [
       'Building digital resilience in teams and leadership',
       'Reducing technology-related stress and burnout'
     ],
-    link: '/our-offers/digital-evolution'
+    link: '/our-services/digital-evolution'
   },
   {
     id: 'executive-mentoring',
@@ -33,7 +33,7 @@ const offersData = [
       'Strategic decision-making with psychological awareness',
       'Building psychological safety in leadership teams'
     ],
-    link: '/our-offers/executive-mentoring'
+    link: '/our-services/executive-mentoring'
   },
   {
     id: 'psychological-therapy',
@@ -47,11 +47,11 @@ const offersData = [
       'Relationship and interpersonal challenges',
       'Life transitions and identity exploration'
     ],
-    link: '/our-offers/psychological-therapy'
+    link: '/our-services/psychological-therapy'
   },
   {
-    id: 'adhd-coaching',
-    title: 'ADHD Coaching',
+    id: 'neurodiversity',
+    title: 'Neurodiversity as a strategic advantage',
     description: 'Our specialized ADHD coaching services help individuals harness their unique cognitive style, develop effective strategies, and thrive in both personal and professional environments.',
     image: '/images/services/adhd-coaching.jpg',
     benefits: [
@@ -61,7 +61,7 @@ const offersData = [
       'Building sustainable routines and habits',
       'Developing self-advocacy skills'
     ],
-    link: '/our-offers/adhd-coaching'
+    link: '/our-services/neurodiversity'
   }
 ];
 
@@ -83,7 +83,7 @@ export default function OurOffersPage() {
         <div className="container-custom mx-auto">
           {/* Breadcrumb */}
           <div className="mb-8">
-            <Link href="/" className="text-[#6A8EA0] hover:text-[#4A6E80] inline-flex items-center">
+            <Link href="/" className="text-[#072E53] hover:text-[#4A6E80] inline-flex items-center">
               <FiArrowLeft className="mr-2" />
               Back to Home
             </Link>
@@ -97,7 +97,7 @@ export default function OurOffersPage() {
                   onClick={() => setActiveOffer(offer)}
                   className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-colors ${
                     activeOffer.id === offer.id
-                      ? 'bg-[#6A8EA0] text-white'
+                      ? 'bg-[#7094B7] text-white'
                       : 'bg-[#D6E2EA]/30 text-gray-700 hover:bg-[#D6E2EA]/50'
                   }`}
                 >
@@ -147,22 +147,55 @@ export default function OurOffersPage() {
             </div>
           </div>
 
-          <div className="bg-[#D6E2EA]/20 rounded-lg p-8 md:p-12">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold text-[#6A8EA0] mb-4">Not sure which offer you need?</h2>
-              <p className="text-gray-600 mb-8">
-                We offer a complimentary initial consultation to understand your needs and recommend the most appropriate approach for your situation.
-              </p>
-              <Link 
-                href="/contact" 
-                className="inline-flex items-center bg-[#6A8EA0] text-white px-8 py-3 rounded-full hover:bg-[#4A6E80] transition-colors"
-              >
-                Contact us for guidance
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
+         {/* Consultation Booking Section - Refined Design */}
+  <section className="relative py-20 md:py-24 px-10">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/images/backgrounds/consultation-bg.jpg" 
+            alt="Consultation Background" 
+            fill 
+            className="object-cover brightness-[0.3]" 
+            priority
+          />
+        </div>
+        
+        <div className="flex flex-col md:flex-row items-center container-custom mx-auto relative z-10 px-4 md:px-0">
+          {/* Left Side (Text) */}
+          <div className="w-full md:flex-1 text-center md:text-left mb-12 md:mb-0">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              Book a Free Consultation
+            </h2>
+            <p className="text-lg text-white opacity-80 max-w-2xl mx-auto md:mx-0">
+              Select one of our services to book your free consultation with us.
+            </p>
+          </div>
+          
+          {/* Right Side (Consultation Options) */}
+          <div className="w-full md:w-auto flex flex-col space-y-4 md:space-y-6 md:ml-10">
+            {[
+              { type: 'digital', title: 'Digital Evolution & AI Adoption' },
+              { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
+              { type: 'psychological', title: 'Psychological Therapy' },
+              { type: 'neurodiversity', title: 'Neurodiversity as a strategic advantage' }
+            ].map(({ type, title }) => (
+              <Link 
+                key={type} 
+                href={`/book/${type}`} 
+                className="group w-full"
+              >
+                <div className="bg-[#0B4073]/90 backdrop-blur-sm hover:bg-[#0B4073] text-white rounded-full py-3 md:py-5 px-5 md:px-8 flex items-center justify-between transition-all duration-300 w-full">
+                  <span className="font-medium text-base md:text-lg">{title}</span>
+                  <div className="bg-[#D6E2EA] rounded-full p-2 md:p-3 ml-2 md:ml-4 flex-shrink-0 text-[#0B4073] group-hover:bg-[#D6E2EA]/90 transition-all">
+                    <FiArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

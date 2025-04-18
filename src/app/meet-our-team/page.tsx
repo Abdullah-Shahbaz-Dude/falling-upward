@@ -286,11 +286,11 @@ function WhoWeAreContent() {
               { type: 'digital', title: 'Digital Evolution & AI Adoption' },
               { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
               { type: 'psychological', title: 'Psychological Therapy' },
-              { type: 'adhd', title: 'ADHD Coaching' }
+              { type: 'neurodiversity', title: 'Neurodiversity as a strategic advantage' }
             ].map(({ type, title }) => (
               <Link 
                 key={type} 
-                href={`/book?type=${type}`} 
+                href={`/book/${type}`} 
                 className="group w-full"
               >
                 <div className="bg-[#0B4073]/90 backdrop-blur-sm hover:bg-[#0B4073] text-white rounded-full py-3 md:py-5 px-5 md:px-8 flex items-center justify-between transition-all duration-300 w-full">

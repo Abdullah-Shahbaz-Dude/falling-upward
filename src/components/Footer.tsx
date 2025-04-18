@@ -60,9 +60,9 @@ export function Footer() {
             <p>Copyright © {currentYear} Fallingupward. All rights reserved. Powered by FALLINGUPWARD</p>
           </div>
           <div className="flex space-x-6 mt-2 md:mt-0">
-            <Link href="/terms" className="hover:underline">Terms of Services</Link>
-            <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
-            <Link href="/cookies" className="hover:underline">Cookie Policy</Link>
+            <Link href="/terms-of-service" className="hover:underline">Terms of Services</Link>
+            <Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+            <Link href="/cookie-policy" className="hover:underline">Cookie Policy</Link>
           </div>
         </div>
       </div>

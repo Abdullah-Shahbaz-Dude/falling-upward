@@ -66,7 +66,7 @@ export function Navbar() {
         { name: 'Digital evolution and AI adoption', href: '/our-services/digital-evolution', icon: '🌐' },
         { name: 'Executive Mentoring & Boardroom Support', href: '/our-services/executive-mentoring', icon: '👔' },
         { name: 'Psychological Therapy', href: '/our-services/psychological-therapy', icon: '🧠' },
-        { name: 'ADHD Coaching', href: '/our-services/adhd-coaching', icon: '🔍' }
+        { name: 'Neurodiversity as a strategic advantage', href: '/our-services/neurodiversity', icon: '🔍' }
       ]
     },
   ];
@@ -91,7 +91,7 @@ export function Navbar() {
           {isScrolled ? ( 
               <Image src="/images/logo.png" alt="Falling Upward Logo" width={50} height={60} className="h-50 w-auto" />   
           ) : (
-            <Image src="/images/logo.png" alt="Falling Upward Logo" width={80} height={80} className="h-50 w-auto" />
+            <Image src="/images/logo.png" alt="Falling Upward Logo" width={50} height={50} className="h-50 w-auto" />
           )}
         </Link>
 
