@@ -1,5 +1,8 @@
+// Remove this line as it's causing issues with Next.js 15
+// export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from 'next/server';
-import { verify } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 export function middleware(request: NextRequest) {
   // Get the path of the request
@@ -29,7 +32,7 @@ export function middleware(request: NextRequest) {
   
   try {
     // Verify the token
-    const decoded = verify(
+    const decoded = jwt.verify(
       sessionCookie.value, 
       process.env.NEXTAUTH_SECRET || 'fallingupsecret'
     ) as { id: string; email: string; name: string; role: string };

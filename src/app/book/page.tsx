@@ -35,11 +35,9 @@ const bookingSchema = z.object({
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
 
-interface BookPageContentProps {
-  type?: string;
-}
+interface BookPageContentProps {}
 
-function BookPageContent({ type }: BookPageContentProps) {
+function BookPageContent({}: BookPageContentProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -47,8 +45,8 @@ function BookPageContent({ type }: BookPageContentProps) {
   const searchParams = useSearchParams();
   const { data: session } = useSession();
   
-  // Use the type prop if provided, otherwise fall back to searchParams, then default to 'digital'
-  const consultationType = type || searchParams.get('type') || 'digital';
+  // Get the consultation type from search params or dynamic route
+  const consultationType = searchParams.get('type') || 'digital-evolution';
 
   const {
     register,
