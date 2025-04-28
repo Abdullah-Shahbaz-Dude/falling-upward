@@ -22,7 +22,7 @@ export default function AdminSidebar({ activeSection, setActiveSection }: AdminS
           <img 
             src="/logo.png" 
             alt="Falling Upward Logo" 
-            className="h-8 w-auto mr-3"
+            className="h-12 w-auto mr-3"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.onerror = null;

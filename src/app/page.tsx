@@ -384,13 +384,14 @@ export default function Home() {
         {/* Overlay with slightly reduced opacity for better text contrast */}
         <div className="absolute inset-0 bg-black opacity-45 z-0"></div>
         {/* Positioned at the left bottom corner with enhanced text styling */}
-        <div className="absolute bottom-20 left-10 sm:left-20 md:left-20 z-10 max-w-2xl">
+        <div className="absolute bottom-20 left-10 sm:left-20 md:left-[65px] z-10 max-w-2xl">
         <h1 className="text-4xl sm:text-4xl md:text-7xl lg:text-8xl text-white font-bold tracking-tight leading-tight">
   Falling Upwards
 </h1>
 
           <p className="text-white/95 text-xl md:text-2xl mt-4 tracking-wide">
-            Psychology-Driven, Mentoring, Therapy & Consultancy
+          Psychology Driven Therapy, Mentoring, Coaching and Business
+          Consultancy
           </p>
           <div className="mt-6 w-32 h-1 bg-white/50 rounded-full"></div>
         </div>
@@ -457,7 +458,7 @@ export default function Home() {
         </div>
         
         <p className="text-gray-700 text-lg leading-relaxed">
-        For individuals, we aspire that you don't just wake up to repeat yesterday, or live a life built around who others want you to be but instead live each day with a sense of momentum, clarity, and connection.
+         We aspire that you don't just wake up to repeat yesterday, or live a life built around who others want you to be but instead live each day with a sense of momentum, clarity, and connection.
         </p>
       </div>
 
@@ -476,7 +477,7 @@ export default function Home() {
           </h3>
         </div>
         <p className="text-gray-700 text-lg leading-relaxed">
-        For organisations, we help navigate change in a human-centred way. Using psychology, we aim to build meaningful connection between people and technology, creating a relationship with AI and automation that feels collaborative, not imposed, and works for everyone.
+        We help navigate change in a human-centred way. Using psychology, we aim to build meaningful connection between people and technology, creating a relationship with AI and automation that feels collaborative, not imposed, and works for everyone.
         </p>
       </div>
     </div>
@@ -487,7 +488,7 @@ export default function Home() {
 <section className="section bg-white relative overflow-hidden py-20">
   <div className="container-custom mx-auto relative z-10 px-4 md:px-6">
     <h2 className="text-4xl sm:text-5xl font-bold text-center text-[#0B4073] mb-14 leading-tight">
-      Why choose falling upwards
+    Why Choose Falling Upwards
     </h2>
 
     <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 items-start">
@@ -507,56 +508,49 @@ export default function Home() {
       {/* Right side - Accordion */}
       <div className="space-y-6">
         <AccordionItem 
-          title="Deeply Rooted in Psychology"
+          title="Psychology at the Core"
           isOpen={false}
           content={
             <div className="text-gray-700 text-base leading-relaxed space-y-2">
-              <p><strong>Coaching:</strong> Preventative focus & practical skills for stress, focus, and wellbeing.</p>
-              <p><strong>Therapy:</strong> A deeper dive into healing past experiences and managing mental health challenges.</p>
+              <p>We ground all our work in evidence-based psychological principles, from therapy to team
+development, strategy to AI. We have a deep commitment to understanding people,
+behaviour, systems, and creating meaningful change.</p>
             </div>
           }
         />
 
         <AccordionItem 
-          title="Compassionate & Person-Centred"
+          title="Compassionate and People Centred"
           content={
             <div className="text-gray-700 text-base leading-relaxed space-y-2">
-              <p>We prioritize people in everything we do, fostering a safe, non-judgmental space.</p>
-              <p>Our approach is warm, empathetic, and tailored to your unique journey.</p>
+              <p>We are unapologetically person-centred and compassionate. We listen, build, challenge, and
+design. Whether working with individuals or organisations, we hold space for vulnerability,
+curiosity, and meaningful growth.</p>
             </div>
           }
         />
 
         <AccordionItem 
-          title="Psychological Safety as a Foundation"
+          title="Celebrating Neurodiversity"
           content={
             <div className="text-gray-700 text-base leading-relaxed space-y-2">
-              <p>We help create environments where individuals feel secure enough to be vulnerable, learn, and grow.</p>
-              <p>Our methods nurture openness and trust both individually and collectively.</p>
+              <p>We see neurodiversity as a strategic and creative advantage, not something to be “managed,”
+but understood, embraced, and leveraged. Our work helps individuals thrive as they are, and
+helps organisations create strategic advantage from Neurodiverse thinking.</p>
             </div>
           }
         />
 
         <AccordionItem 
-          title="Human-Centred Approach to Digital Innovation"
+          title="Human Centred AI & Data Principles"
           content={
             <div className="text-gray-700 text-base leading-relaxed space-y-2">
-              <p>We guide digital transformation with people at the heart of every solution.</p>
-              <p>Our approach ensures technology enhances, not overwhelms, human experience and wellbeing.</p>
+              <p>We develop AI and data efficiency from the ground up, starting with people, not platforms.
+Using first principles thinking and psychology we help solve problems and support
+organisations think forwards in a simple and understandable way.</p>
             </div>
           }
         />
-
-        {/* CTA Link */}
-        <div className="text-right pt-4">
-          <Link 
-            href="/why-choose-us" 
-            className="inline-flex items-center text-[#0B4073] bg-[#D6E2EA]/40 px-5 py-2.5 rounded-full hover:bg-[#D6E2EA]/60 transition-colors duration-300 font-medium"
-          >
-            <span>See More</span>
-            <FiArrowRight className="ml-2" />
-          </Link>
-        </div>
       </div>
     </div>
   </div>
@@ -605,7 +599,7 @@ export default function Home() {
             />
           </div>
           <div className="p-6 bg-white">
-            <h3 className="text-center font-medium text-gray-800 text-lg">Executive Mentoring & Boardroom Support</h3>
+            <h3 className="text-center font-medium text-gray-800 text-lg">Psychological Therapy & ADHD Coaching</h3>
           </div>
         </Link>
       </div>
@@ -623,7 +617,7 @@ export default function Home() {
             />
           </div>
           <div className="p-6 bg-white">
-            <h3 className="text-center font-medium text-gray-800 text-lg">Psychological Therapy</h3>
+            <h3 className="text-center font-medium text-gray-800 text-lg">Executive Mentoring & Board Room Support</h3>
           </div>
         </Link>
       </div>
@@ -641,7 +635,7 @@ export default function Home() {
             />
           </div>
           <div className="p-6 bg-white">
-            <h3 className="text-center font-medium text-gray-800 text-lg">Neurodiversity as a strategic advantage</h3>
+            <h3 className="text-center font-medium text-gray-800 text-lg">Neurodiversity for strategic advantage </h3>
           </div>
         </Link>
       </div>
@@ -711,7 +705,7 @@ export default function Home() {
             {[
               { type: 'digital', title: 'Digital Evolution & AI Adoption' },
               { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
-              { type: 'psychological', title: 'Psychological Therapy' },
+              { type: 'psychological', title: 'Psychological Therapy & ADHD Coaching' },
               { type: 'neurodiversity', title: 'Neurodiversity as a strategic advantage' }
             ].map(({ type, title }) => (
               <Link 

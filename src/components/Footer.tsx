@@ -18,9 +18,9 @@ export function Footer() {
               <Image 
                 src="/images/logo.png" 
                 alt="Falling Upward Logo" 
-                width={100} 
-                height={100}
-                className="border border-gray-200 p-2"
+                width={130} 
+                height={130}
+                className="border border-gray-200 p-2 w-[130px] sm:w-[100px]"
               />
             </div>
             <div className="space-y-2">

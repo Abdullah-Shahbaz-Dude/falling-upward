@@ -517,7 +517,7 @@ export default function ExecutiveMentoringPage() {
           </div>
         </div>
       )}
-    <section className="relative py-20 md:py-24 px-10">
+    <section className="relative py-20 md:py-24 px-10 mt-20 min-h-[500px]">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/backgrounds/consultation-bg.jpg" 
@@ -528,7 +528,7 @@ export default function ExecutiveMentoringPage() {
           />
         </div>
         
-        <div className="flex flex-col md:flex-row items-center container-custom mx-auto relative z-10 px-4 md:px-0">
+        <div className="flex flex-col md:flex-row items-center container-custom mx-auto relative z-10 px-4 md:px-0 mt-20 ">
           {/* Left Side (Text) */}
           <div className="w-full md:flex-1 text-center md:text-left mb-12 md:mb-0">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">

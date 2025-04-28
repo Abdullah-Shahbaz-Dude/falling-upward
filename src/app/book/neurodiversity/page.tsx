@@ -156,7 +156,7 @@ function BookPageContent() {
     <div className="min-h-screen  pb-16">
          
       <HeroSection
-        title="Neurodiversity as a strategic advantage"
+        title="Neurodiversity for innovation and growth"
         subtitle="Unlock your potential with psychology-informed ADHD coaching"
         backgroundImage="/images/services/IMG_7552.jpg"
         textPosition="left"
@@ -166,7 +166,7 @@ function BookPageContent() {
         <div className="mb-16 mt-16">
           <Link href="/our-services/neurodiversity" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
             <FiArrowLeft className="mr-2" />
-            Back to Neurodiversity as a strategic advantage
+            Back to Neurodiversity for innovation and growth
           </Link>
         </div>
         

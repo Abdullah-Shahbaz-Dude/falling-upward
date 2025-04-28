@@ -76,9 +76,9 @@ export function LoadingSpinner() {
           <Image 
             src="/favicon.ico" 
             alt="Falling Upward Logo" 
-            width={100} 
-            height={100}
-            className="relative z-10"
+            width={130} 
+            height={130}
+            className="relative z-10 w-[130px] sm:w-[100px]"
           />
         </div>
       </div>
@@ -114,7 +114,7 @@ export function LoadingSpinner() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        FALLING UPWARD
+        FALLING UPWARDS
       </motion.div>
     </div>
   );

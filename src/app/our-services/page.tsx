@@ -37,7 +37,7 @@ const offersData = [
   },
   {
     id: 'psychological-therapy',
-    title: 'Psychological Therapy',
+    title: 'Psychological Therapy & ADHD Coaching',
     description: 'Our psychological therapy services provide a safe, confidential space for individuals to explore challenges, process difficult experiences, and develop strategies for positive change and growth.',
     image: '/images/services/psychological-therapy.jpg',
     benefits: [
@@ -177,7 +177,7 @@ export default function OurOffersPage() {
             {[
               { type: 'digital', title: 'Digital Evolution & AI Adoption' },
               { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
-              { type: 'psychological', title: 'Psychological Therapy' },
+              { type: 'psychological', title: 'Psychological Therapy & ADHD Coaching' },
               { type: 'neurodiversity', title: 'Neurodiversity as a strategic advantage' }
             ].map(({ type, title }) => (
               <Link 
