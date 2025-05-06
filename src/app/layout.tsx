@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "@/components/SessionProvider";
 import { LoadingProvider } from "@/components/LoadingProvider";
 import MainLayoutWrapper from "@/components/MainLayoutWrapper";
 
@@ -17,6 +16,13 @@ export const metadata: Metadata = {
   description: 'We provide psychology-driven solutions for individuals and organizations, including digital evolution, executive mentoring, therapy, and neurodiversity services.',
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,13 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} font-roboto`}>
-        <SessionProvider>
-          <LoadingProvider>
-            <MainLayoutWrapper>
-              {children}
-            </MainLayoutWrapper>
-          </LoadingProvider>
-        </SessionProvider>
+        <LoadingProvider>
+          <MainLayoutWrapper>
+            {children}
+          </MainLayoutWrapper>
+        </LoadingProvider>
       </body>
     </html>
   );

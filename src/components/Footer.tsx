@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer className="bg-[#E2E6EB] text-gray-800">
       {/* Main Footer Content */}
-      <div className="container-custom mx-auto py-8">
+      <div className="container-custom mx-auto py-8 px-10">
         <div className="flex flex-col mb-8">
           {/* Logo and Contact Info */}
           <div className="flex flex-col items-start mb-6">
@@ -54,7 +54,7 @@ export function Footer() {
       </div>
 
       {/* Copyright Bar */}
-      <div className="bg-[#0B4073] py-3">
+      <div className="bg-[#0B4073] py-3 px-10">
         <div className="container-custom mx-auto flex flex-col md:flex-row justify-between items-center text-white text-sm">
           <div>
             <p>Copyright © {currentYear} Fallingupward. All rights reserved. Powered by FALLINGUPWARD</p>

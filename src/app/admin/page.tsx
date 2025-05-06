@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
 
@@ -30,7 +29,6 @@ interface Workbook {
 }
 
 export default function AdminDashboard() {
-  const { data: session, status } = useSession();
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [workbooks, setWorkbooks] = useState<Workbook[]>([]);
@@ -177,7 +175,7 @@ export default function AdminDashboard() {
     setShowAssignForm(true);
   };
 
-  if (status === 'loading') {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] font-['Roboto']">
         <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#0B4073]"></div>

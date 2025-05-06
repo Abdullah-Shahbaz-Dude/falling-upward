@@ -381,16 +381,7 @@ export default function PsychologicalTherapyPage() {
               
             
             </div>
-          <div className="mt-12 text-center">
-                <p className="text-lg md:text-xl text-gray-700 mb-4">
-                  We offer face to face therapy in Leeds West Yorkshire or online
-                </p>
-                <div className="bg-[#0B4073] text-white px-8 py-4 rounded-full inline-block mt-4">
-                  <p className="font-medium">
-                    Book a free 30 minute consultation to see how we can help you
-                  </p>
-                </div>
-              </div>
+         
           </div>
         </>
       )}
@@ -822,86 +813,7 @@ export default function PsychologicalTherapyPage() {
         </div>
       )}
 
-      <section className="bg-[#D6E2EA] px-6 py-12">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-8">
-          {/* Left Side */}
-          <div className="flex-1">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#0B4073] mb-6">
-              Book a Free Consultation
-            </h2>
-
-            <ul className="space-y-4 text-gray-800 mb-6">
-              <li className="flex items-center gap-3">
-                <span className="text-xl">
-                  <Image
-                    src="/favicon.ico" // Update path if needed
-                    alt="icon"
-                    width={24}
-                    height={24}
-                    className="group-hover:scale-110 transition-transform"
-                  />
-                </span>
-                <span>Whether you're at breaking point</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-xl">
-                  <img
-                    src="/favicon.ico" // Replace this with your image path
-                    alt="icon"
-                    className="h-6 w-6 group-hover:scale-110 transition-transform"
-                  />
-                </span>
-                <span>somewhere in the fog</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-xl">
-                  <Image
-                    src="/favicon.ico" // Update path if needed
-                    alt="icon"
-                    width={24}
-                    height={24}
-                    className="group-hover:scale-110 transition-transform"
-                  />
-                </span>
-                <span>Or just starting to wonder</span>
-              </li>
-            </ul>
-
-            <p className="text-gray-700 mb-8">
-              You're welcome here. Let's talk—without pressure or commitment.
-            </p>
-
-            <div className="bg-[#7094B7] rounded-md px-6 py-4 text-white font-semibold flex items-center justify-center gap-3 text-lg">
-              <span className="text-xl">
-                <Image
-                  src="/favicon.ico" // Update path if needed
-                  alt="icon"
-                  width={24}
-                  height={24}
-                  className="group-hover:scale-110 transition-transform"
-                />
-              </span>
-              <span>In-person and online sessions available</span>
-            </div>
-          </div>
-
-          {/* Right Side */}
-          <div className="relative flex-1 max-w-md w-full">
-            <Image
-              src="/images/image 16.png" // <- Put your image in /public
-              alt="Consultation"
-              width={400}
-              height={300}
-              className="rounded-xl object-cover w-full h-auto shadow-md"
-            />
-
-            {/* Floating text box */}
-            <div className="absolute top-1/4 left-[10%] transform -translate-y-1/2 bg-[#7094B7] text-white px-5 py-2 text-sm rounded-md shadow-md">
-              "is this it?"
-            </div>
-          </div>
-        </div>
-      </section>
+    
       {/* Consultation Booking Section - Refined Design */}
       <section className="relative py-20 md:py-24 px-10">
         <div className="absolute inset-0 z-0">

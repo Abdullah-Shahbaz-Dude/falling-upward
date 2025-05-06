@@ -1,87 +1,203 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense } from 'react';
-import { useSession } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import { FiUser, FiMail, FiPhone, FiCalendar, FiClock, FiMessageSquare, FiCheck, FiArrowLeft } from 'react-icons/fi';
-import Link from 'next/link';
-import { HeroSection } from '@/components/HeroSection';
+import { useState, useEffect, Suspense } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FiArrowLeft, FiBriefcase, FiCalendar, FiCheck, FiGlobe, FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
+
+import Link from "next/link";
+import { HeroSection } from "@/components/HeroSection";
 
 const bookingSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(10, 'Please enter a valid phone number'),
-  date: z.date({
-    required_error: 'Please select a date',
-    invalid_type_error: 'Please select a valid date',
-  }).refine((date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date >= today;
-  }, {
-    message: 'Appointment date must be today or in the future',
-  }),
-  time: z.string().min(1, 'Please select a time'),
+  // Personal Details
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  jobTitle: z.string().optional(),
+  organisationName: z.string().optional(),
+  organisationWebsite: z.string().optional(),
+
+  // Additional fields
+  company: z.string().optional(),
+  website: z.string().optional(),
+  projectType: z.string().optional(),
+  projectScope: z.string().min(1, "Please provide some details about your project").optional(),
   message: z.string().optional(),
-  companyName: z.string().optional(),
-  companySize: z.enum(['1-10', '11-50', '51-200', '201-500', '500+']).optional(),
+
+  // Organisation Overview
+  organisationSize: z
+    .enum([
+      "Micro (1–9 employees)",
+      "Small (10–49 employees)",
+      "Medium SME (50–249 employees)",
+      "Large SME (250–499 employees)",
+      "Large Organisation / Enterprise (500+ employees)",
+    ])
+    .optional(),
+  sector: z
+    .enum([
+      "Digital / Technology",
+      "Construction",
+      "Recruitment / HR",
+      "Healthcare (NHS or Private)",
+      "Education / Training",
+      "Local Government / Public Sector",
+      "Logistics / Transport",
+      "Manufacturing / Engineering",
+      "Charity / Voluntary Sector",
+      "Finance / Professional Services",
+      "Creative Industries / Media",
+      "Other",
+    ])
+    .optional(),
+  otherSector: z.string().optional(),
+
+  // Digital and AI Context
+  challenge: z.string().optional(),
+  digitalMaturity: z
+    .enum([
+      "Early-stage / Paper-based processes",
+      "Mixed digital and manual systems",
+      "Mostly digital, but lacking integration",
+      "Highly digital with established tools and data insight",
+      "Unsure / Not assessed",
+    ])
+    .optional(),
+  currentSystems: z.string().optional(),
+  supportType: z.array(z.string()).optional(),
+  otherSupportType: z.string().optional(),
+  keyPeople: z.string().optional(),
+  barriers: z.array(z.string()).optional(),
+  otherBarrier: z.string().optional(),
+  successOutcome: z.string().optional(),
+
+  // Agreement
+  dataProtectionAgreement: z.boolean().refine((val) => val === true, {
+    message: "You must agree to our data protection policy",
+  }),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
 
 function BookPageContent() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const { data: session } = useSession();
-  
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [otherSectorSelected, setOtherSectorSelected] = useState(false);
+  const [otherSupportSelected, setOtherSupportSelected] = useState(false);
+  const [otherBarrierSelected, setOtherBarrierSelected] = useState(false);
+
   const {
     register,
     handleSubmit,
-    setValue,
+    watch,
     formState: { errors },
     reset,
   } = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      supportType: [],
+      barriers: [],
+    },
   });
 
-  const timeSlots = [
-    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
+  // Watch for "Other" selections
+  const selectedSector = watch("sector");
+  const selectedSupportTypes = watch("supportType") || [];
+  const selectedBarriers = watch("barriers") || [];
+
+  // Update state when selections change
+  useEffect(() => {
+    setOtherSectorSelected(selectedSector === "Other");
+    setOtherSupportSelected(selectedSupportTypes.includes("Other"));
+    setOtherBarrierSelected(selectedBarriers.includes("Other"));
+  }, [selectedSector, selectedSupportTypes, selectedBarriers]);
+
+  const supportTypes = [
+    "AI Integration & Strategy",
+    "Workflow & Process Automation",
+    "Digital Readiness & Change Management",
+    "Workforce Engagement & Upskilling",
+    "Data Insight & Dashboard Development",
+    "Innovation Culture & Mindset Shifts",
+    "Strategic Use of Technology for Service Delivery",
+    "Other",
   ];
 
-  // Set the date in the form when the date picker changes
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    if (date) {
-      setValue('date', date, { shouldValidate: true });
-    }
-  };
+  const barrierTypes = [
+    "Leadership buy-in",
+    "Technical expertise",
+    "Staff resistance or low confidence",
+    "Budget constraints",
+    "Legacy systems / fragmentation",
+    "Competing organisational priorities",
+    "Other",
+  ];
 
   // Handle form submission
   const onSubmit = async (data: BookingFormValues) => {
     setIsLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
-      // Here you would typically send the data to your API
-      console.log('Form data submitted:', data);
+      // Format the data for submission
+      const formData = {
+        ...data,
+        // Format any specific fields if needed
+        supportType: data.supportType ? data.supportType.join(", ") : "",
+        barriers: data.barriers ? data.barriers.join(", ") : "",
+        formType: "digital-evolution-ai-adoption",
+        consultationTypeLabel: "Digital Evolution & AI Adoption"
+      };
+
+      console.log("Form data submitted:", formData);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Send data to API
+      let response;
+      try {
+        response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formData),
+        });
+      } catch (fetchError: any) {
+        throw new Error(`Network error: ${fetchError.message}`);
+      }
+
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        // Try to get the text content for debugging
+        const textContent = await response.text();
+        console.error("Received non-JSON response:", textContent);
+        throw new Error("Server returned non-JSON response. Please try again later.");
+      }
       
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        throw new Error("Failed to parse server response. Please try again.");
+      }
+      
+      if (!response.ok) {
+        throw new Error(result.error || `Failed to submit form (Status ${response.status})`);
+      }
+
       // Show success message
-      setSuccess('Your Digital Evolution & AI Adoption consultation has been booked successfully!');
+      setSuccess(
+        "Your Digital Evolution & AI Adoption consultation has been booked successfully!"
+      );
       reset();
-      setSelectedDate(null);
-    } catch (err) {
-      setError('There was an error booking your consultation. Please try again.');
-      console.error('Booking error:', err);
+    } catch (err: any) {
+      console.error("Booking error:", err);
+      setError(
+        err.message || "There was an error booking your consultation. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -89,7 +205,7 @@ function BookPageContent() {
 
   // Add global styles for form inputs
   useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = `
       .input-field {
         width: 100%;
@@ -126,7 +242,7 @@ function BookPageContent() {
       }
     `;
     document.head.appendChild(style);
-    
+
     return () => {
       document.head.removeChild(style);
     };
@@ -136,26 +252,32 @@ function BookPageContent() {
     <div className="min-h-screen  pb-16">
       {/* Hero Section */}
       <HeroSection
-      title="Digital Evolution & AI Adoption"
-      subtitle="We provide specialized mentoring and support for executives and board members, helping them navigate complex leadership challenges."
-      backgroundImage="/images/backgrounds/Digital-Evolution -Ai-Adoption.JPG"
-      height="medium"
-      textPosition="left"
-     
-    />
+        title="Digital Evolution & AI Adoption"
+        subtitle="We provide specialized mentoring and support for executives and board members, helping them navigate complex leadership challenges."
+        backgroundImage="/images/backgrounds/Digital-Evolution -Ai-Adoption.JPG"
+        height="medium"
+        textPosition="left"
+      />
 
       <div className="container-custom mx-auto">
         <div className="mb-16 mt-16">
-          <Link href="/our-services/digital-evolution" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
+          <Link
+            href="/our-services/digital-evolution"
+            className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200"
+          >
             <FiArrowLeft className="mr-2" />
             Back to Digital Evolution & AI Adoption
           </Link>
         </div>
-        
+
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#0B4073] p-6 text-white">
-            <h1 className="text-3xl font-bold">Book a Digital Evolution & AI Adoption Consultation</h1>
-            <p className="mt-2 opacity-90">Schedule your free consultation session</p>
+            <h1 className="text-3xl font-bold">
+              Digital Evolution & AI Adoption Consultation Form
+            </h1>
+            <p className="mt-2 opacity-90">
+              Schedule your consultation session
+            </p>
           </div>
 
           <div className="p-6 md:p-8">
@@ -170,8 +292,13 @@ function BookPageContent() {
                 <FiCheck className="mr-2 mt-1" />
                 <div>
                   <p className="font-medium">{success}</p>
-                  <p className="mt-1">We will contact you shortly to confirm your appointment.</p>
-                  <Link href="/" className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium">
+                  <p className="mt-1">
+                    We will contact you shortly to confirm your appointment.
+                  </p>
+                  <Link
+                    href="/"
+                    className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium"
+                  >
                     Return to Home
                   </Link>
                 </div>
@@ -179,164 +306,499 @@ function BookPageContent() {
             )}
 
             {!success && (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
-                      Full Name
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiUser size={18} className="text-gray-400" />
-                      </div>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                {/* Data Protection Agreement */}
+                <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
+                  <div className="flex items-start mb-2">
+                    <div className="flex items-center h-5">
                       <input
-                        id="name"
-                        type="text"
-                        {...register('name')}
-                        className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
-                        placeholder="John Doe"
-                        disabled={isLoading}
+                        id="dataProtectionAgreement"
+                        type="checkbox"
+                        {...register("dataProtectionAgreement")}
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
                       />
                     </div>
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-                      Email Address
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiMail size={18} className="text-gray-400" />
-                      </div>
-                      <input
-                        id="email"
-                        type="email"
-                        {...register('email')}
-                        className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
-                        placeholder="your@email.com"
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
-                      Phone Number
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiPhone size={18} className="text-gray-400" />
-                      </div>
-                      <input
-                        id="phone"
-                        type="tel"
-                        {...register('phone')}
-                        className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
-                        placeholder="+1 (555) 123-4567"
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="companyName" className="block mb-2 text-sm font-medium text-gray-700">
-                      Company Name (Optional)
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiUser size={18} className="text-gray-400" />
-                      </div>
-                      <input
-                        id="companyName"
-                        type="text"
-                        {...register('companyName')}
-                        className="input-field pl-10"
-                        placeholder="Your Company Ltd"
-                        disabled={isLoading}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="companySize" className="block mb-2 text-sm font-medium text-gray-700">
-                      Company Size (Optional)
-                    </label>
-                    <select
-                      id="companySize"
-                      {...register('companySize')}
-                      className="input-field pl-3"
-                      disabled={isLoading}
+                    <label
+                      htmlFor="dataProtectionAgreement"
+                      className="ml-2 text-sm font-medium text-gray-700"
                     >
-                      <option value="">Select company size</option>
-                      <option value="1-10">1-10 employees</option>
-                      <option value="11-50">11-50 employees</option>
-                      <option value="51-200">51-200 employees</option>
-                      <option value="201-500">201-500 employees</option>
-                      <option value="500+">500+ employees</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-700">
-                      Preferred Date
+                      Please tick the box to confirm you are happy to adhere to
+                      our data protection policy.
                     </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiCalendar size={18} className="text-gray-400" />
-                      </div>
-                      <DatePicker
-                        id="date"
-                        selected={selectedDate}
-                        onChange={handleDateChange}
-                        minDate={new Date()}
-                        className={`input-field pl-10 ${errors.date ? 'border-red-500' : ''}`}
-                        placeholderText="Select a date"
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.date && (
-                      <p className="mt-1 text-sm text-red-600">{errors.date.message as string}</p>
-                    )}
                   </div>
+                  <div className="text-sm text-blue-600 hover:underline">
+                    <Link href="/privacy-policy">
+                      Click here to view policy
+                    </Link>
+                  </div>
+                  {errors.dataProtectionAgreement && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.dataProtectionAgreement.message}
+                    </p>
+                  )}
+                </div>
 
-                  <div>
-                    <label htmlFor="time" className="block mb-2 text-sm font-medium text-gray-700">
-                      Preferred Time
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiClock size={18} className="text-gray-400" />
-                      </div>
-                      <select
-                        id="time"
-                        {...register('time')}
-                        className={`input-field pl-10 ${errors.time ? 'border-red-500' : ''}`}
-                        disabled={isLoading}
+                {/* Personal Details Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Personal Details
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block mb-2 text-sm font-medium text-gray-700"
                       >
-                        <option value="">Select a time</option>
-                        {timeSlots.map((time) => (
-                          <option key={time} value={time}>{time}</option>
-                        ))}
-                      </select>
+                        Full name (First &amp; Last)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="name"
+                          type="text"
+                          {...register("name")}
+                          className={`input-field pl-10 ${
+                            errors.name ? "border-red-500" : ""
+                          }`}
+                          placeholder="John Doe"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.name.message}
+                        </p>
+                      )}
                     </div>
-                    {errors.time && (
-                      <p className="mt-1 text-sm text-red-600">{errors.time.message}</p>
+
+                    <div>
+                      <label
+                        htmlFor="organisationName"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        Organisation Name
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="organisationName"
+                          type="text"
+                          {...register("organisationName")}
+                          className="input-field pl-10"
+                          placeholder="Your Organisation Ltd"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="jobTitle"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        Job Title / Role
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="jobTitle"
+                          type="text"
+                          {...register("jobTitle")}
+                          className="input-field pl-10"
+                          placeholder="CEO / Manager / Director"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        Email address
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiMail size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="email"
+                          type="email"
+                          {...register("email")}
+                          className={`input-field pl-10 ${
+                            errors.email ? "border-red-500" : ""
+                          }`}
+                          placeholder="your@email.com"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      {errors.email && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        Contact number
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiPhone size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="phone"
+                          type="tel"
+                          {...register("phone")}
+                          className={`input-field pl-10 ${
+                            errors.phone ? "border-red-500" : ""
+                          }`}
+                          placeholder="+1 (555) 123-4567"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.phone.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="organisationWebsite"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        Organisation website (if applicable)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="organisationWebsite"
+                          type="text"
+                          {...register("organisationWebsite")}
+                          className="input-field pl-10"
+                          placeholder="https://www.example.com"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Organisation Overview Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Organisation Overview
+                  </h3>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      1. What size is your organisation?
+                    </label>
+                    <div className="space-y-2">
+                      {[
+                        "Micro (1–9 employees)",
+                        "Small (10–49 employees)",
+                        "Medium SME (50–249 employees)",
+                        "Large SME (250–499 employees)",
+                        "Large Organisation / Enterprise (500+ employees)",
+                      ].map((size) => (
+                        <div key={size} className="flex items-center">
+                          <input
+                            id={`size-${size}`}
+                            type="radio"
+                            value={size}
+                            {...register("organisationSize")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <label
+                            htmlFor={`size-${size}`}
+                            className="ml-2 text-sm font-medium text-gray-700"
+                          >
+                            {size}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      2. What sector best describes your organisation's work?
+                    </label>
+                    <div className="space-y-2">
+                      {[
+                        "Digital / Technology",
+                        "Construction",
+                        "Recruitment / HR",
+                        "Healthcare (NHS or Private)",
+                        "Education / Training",
+                        "Local Government / Public Sector",
+                        "Logistics / Transport",
+                        "Manufacturing / Engineering",
+                        "Charity / Voluntary Sector",
+                        "Finance / Professional Services",
+                        "Creative Industries / Media",
+                        "Other",
+                      ].map((sector) => (
+                        <div key={sector} className="flex items-center">
+                          <input
+                            id={`sector-${sector}`}
+                            type="radio"
+                            value={sector}
+                            {...register("sector")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <label
+                            htmlFor={`sector-${sector}`}
+                            className="ml-2 text-sm font-medium text-gray-700"
+                          >
+                            {sector}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+
+                    {selectedSector === "Other" && (
+                      <div className="mt-3">
+                        <input
+                          type="text"
+                          {...register("otherSector")}
+                          className="input-field"
+                          placeholder="Please specify"
+                          disabled={isLoading}
+                        />
+                      </div>
                     )}
                   </div>
                 </div>
 
+                {/* Digital and AI Context Section */}
                 <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Digital and AI Context
+                  </h3>
+
+                  <div className="mb-6">
+                    <label
+                      htmlFor="challenge"
+                      className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                      3. What challenge or opportunity is prompting you to
+                      explore digital or AI solutions right now?
+                    </label>
+                    <textarea
+                      id="challenge"
+                      {...register("challenge")}
+                      rows={4}
+                      className="input-field"
+                      placeholder="Describe your current challenges or opportunities..."
+                      disabled={isLoading}
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      4. How would you describe the current digital maturity of
+                      your organisation?
+                    </label>
+                    <div className="space-y-2">
+                      {[
+                        "Early-stage / Paper-based processes",
+                        "Mixed digital and manual systems",
+                        "Mostly digital, but lacking integration",
+                        "Highly digital with established tools and data insight",
+                        "Unsure / Not assessed",
+                      ].map((maturity) => (
+                        <div key={maturity} className="flex items-center">
+                          <input
+                            id={`maturity-${maturity}`}
+                            type="radio"
+                            value={maturity}
+                            {...register("digitalMaturity")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <label
+                            htmlFor={`maturity-${maturity}`}
+                            className="ml-2 text-sm font-medium text-gray-700"
+                          >
+                            {maturity}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <label
+                      htmlFor="currentSystems"
+                      className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                      5. What systems or platforms are you currently using (if
+                      any)?
+                    </label>
+                    <textarea
+                      id="currentSystems"
+                      {...register("currentSystems")}
+                      rows={3}
+                      className="input-field"
+                      placeholder="e.g. Excel, Google Workspace, Microsoft 365, CRMs, EMIS, SystmOne, custom platforms"
+                      disabled={isLoading}
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      6. What kind of support or input are you interested in?
+                    </label>
+                    <div className="space-y-2">
+                      {[
+                        "AI Integration & Strategy",
+                        "Workflow & Process Automation",
+                        "Digital Readiness & Change Management",
+                        "Workforce Engagement & Upskilling",
+                        "Data Insight & Dashboard Development",
+                        "Innovation Culture & Mindset Shifts",
+                        "Strategic Use of Technology for Service Delivery",
+                        "Other",
+                      ].map((support) => (
+                        <div key={support} className="flex items-center">
+                          <input
+                            id={`support-${support}`}
+                            type="checkbox"
+                            value={support}
+                            {...register("supportType")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <label
+                            htmlFor={`support-${support}`}
+                            className="ml-2 text-sm font-medium text-gray-700"
+                          >
+                            {support}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+
+                    {selectedSupportTypes.includes("Other") && (
+                      <div className="mt-3">
+                        <input
+                          type="text"
+                          {...register("otherSupportType")}
+                          className="input-field"
+                          placeholder="Please specify"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mb-6">
+                    <label
+                      htmlFor="keyPeople"
+                      className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                      7. Who are the key people or teams currently responsible
+                      for digital change in your organisation?
+                    </label>
+                    <textarea
+                      id="keyPeople"
+                      {...register("keyPeople")}
+                      rows={3}
+                      className="input-field"
+                      placeholder="List key stakeholders, teams, or roles..."
+                      disabled={isLoading}
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      8. What barriers (if any) are limiting your organisation's
+                      ability to scale or embed digital or AI tools?
+                    </label>
+                    <div className="space-y-2">
+                      {[
+                        "Leadership buy-in",
+                        "Technical expertise",
+                        "Staff resistance or low confidence",
+                        "Budget constraints",
+                        "Legacy systems / fragmentation",
+                        "Competing organisational priorities",
+                        "Other",
+                      ].map((barrier) => (
+                        <div key={barrier} className="flex items-center">
+                          <input
+                            id={`barrier-${barrier}`}
+                            type="checkbox"
+                            value={barrier}
+                            {...register("barriers")}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <label
+                            htmlFor={`barrier-${barrier}`}
+                            className="ml-2 text-sm font-medium text-gray-700"
+                          >
+                            {barrier}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+
+                    {selectedBarriers.includes("Other") && (
+                      <div className="mt-3">
+                        <input
+                          type="text"
+                          {...register("otherBarrier")}
+                          className="input-field"
+                          placeholder="Please specify"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mb-6">
+                    <label
+                      htmlFor="successOutcome"
+                      className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                      9. What would a successful outcome look like from working
+                      with us on this initiative?
+                    </label>
+                    <textarea
+                      id="successOutcome"
+                      {...register("successOutcome")}
+                      rows={4}
+                      className="input-field"
+                      placeholder="Describe your desired outcomes and success criteria..."
+                      disabled={isLoading}
+                    ></textarea>
+                  </div>
+                </div>
+
+                {/* Additional Message */}
+                <div className="mb-6">
                   <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-700">
-                    Additional Information (Optional)
+                    Additional Message (Optional)
                   </label>
                   <div className="relative">
                     <div className="absolute top-3 left-3 flex items-start pointer-events-none">
@@ -347,7 +809,7 @@ function BookPageContent() {
                       {...register('message')}
                       rows={4}
                       className="input-field pl-10"
-                      placeholder="Tell us about your organization's digital evolution needs or specific challenges..."
+                      placeholder="Add any special requests, questions, or information you'd like us to know before the consultation..."
                       disabled={isLoading}
                     ></textarea>
                   </div>
@@ -359,7 +821,7 @@ function BookPageContent() {
                     disabled={isLoading}
                     className="btn-primary"
                   >
-                    {isLoading ? 'Booking...' : 'Book Consultation'}
+                    {isLoading ? "Booking..." : "Book Consultation"}
                   </button>
                 </div>
               </form>
@@ -379,4 +841,4 @@ export default function DigitalBookPage() {
       </Suspense>
     </div>
   );
-} 
+}

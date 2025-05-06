@@ -16,14 +16,9 @@ function WhoWeAreContent() {
     {
       id: 'alexander',
       name: 'Alexander Church',
-      role: 'Psychology-Driven Innovator in Leadership, Digital Health & Organisational Strategy',
-      image: '/images/team/alexander-placeholder.jpg',
-      expertise: [
-        { title: 'Strategic Leadership', icon: <FiBriefcase /> },
-        { title: 'Digital Evolution', icon: <FiCpu /> },
-        { title: 'Psychology & Therapy', icon: <FiHeart /> },
-        { title: 'ADHD Coaching', icon: <FiStar /> }
-      ],
+      role: 'Organisational & Business Consultant, Psychological Therapist & ADHD Coach ',
+      image: '/images/meet-our-team/alex.svg',
+     
       qualifications: [
         { title: 'Msc Psychology' },
         { title: 'Msc Forensic Psychology' },
@@ -57,7 +52,7 @@ function WhoWeAreContent() {
       id: 'suzanne',
       name: 'Dr. Suzanne Heywood Everett',
       role: 'Chartered Consultant Clinical Psychologist & Organisational Innovator',
-      image: '/images/team/suzanne-placeholder.jpg',
+      image: '/images/meet-our-team/dr.webp',
       expertise: [
         { title: 'Clinical Psychology', icon: <FiHeart /> },
         { title: 'Neurodiversity', icon: <FiUsers /> },
@@ -79,7 +74,7 @@ function WhoWeAreContent() {
     <div className="bg-background min-h-screen font-roboto">
       {/* Hero Section */}
       <HeroSection
-        title="Who We Are"
+        title="Meet Our Team"
         subtitle="Meet our team of psychology-driven innovators committed to transforming individuals and organizations through human-centered approaches."
         backgroundImage="/images/backgrounds/Who-we-are.JPG"
         height="medium"
@@ -89,20 +84,20 @@ function WhoWeAreContent() {
     
 
       {/* Team Section with Tabs */}
-      <section className="py-20 bg-[#D6E2EA]/20">
+      <section className="py-20 bg-[#D6E2EA]/20 px-10" >
         <div className="container-custom mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center text-[#0B4073]">Meet Our Team</h2>
+        
           
           {/* Team Member Tabs */}
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex bg-white rounded-full p-1 shadow-md">
+          <div className="flex justify-center mb-12 ">
+            <div className="inline-flex bg-white rounded-full p-1 shadow-md mx-10">
               {teamMembers.map((member) => (
                 <button
                   key={member.id}
                   onClick={() => setActiveTab(member.id)}
                   className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === member.id ? 'bg-[#0B4073] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
                 >
-                  {member.name.split(' ')[0]}
+                  {member.name}
                 </button>
               ))}
             </div>
@@ -129,16 +124,8 @@ function WhoWeAreContent() {
                       <p className="text-[#7094B7] font-medium mb-8">{member.role}</p>
                       
                       {/* Areas of Expertise */}
-                      <h4 className="text-xl font-semibold mb-4 text-[#0B4073]">Areas of Expertise</h4>
-                      <div className="space-y-4">
-                        {member.expertise.map((item, index) => (
-                          <div key={index} className="flex items-center space-x-3 p-3 bg-white ">
-                            <div className="text-[#0B4073] text-2xl">{item.icon}</div>
-                            <span className="text-[#0B4073] font-medium text-lg">{item.title}</span>
-                          </div>
-                        ))}
-                      </div>
-
+                   
+                    
                       {member.id === 'alexander' && (
                         <div>
                           {/* Qualifications & Training */}
@@ -241,15 +228,7 @@ function WhoWeAreContent() {
                     ))}
                   </div>
                   
-                  <div className="mt-8 pt-6 border-t border-gray-200">
-                    <Link 
-                      href="/book" 
-                      className="inline-flex items-center bg-[#7094B7] hover:bg-[#0B4073] text-white font-medium px-6 py-3 rounded-lg transition-colors"
-                    >
-                      Book a Consultation
-                      <FiArrowRight className="ml-2" />
-                    </Link>
-                  </div>
+                  
                 </div>
               </div>
             </div>

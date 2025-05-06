@@ -1,35 +1,35 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import { FiUser, FiMail, FiPhone, FiCalendar, FiClock, FiMessageSquare, FiCheck, FiArrowLeft, FiBriefcase } from 'react-icons/fi';
 import Link from 'next/link';
 import { HeroSection } from '@/components/HeroSection';
+import { FiArrowLeft, FiBriefcase, FiCalendar, FiCheck, FiGlobe, FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
 
-const bookingSchema = z.object({
+const bookingSchema = z.object({  
+  // Personal Details
   name: z.string().min(2, 'Name must be at least 2 characters'),
+  organisation: z.string().optional(),
+  jobTitle: z.string().optional(),
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
-  date: z.date({
-    required_error: 'Please select a date',
-    invalid_type_error: 'Please select a valid date',
-  }).refine((date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date >= today;
-  }, {
-    message: 'Appointment date must be today or in the future',
+  linkedin: z.string().optional(),
+
+  // About You
+  mentoringReason: z.string().optional(),
+  challenges: z.array(z.string()).optional(),
+  otherChallenge: z.string().optional(),
+  previousMentoring: z.enum(['Yes', 'No']).optional(),
+  expectations: z.string().optional(),
+  careerGoals: z.string().optional(),
+  sessionFormat: z.enum(['Online', 'In-person', 'Hybrid / Flexible']).optional(),
+
+  // Data Protection Agreement
+  dataProtectionAgreement: z.boolean().refine((val) => val === true, {
+    message: 'You must agree to our data protection policy',
   }),
-  time: z.string().min(1, 'Please select a time'),
-  message: z.string().optional(),
-  position: z.string().min(2, 'Please enter your position').optional(),
-  industry: z.string().optional(),
-  experience: z.enum(['0-5', '6-10', '11-15', '16-20', '20+']).optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -38,36 +38,46 @@ function BookPageContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const { data: session } = useSession();
-  
+  const [selectedChallenges, setSelectedChallenges] = useState<string[]>([]);
+  const [otherChallengeSelected, setOtherChallengeSelected] = useState(false);
+
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
     reset,
   } = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      challenges: [],
+    },
   });
 
-  const timeSlots = [
-    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
+  // Watch for changes in challenges array
+  const challenges = watch('challenges') || [];
+  const hasOtherChallenge = challenges.includes('Other');
+
+
+  const challengeOptions = [
+    'Role change or promotion',
+    'Leadership under pressure',
+    'Strategic growth or vision',
+    'Team conflict or dynamics',
+    'Burnout or decision fatigue',
+    'Confidence or presence',
+    'Navigating uncertainty',
+    'Other'
   ];
 
-  const industries = [
-    'Technology', 'Finance', 'Healthcare', 'Education', 'Retail',
-    'Manufacturing', 'Consulting', 'Entertainment', 'Non-profit', 'Other'
+  const sessionFormats = [
+    'Online',
+    'In-person',
+    'Hybrid / Flexible'
   ];
 
   // Set the date in the form when the date picker changes
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    if (date) {
-      setValue('date', date, { shouldValidate: true });
-    }
-  };
 
   // Handle form submission
   const onSubmit = async (data: BookingFormValues) => {
@@ -75,19 +85,36 @@ function BookPageContent() {
     setError('');
     
     try {
-      // Here you would typically send the data to your API
-      console.log('Form data submitted:', data);
+      // Add form type identifier
+      const formData = {
+        ...data,
+        formType: 'executive-mentoring',
+        consultationTypeLabel: 'Executive Mentoring'
+      };
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Form data submitted:', formData);
+      
+      // Send data to API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit form');
+      }
       
       // Show success message
-      setSuccess('Your Executive Mentoring & Boardroom Support consultation has been booked successfully!');
+      setSuccess('Your Executive Mentoring consultation has been booked successfully!');
       reset();
-      setSelectedDate(null);
     } catch (err) {
-      setError('There was an error booking your consultation. Please try again.');
       console.error('Booking error:', err);
+      setError('There was an error booking your consultation. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -142,8 +169,8 @@ function BookPageContent() {
     <div className="min-h-screen  pb-16">
       {/* Hero Section */}
       <HeroSection
-        title="Executive Mentoring & Boardroom Support"
-        subtitle="We provide specialized mentoring and support for executives and board members, helping them navigate complex leadership challenges."
+        title="Executive Mentoring"
+        subtitle="Specialized mentoring for executives to navigate complex leadership challenges"
         backgroundImage="/images/services/executive-mentoring.jpg"
         height="medium"
         textPosition="left"
@@ -152,14 +179,14 @@ function BookPageContent() {
         <div className="mb-16 mt-16">
           <Link href="/our-services/executive-mentoring" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
             <FiArrowLeft className="mr-2" />
-            Back to Executive Mentoring & Boardroom Support
+            Back to Executive Mentoring
           </Link>
         </div>
         
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#0B4073] p-6 text-white">
-            <h1 className="text-3xl font-bold">Book an Executive Mentoring Consultation</h1>
-            <p className="mt-2 opacity-90">Schedule your free consultation session</p>
+            <h1 className="text-3xl font-bold">Executive Mentoring Consultation Form</h1>
+            <p className="mt-2 opacity-90">Schedule your consultation session</p>
           </div>
 
           <div className="p-6 md:p-8">
@@ -183,197 +210,293 @@ function BookPageContent() {
             )}
 
             {!success && (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
-                      Full Name
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiUser size={18} className="text-gray-400" />
-                      </div>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                {/* Data Protection Agreement */}
+                <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
+                  <div className="flex items-start mb-2">
+                    <div className="flex items-center h-5">
                       <input
-                        id="name"
-                        type="text"
-                        {...register('name')}
-                        className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
-                        placeholder="John Doe"
-                        disabled={isLoading}
+                        id="dataProtectionAgreement"
+                        type="checkbox"
+                        {...register('dataProtectionAgreement')}
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
                       />
                     </div>
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-                      Email Address
+                    <label htmlFor="dataProtectionAgreement" className="ml-2 text-sm font-medium text-gray-700">
+                      Please tick the box to confirm you are happy to adhere to our data protection policy.
                     </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiMail size={18} className="text-gray-400" />
+                  </div>
+                  <div className="text-sm text-blue-600 hover:underline">
+                    <Link href="/privacy-policy">
+                      Click here to view policy
+                    </Link>
+                  </div>
+                  {errors.dataProtectionAgreement && (
+                    <p className="mt-1 text-sm text-red-600">{errors.dataProtectionAgreement.message}</p>
+                  )}
+                </div>
+
+                {/* Personal Details Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Personal Details
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
+                        Full Name (First & Last)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="name"
+                          type="text"
+                          {...register('name')}
+                          className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
+                          placeholder="John Doe"
+                          disabled={isLoading}
+                        />
                       </div>
-                      <input
-                        id="email"
-                        type="email"
-                        {...register('email')}
-                        className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
-                        placeholder="your@email.com"
-                        disabled={isLoading}
-                      />
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                      )}
                     </div>
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                    )}
-                  </div>
 
-                  <div>
-                    <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
-                      Phone Number
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiPhone size={18} className="text-gray-400" />
+                    <div>
+                      <label htmlFor="organisation" className="block mb-2 text-sm font-medium text-gray-700">
+                        Organisation
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiBriefcase size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="organisation"
+                          type="text"
+                          {...register('organisation')}
+                          className="input-field pl-10"
+                          placeholder="Your Organisation"
+                          disabled={isLoading}
+                        />
                       </div>
-                      <input
-                        id="phone"
-                        type="tel"
-                        {...register('phone')}
-                        className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
-                        placeholder="+1 (555) 123-4567"
-                        disabled={isLoading}
-                      />
                     </div>
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                    )}
-                  </div>
 
-                  <div>
-                    <label htmlFor="position" className="block mb-2 text-sm font-medium text-gray-700">
-                      Current Position
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiBriefcase size={18} className="text-gray-400" />
+                    <div>
+                      <label htmlFor="jobTitle" className="block mb-2 text-sm font-medium text-gray-700">
+                        Job Title / Role
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiBriefcase size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="jobTitle"
+                          type="text"
+                          {...register('jobTitle')}
+                          className="input-field pl-10"
+                          placeholder="Your Job Title"
+                          disabled={isLoading}
+                        />
                       </div>
-                      <input
-                        id="position"
-                        type="text"
-                        {...register('position')}
-                        className={`input-field pl-10 ${errors.position ? 'border-red-500' : ''}`}
-                        placeholder="CEO, Director, etc."
-                        disabled={isLoading}
-                      />
                     </div>
-                    {errors.position && (
-                      <p className="mt-1 text-sm text-red-600">{errors.position.message}</p>
-                    )}
-                  </div>
 
-                  <div>
-                    <label htmlFor="industry" className="block mb-2 text-sm font-medium text-gray-700">
-                      Industry
-                    </label>
-                    <select
-                      id="industry"
-                      {...register('industry')}
-                      className="input-field pl-3"
-                      disabled={isLoading}
-                    >
-                      <option value="">Select your industry</option>
-                      {industries.map((industry) => (
-                        <option key={industry} value={industry}>{industry}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="experience" className="block mb-2 text-sm font-medium text-gray-700">
-                      Years of Experience
-                    </label>
-                    <select
-                      id="experience"
-                      {...register('experience')}
-                      className="input-field pl-3"
-                      disabled={isLoading}
-                    >
-                      <option value="">Select experience level</option>
-                      <option value="0-5">0-5 years</option>
-                      <option value="6-10">6-10 years</option>
-                      <option value="11-15">11-15 years</option>
-                      <option value="16-20">16-20 years</option>
-                      <option value="20+">20+ years</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-700">
-                      Preferred Date
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiCalendar size={18} className="text-gray-400" />
+                    <div>
+                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
+                        Email Address
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiMail size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="email"
+                          type="email"
+                          {...register('email')}
+                          className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
+                          placeholder="your@email.com"
+                          disabled={isLoading}
+                        />
                       </div>
-                      <DatePicker
-                        id="date"
-                        selected={selectedDate}
-                        onChange={handleDateChange}
-                        minDate={new Date()}
-                        className={`input-field pl-10 ${errors.date ? 'border-red-500' : ''}`}
-                        placeholderText="Select a date"
-                        disabled={isLoading}
-                      />
+                      {errors.email && (
+                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                      )}
                     </div>
-                    {errors.date && (
-                      <p className="mt-1 text-sm text-red-600">{errors.date.message as string}</p>
-                    )}
-                  </div>
 
-                  <div>
-                    <label htmlFor="time" className="block mb-2 text-sm font-medium text-gray-700">
-                      Preferred Time
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiClock size={18} className="text-gray-400" />
+                    <div>
+                      <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
+                        Contact Number
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiPhone size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="phone"
+                          type="tel"
+                          {...register('phone')}
+                          className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
+                          placeholder="+1 (555) 123-4567"
+                          disabled={isLoading}
+                        />
                       </div>
-                      <select
-                        id="time"
-                        {...register('time')}
-                        className={`input-field pl-10 ${errors.time ? 'border-red-500' : ''}`}
-                        disabled={isLoading}
-                      >
-                        <option value="">Select a time</option>
-                        {timeSlots.map((time) => (
-                          <option key={time} value={time}>{time}</option>
-                        ))}
-                      </select>
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                      )}
                     </div>
-                    {errors.time && (
-                      <p className="mt-1 text-sm text-red-600">{errors.time.message}</p>
-                    )}
+
+                    <div>
+                      <label htmlFor="linkedin" className="block mb-2 text-sm font-medium text-gray-700">
+                        LinkedIn (optional)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="linkedin"
+                          type="text"
+                          {...register('linkedin')}
+                          className="input-field pl-10"
+                          placeholder="Your LinkedIn URL"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
+                {/* About You Section */}
                 <div>
-                  <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-700">
-                    What specific challenges are you facing? (Optional)
-                  </label>
-                  <div className="relative">
-                    <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                      <FiMessageSquare size={18} className="text-gray-400" />
-                    </div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    About You
+                  </h3>
+
+                  <div className="mb-6">
+                    <label htmlFor="mentoringReason" className="block mb-2 text-sm font-medium text-gray-700">
+                      What prompted you to seek mentoring?
+                    </label>
                     <textarea
-                      id="message"
-                      {...register('message')}
+                      id="mentoringReason"
+                      {...register('mentoringReason')}
                       rows={4}
-                      className="input-field pl-10"
-                      placeholder="Tell us about your current challenges or goals for executive mentoring..."
+                      className="input-field"
+                      placeholder="Please describe your reasons for seeking mentoring..."
                       disabled={isLoading}
                     ></textarea>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      What are the current challenges or transitions you're navigating?
+                    </label>
+                    <div className="space-y-2">
+                      {challengeOptions.map((challenge) => (
+                        <div key={challenge} className="flex items-center">
+                          <input
+                            id={`challenge-${challenge}`}
+                            type="checkbox"
+                            value={challenge}
+                            {...register('challenges')}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <label
+                            htmlFor={`challenge-${challenge}`}
+                            className="ml-2 text-sm font-medium text-gray-700"
+                          >
+                            {challenge}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+
+                    {hasOtherChallenge && (
+                      <div className="mt-3">
+                        <input
+                          type="text"
+                          {...register('otherChallenge')}
+                          className="input-field"
+                          placeholder="Please describe other challenges"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Have you had coaching or mentoring before?
+                    </label>
+                    <div className="space-x-4">
+                      {['Yes', 'No'].map((option) => (
+                        <label key={option} className="inline-flex items-center">
+                          <input
+                            type="radio"
+                            value={option}
+                            {...register('previousMentoring')}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <span className="ml-2 text-sm font-medium text-gray-700">{option}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <label htmlFor="expectations" className="block mb-2 text-sm font-medium text-gray-700">
+                      What are your expectations or hopes for this work?
+                    </label>
+                    <textarea
+                      id="expectations"
+                      {...register('expectations')}
+                      rows={4}
+                      className="input-field"
+                      placeholder="Please describe your expectations..."
+                      disabled={isLoading}
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-6">
+                    <label htmlFor="careerGoals" className="block mb-2 text-sm font-medium text-gray-700">
+                      Where would you like to get to with your career / role?
+                    </label>
+                    <textarea
+                      id="careerGoals"
+                      {...register('careerGoals')}
+                      rows={4}
+                      className="input-field"
+                      placeholder="Please describe your career goals..."
+                      disabled={isLoading}
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      What's the best format for sessions?
+                    </label>
+                    <div className="space-y-2">
+                      {sessionFormats.map((format) => (
+                        <div key={format} className="flex items-center">
+                          <input
+                            id={`format-${format}`}
+                            type="radio"
+                            value={format}
+                            {...register('sessionFormat')}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                            disabled={isLoading}
+                          />
+                          <label
+                            htmlFor={`format-${format}`}
+                            className="ml-2 text-sm font-medium text-gray-700"
+                          >
+                            {format}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

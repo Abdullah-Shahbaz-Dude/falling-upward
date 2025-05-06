@@ -1,77 +1,46 @@
 'use client';
 
 import { useState, Suspense } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import { FiUser, FiLock, FiAlertCircle } from 'react-icons/fi';
 import Link from 'next/link';
 import { HeroSection } from '@/components/HeroSection';
 
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
-
 function LoginContent() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   
-  const { control, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
-    defaultValues: {
-      email: '',
-      password: ''
+  // Placeholder function - will be replaced with actual Node.js backend logic later
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Just form validation without actual submission
+    if (!email) {
+      setError('Email is required');
+      return;
     }
-  });
-
-  const onSubmit = async (data: LoginFormValues) => {
+    
+    if (!password) {
+      setError('Password is required');
+      return;
+    }
+    
+    // Show loading state but don't actually submit
     setIsLoading(true);
-    setError('');
-
-    try {
-      // Send login request to our new simple API
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password
-        }),
-      });
-
-      const result = await response.json();
-      console.log('Login result:', result);
-
-      if (!response.ok || !result.success) {
-        setError(result.message || 'Invalid email or password');
-        setIsLoading(false);
-        return;
-      }
-      
-      // Get the redirect URL from the API response
-      const redirectUrl = result.redirectUrl || '/user-dashboard';
-      console.log(`Login successful, redirecting to: ${redirectUrl}`);
-      
-      // Log cookie information for debugging
-      console.log('Cookies after login:', document.cookie);
-      
-      // Force a short delay to ensure cookies are set
-      setTimeout(() => {
-        console.log('Executing redirect now to:', redirectUrl);
-        // Use hard redirect for more reliable navigation
-        window.location.href = redirectUrl;
-      }, 500);
-    } catch (error) {
-      console.error('Login error:', error);
-      setError('Something went wrong. Please try again.');
+    
+    // Simulate API call with setTimeout
+    setTimeout(() => {
+      console.log('Form would submit these values to Node.js backend:', { email, password });
       setIsLoading(false);
-    }
+      // For now just log the values that would be sent to backend
+      alert('Login functionality will be implemented with Node.js backend later');
+    }, 1000);
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 font-[Roboto]">
       {/* Hero Section */}
-
       <HeroSection
         title="Welcome Back"
         subtitle="Sign in to access your Falling Upwards account"
@@ -102,7 +71,7 @@ function LoginContent() {
             </div>
           )}
           
-          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email
@@ -111,32 +80,17 @@ function LoginContent() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FiUser className="h-5 w-5 text-gray-400" />
                 </div>
-                <Controller
+                <input
+                  id="email"
                   name="email"
-                  control={control}
-                  rules={{ 
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address"
-                    }
-                  }}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      id="email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="Enter your email"
-                      className="block w-full pl-10 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0B4073] focus:border-[#0B4073] sm:text-sm"
-                      aria-invalid={errors.email ? "true" : "false"}
-                    />
-                  )}
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Enter your email"
+                  className="block w-full pl-10 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0B4073] focus:border-[#0B4073] sm:text-sm"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              {errors.email && (
-                <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
-              )}
             </div>
 
             <div>
@@ -147,26 +101,17 @@ function LoginContent() {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FiLock className="h-5 w-5 text-gray-400" />
                 </div>
-                <Controller
+                <input
+                  id="password"
                   name="password"
-                  control={control}
-                  rules={{ required: 'Password is required' }}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      id="password"
-                      type="password"
-                      autoComplete="current-password"
-                      placeholder="Enter your password"
-                      className="block w-full pl-10 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0B4073] focus:border-[#0B4073] sm:text-sm"
-                      aria-invalid={errors.password ? "true" : "false"}
-                    />
-                  )}
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Enter your password"
+                  className="block w-full pl-10 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#0B4073] focus:border-[#0B4073] sm:text-sm"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              {errors.password && (
-                <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
-              )}
             </div>
 
             <div>
@@ -189,14 +134,12 @@ function LoginContent() {
               </button>
             </div>
           </form>
-
-
           
           <div className="mt-6">
             <p className="text-center text-sm text-gray-600">
               Don't have an account?{' '}
               <Link 
-                href="/register" 
+                href="#" 
                 className="font-medium text-[#0B4073] hover:text-[#0B4073]/80"
               >
                 Register here

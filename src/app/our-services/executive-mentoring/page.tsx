@@ -26,20 +26,7 @@ import {
 } from "lucide-react";
 
 const approachSections = [
-  {
-    title: "Harnessing Neurodiversity for Strategic Change",
-    icon: (
-      <Image src="/favicon.ico" alt="Neurodiversity" width={32} height={32} />
-    ),
-    description: [
-      "Many organisations overlook the 	strategic advantage that comes from diverse cognitive styles. We 	provide training and advisory support to help leadership teams:",
-      "Recognise 	and leverage neurodivergent strengths in problem-solving, 	innovation, and decision-making.",
-      "Create 	inclusive boardroom cultures where different ways of thinking lead 	to stronger, more creative strategies.",
-      "Ensure 	that neurodiverse employees and leaders feel valued, improving 	engagement, retention, and overall performance.",
-    ],
-    reversed: false,
-    img: "/images/executive/our-approch/image-1.png",
-  },
+  
   {
     title: "Bias & Decision-Making",
     icon: (
@@ -85,16 +72,7 @@ const approachSections = [
     reversed: false,
     img: "/images/executive/our-approch/image-5.png",
   },
-  {
-    title: "Harnessing Neurodiversity for Strategic Change",
-    icon: (
-      <Image src="/favicon.ico" alt="Neurodiversity" width={32} height={32} />
-    ),
-    description:
-      "We train leadership teams to recognise and leverage neurodivergent strengths, foster inclusive boardroom cultures, and unlock innovation through diverse cognitive styles.",
-    reversed: true,
-    img: "/images/executive/our-approch/image-6.png",
-  },
+ 
 ];
 
 const offers = [
@@ -150,7 +128,7 @@ const offerings = [
 ];
 
 export default function ExecutiveMentoringPage() {
-  const [activeSection, setActiveSection] = useState("Mentoring ");
+  const [activeSection, setActiveSection] = useState("For Individuals ");
   return (
     <div className="font-roboto">
       {/* Hero Section */}
@@ -180,29 +158,29 @@ export default function ExecutiveMentoringPage() {
           <div className="mb-0">
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               <button
-                onClick={() => setActiveSection("Mentoring ")}
+                onClick={() => setActiveSection("For Individuals ")}
                 className={`group p-6 rounded-xl transition-all duration-300 flex flex-col items-center text-center ${
-                  activeSection === "Mentoring "
+                  activeSection === "For Individuals "
                     ? "bg-[#0B4073] text-white shadow-lg"
                     : "bg-white hover:bg-[#D6E2EA]/30 text-gray-700 shadow-md hover:shadow-lg"
                 }`}
               >
                 <div
                   className={`p-4 rounded-full mb-4 ${
-                    activeSection === "Mentoring "
+                    activeSection === "For Individuals "
                       ? "bg-white/20"
                       : "bg-[#D6E2EA]"
                   }`}
                 >
                   <FiUsers
                     className={`w-8 h-8 ${
-                      activeSection === "Mentoring "
+                      activeSection === "For Individuals "
                         ? "text-white"
                         : "text-[#0B4073]"
                     }`}
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Mentoring </h3>
+                <h3 className="text-xl font-bold mb-2">For Individuals </h3>
               </button>
 
               <button
@@ -236,20 +214,17 @@ export default function ExecutiveMentoringPage() {
           {/* Section Content */}
         </div>
       </section>
-      {activeSection === "Mentoring " ? (
+      {activeSection === "For Individuals " ? (
         <div className="max-w-7xl mx-auto px-0 md:px-12 mt-0">
           {/* List of challenges */}
           {/* Heading */}
           <div className="mb-20 text-center">
-            <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
-              For Individuals
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
+            Do any of these sound familiar?
             </h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-              Do any of these sound familiar?
-            </p>
           </div>
 
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-2 ">
+          <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
             {[
               "Is masking, rejection sensitivity, or neurodivergent burnout a hidden challenge you're managing silently?",
               "Do you feel like your career or business vision has become unclear, and you need to reconnect with purpose?",
@@ -264,19 +239,18 @@ export default function ExecutiveMentoringPage() {
             ].map((question, idx) => (
               <div
                 key={idx}
-                className="flex items-start p-6 bg-white/90 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+                className="flex items-start p-4 sm:p-6 bg-white/90 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group"
               >
-                <div className="text-[#0B4073] mt-1 mr-4 shrink-0">
-                  <div className="flex items-center space-x-3">
+                <div className="text-[#0B4073] mt-1 mr-3 sm:mr-4 shrink-0">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
                     <img
-                      src="/favicon.ico" // Replace this with your image path
+                      src="/favicon.ico"
                       alt="icon"
-                      className="h-6 w-6 group-hover:scale-110 transition-transform"
+                      className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform"
                     />
-                    <span className="text-base font-medium group-hover:text-[#0B4073] transition-colors duration-200"></span>
                   </div>
                 </div>
-                <p className="text-gray-800 text-lg leading-relaxed">
+                <p className="text-gray-800 text-base sm:text-lg leading-relaxed">
                   {question}
                 </p>
               </div>
@@ -284,7 +258,7 @@ export default function ExecutiveMentoringPage() {
           </div>
           {/* Closing message */}
           <div className="mt-20 text-center max-w-4xl mx-auto mb-20">
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               Our mentoring combines
               <span className="font-semibold text-[#0B4073]">
                 {" "}
@@ -304,10 +278,10 @@ export default function ExecutiveMentoringPage() {
               personally.
             </p>
           </div>
-          <h2 className="text-4xl font-bold text-center text-blue-900 mb-12">
+          <h2 className="text-3xl xs:text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-12">
             What We Offer
           </h2>
-          <div className="grid md:grid-cols-2 gap-8 mb-20">
+          <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-20">
             {offers.map((item, index) => (
               <React.Fragment key={index}>
                 {/* Image Section with Motion */}
@@ -315,27 +289,28 @@ export default function ExecutiveMentoringPage() {
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
+                  className="h-[200px] xs:h-[250px] sm:h-[300px] md:h-[350px] relative rounded-md overflow-hidden"
                 >
                   <Image
                     src={item.image}
                     alt={item.title}
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover rounded-md"
+                    fill
+                    className="w-full h-full object-cover rounded-md"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </motion.div>
 
                 {/* Text Section with Motion */}
                 <motion.div
-                  className={`${item.bg} p-6 rounded-md flex flex-col justify-center`}
+                  className={`${item.bg} p-4 sm:p-6 rounded-md flex flex-col justify-center`}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.2 + 0.1 }}
                 >
-                  <h3 className="text-2xl font-semibold text-gray-800 border-b-2 border-gray-500 mb-4">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 border-b-2 border-gray-500 mb-3 sm:mb-4 pb-2">
                     {item.title}
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     {item.description}
                   </p>
                 </motion.div>
@@ -344,11 +319,11 @@ export default function ExecutiveMentoringPage() {
           </div>
 
           <div className="container mx-auto px-6">
-            <h2 className="text-4xl font-bold text-center text-[#0B4073] mb-16">
+            <h2 className="text-3xl xs:text-3xl sm:text-4xl font-bold text-center text-[#0B4073] mb-16">
               Who It's For
             </h2>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
               {offerings.map((offering, idx) => (
                 <motion.div
                   key={idx}
@@ -356,12 +331,12 @@ export default function ExecutiveMentoringPage() {
                   className="transition-all duration-300"
                 >
                   <div
-                    className={`bg-white p-8 rounded-xl shadow-sm hover:shadow-lg border border-[#D6E2EA] ${offering.bgColor}`}
+                    className={`bg-white p-5 sm:p-8 rounded-xl shadow-sm hover:shadow-lg border border-[#D6E2EA] ${offering.bgColor}`}
                   >
-                    <h3 className="text-2xl font-semibold text-[#0B4073] mb-4 border-b-2 border-[#D6E2EA] pb-2">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-[#0B4073] mb-3 sm:mb-4 border-b-2 border-[#D6E2EA] pb-2">
                       {offering.title}
                     </h3>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
                       {offering.description}
                     </p>
                   </div>
@@ -375,16 +350,13 @@ export default function ExecutiveMentoringPage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             {/* Heading */}
             <div className="mb-20 text-center">
-              <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
-                Boardroom Support
+              <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
+              Do any of these sound familiar?
               </h2>
-              <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-                Do any of these sound familiar?
-              </p>
             </div>
 
             {/* List of challenges */}
-            <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-2 ">
+            <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
               {[
                 "Are your board meetings 	dominated by a few voices, leaving others hesitant to speak up?",
                 "Do unconscious biases impact decision-making, leading to missed opportunities or unseen risks?",
@@ -396,19 +368,18 @@ export default function ExecutiveMentoringPage() {
               ].map((question, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start p-6 bg-white/90 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group "
+                  className="flex items-start p-4 sm:p-6 bg-white/90 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
-                  <div className="text-[#0B4073] mt-1 mr-4 shrink-0">
-                    <div className="flex items-center space-x-3">
+                  <div className="text-[#0B4073] mt-1 mr-3 sm:mr-4 shrink-0">
+                    <div className="flex items-center space-x-2 sm:space-x-3">
                       <img
-                        src="/favicon.ico" // Replace this with your image path
+                        src="/favicon.ico"
                         alt="icon"
-                        className="h-6 w-6 group-hover:scale-110 transition-transform"
+                        className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform"
                       />
-                      <span className="text-base font-medium group-hover:text-[#0B4073] transition-colors duration-200"></span>
                     </div>
                   </div>
-                  <p className="text-gray-800 text-lg leading-relaxed">
+                  <p className="text-gray-800 text-base sm:text-lg leading-relaxed">
                     {question}
                   </p>
                 </div>
@@ -429,10 +400,10 @@ export default function ExecutiveMentoringPage() {
 
               {/* Right: Text */}
               <div className="w-full md:w-1/2 text-white text-center md:text-left">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                <h2 className="text-2xl xs:text-3xl md:text-4xl font-bold mb-6">
                   How We Help?
                 </h2>
-                <p className="text-lg md:text-xl leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl leading-relaxed">
                   True leadership excellence isn't just about processes and
                   expertise — it's about people, behaviour, and decision-making
                   at the highest levels. Boards shape the direction of an
@@ -451,10 +422,10 @@ export default function ExecutiveMentoringPage() {
             </div>
           </div>
 
-          <h2 className="text-4xl font-bold text-center text-[#0B4073] mb-16">
+          <h2 className="text-3xl xs:text-3xl sm:text-4xl font-bold text-center text-[#0B4073] mb-16">
             Our Approach
           </h2>
-          <div className="space-y-16 px-10">
+          <div className="space-y-12 sm:space-y-16 px-4 sm:px-10">
             {approachSections.map((section, idx) => (
               <motion.div
                 key={idx}
@@ -464,19 +435,19 @@ export default function ExecutiveMentoringPage() {
                 <div
                   className={`flex flex-col ${
                     section.reversed ? "md:flex-row-reverse" : "md:flex-row"
-                  } gap-8 items-center`}
+                  } gap-6 sm:gap-8 items-center`}
                 >
                   <div className="flex-1">
-                    <div className="bg-white shadow-sm rounded-xl p-8 hover:shadow-lg transition-shadow duration-300 border border-[#D6E2EA]">
-                      <div className="flex items-center mb-4">
-                        <div className="mr-4 p-3 rounded-full bg-[#D6E2EA]">
+                    <div className="bg-white shadow-sm rounded-xl p-5 sm:p-8 hover:shadow-lg transition-shadow duration-300 border border-[#D6E2EA]">
+                      <div className="flex items-center mb-3 sm:mb-4">
+                        <div className="mr-3 sm:mr-4 p-2 sm:p-3 rounded-full bg-[#D6E2EA]">
                           {section.icon}
                         </div>
-                        <h3 className="text-2xl font-semibold text-[#0B4073]">
+                        <h3 className="text-xl sm:text-2xl font-semibold text-[#0B4073]">
                           {section.title}
                         </h3>
                       </div>
-                      <ul className="list-disc pl-6 text-gray-700 leading-relaxed space-y-2">
+                      <ul className="list-disc pl-4 sm:pl-6 text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed space-y-1 sm:space-y-2">
                         {Array.isArray(section.description) ? (
                           section.description.map((point, index) => (
                             <motion.li
@@ -500,14 +471,14 @@ export default function ExecutiveMentoringPage() {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <div className="relative rounded-xl overflow-hidden shadow-sm bg-gradient-to-br from-[#D6E2EA]/20 to-[#D6E2EA]/10 aspect-video flex items-center justify-center">
+                    <div className="relative rounded-xl overflow-hidden shadow-sm bg-gradient-to-br from-[#D6E2EA]/20 to-[#D6E2EA]/10 aspect-video h-[150px] xs:h-[200px] sm:h-[250px] md:h-[300px] w-full">
                       <Image
-                        src={section.img} // The path from your data
+                        src={section.img}
                         alt={section.title}
-                        fill // Makes the image fill the parent div
-                        className="object-cover" // Controls how the image scales
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Optional: Helps optimize image loading based on viewport size
-                        priority={idx < 2} // Optional: Prioritize loading the first couple of images
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={idx < 2}
                       />
                     </div>
                   </div>
@@ -517,50 +488,56 @@ export default function ExecutiveMentoringPage() {
           </div>
         </div>
       )}
-    <section className="relative py-20 md:py-24 px-10 mt-20 min-h-[500px]">
+
+
+
+<section className="relative py-20 md:py-24 px-4 xs:px-6 sm:px-10 mt-20 min-h-[500px]">
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="/images/backgrounds/consultation-bg.jpg" 
-            alt="Consultation Background" 
-            fill 
-            className="object-cover brightness-[0.3]" 
+          <Image
+            src="/images/backgrounds/consultation-bg.jpg"
+            alt="Consultation Background"
+            fill
+            className="object-cover brightness-[0.3]"
             priority
           />
         </div>
-        
-        <div className="flex flex-col md:flex-row items-center container-custom mx-auto relative z-10 px-4 md:px-0 mt-20 ">
-          {/* Left Side (Text) */}
-          <div className="w-full md:flex-1 text-center md:text-left mb-12 md:mb-0">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+
+        <div className="flex flex-col md:flex-row items-center container-custom mx-auto relative z-10 px-4 md:px-0 min-h-[300px]">
+          {/* Text */}
+          <div className="w-full text-center mb-12">
+            <h2 className="text-2xl xs:text-3xl md:text-5xl font-bold text-white mb-4">
               Book a Free Consultation
             </h2>
-            <p className="text-lg text-white opacity-80 max-w-2xl mx-auto md:mx-0">
+            <p className="text-base sm:text-lg text-white opacity-80 max-w-2xl mx-auto">
               Select one of our services to book your free consultation with us.
             </p>
           </div>
-          
-          {/* Right Side (Consultation Options) */}
-          <div className="w-full md:w-auto flex flex-col space-y-4 md:space-y-6 md:ml-10">
-            {[
-           
-              { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
-            ].map(({ type, title }) => (
-              <Link 
-                key={type} 
-                href={`/book/${type}`} 
-                className="group w-full"
-              >
-                <div className="bg-[#0B4073]/90 backdrop-blur-sm hover:bg-[#0B4073] text-white rounded-full py-3 md:py-5 px-5 md:px-8 flex items-center justify-between transition-all duration-300 w-full">
-                  <span className="font-medium text-base md:text-lg">{title}</span>
-                  <div className="bg-[#D6E2EA] rounded-full p-2 md:p-3 ml-2 md:ml-4 flex-shrink-0 text-[#0B4073] group-hover:bg-[#D6E2EA]/90 transition-all">
-                    <FiArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-                  </div>
+
+          {/* Consultation Options */}
+          <div className="w-full flex flex-col items-center space-y-3 sm:space-y-4 md:space-y-6">
+            <Link href="/book/executive" className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+              <div className="bg-[#0B4073] text-white rounded-full py-3 sm:py-4 px-5 sm:px-8 flex items-center justify-between transition-all duration-300 hover:bg-[#0B4073]/90 group">
+                <span className="font-medium text-base sm:text-lg">Executive Mentoring</span>
+                <div className="bg-white rounded-full p-2 sm:p-3 text-[#0B4073]">
+                  <FiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-              </Link>
-            ))}
+              </div>
+            </Link>
+
+            <Link href="/book/boardroom" className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+              <div className="bg-[#0B4073] text-white rounded-full py-3 sm:py-4 px-5 sm:px-8 flex items-center justify-between transition-all duration-300 hover:bg-[#0B4073]/90 group">
+                <span className="font-medium text-base sm:text-lg">Boardroom Support</span>
+                <div className="bg-white rounded-full p-2 sm:p-3 text-[#0B4073]">
+                  <FiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+              </div>
+            </Link>
+
+           
           </div>
         </div>
       </section>
+  
     </div>
   );
 }

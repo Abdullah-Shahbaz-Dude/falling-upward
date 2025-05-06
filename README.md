@@ -4,6 +4,15 @@ Falling Upward is a comprehensive physiotherapy consultation website built with 
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Architecture Change
+
+**Important Notice**: This project has been restructured to separate the frontend and backend:
+
+- **Frontend**: Next.js application (this repository)
+- **Backend**: Node.js/Express application (separate repository)
+
+The backend code that was previously part of this Next.js application has been moved to a separate Node.js backend. See the `/backup` directory for the extracted backend code and instructions for setting up the separate backend service.
+
 ## Getting Started
 
 First, run the development server:
@@ -24,41 +33,35 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
 ## Features
 
-- **User Authentication**: Secure login and registration system with role-based access control
-- **Appointment Booking**: Online booking system for physiotherapy consultations
-- **Admin Dashboard**: Comprehensive dashboard for managing appointments, users, and workbooks
-- **Workbook Management**: System for assigning and tracking patient workbooks and exercises
+- **Marketing Website**: Information about the services offered
+- **Booking Forms**: Online booking system for consultations with different specialists
 - **Responsive Design**: Mobile-friendly interface built with Tailwind CSS
-- **MongoDB Integration**: Data storage and retrieval using MongoDB and Mongoose
+- **Static Pages**: About, services, team information, and more
 
 ## Project Structure
 
-- `/app` - Next.js app router pages and API routes
+- `/app` - Next.js app router pages
 - `/components` - Reusable UI components
-- `/lib` - Utility functions and configuration
-- `/models` - MongoDB schema definitions
 - `/public` - Static assets
-- `/types` - TypeScript type definitions
+- `/backup` - Backend code that has been moved out to a separate Node.js backend (for reference)
+
+## Setting Up the Backend
+
+See the README in the `/backup` directory for instructions on setting up the separate Node.js backend which will handle:
+
+- User authentication
+- Workbook management (40 workbooks)
+- Database operations
+- Admin dashboard functionality
 
 ## Environment Variables
 
 Create a `.env.local` file in the root directory with the following variables:
 
 ```
-MONGODB_URI=your_mongodb_connection_string
-NEXTAUTH_SECRET=your_nextauth_secret
-NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BACKEND_URL=http://localhost:5000 # URL to your Node.js backend
 ```
 
 ## Deploy on Vercel
@@ -66,4 +69,3 @@ NEXTAUTH_URL=http://localhost:3000
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# falling-upward

@@ -1,37 +1,45 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import { FiUser, FiMail, FiPhone, FiCalendar, FiClock, FiMessageSquare, FiCheck, FiArrowLeft, FiBriefcase, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
 import { HeroSection } from '@/components/HeroSection';
+import { FiArrowLeft, FiBriefcase, FiCalendar, FiCheck, FiGlobe, FiMail, FiMessageSquare, FiPhone, FiUser} from 'react-icons/fi';
 
 const bookingSchema = z.object({
+  // Agreement
+  dataProtectionAgreement: z.boolean().refine((val) => val === true, {
+    message: "You must agree to our data protection policy",
+  }),
+  
+  // Personal Details
   name: z.string().min(2, 'Name must be at least 2 characters'),
+  organisation: z.string().optional(),
+  jobTitle: z.string().optional(),
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
-  date: z.date({
-    required_error: 'Please select a date',
-    invalid_type_error: 'Please select a valid date',
-  }).refine((date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date >= today;
-  }, {
-    message: 'Appointment date must be today or in the future',
-  }),
-  time: z.string().min(1, 'Please select a time'),
-  message: z.string().optional(),
-  service_type: z.enum(['individual_coaching', 'org_consulting', 'workshop', 'not_sure']).optional(),
-  companyName: z.string().optional(),
-  companySize: z.enum(['1-10', '11-50', '51-200', '201-500', '500+']).optional(),
-  position: z.string().optional(),
-  has_neurodiversity: z.boolean().optional(),
+  website: z.string().optional(),
+  
+  // Organisation Overview
+  organisationSize: z.enum(['micro', 'small', 'medium', 'large_sme', 'enterprise']).optional(),
+  sector: z.string().optional(),
+  otherSector: z.string().optional(),
+  
+  // Neurodiversity Context
+  interestReason: z.string().optional(),
+  approachToNeurodiversity: z.enum(['exploring', 'awareness', 'supporting', 'strategic', 'undefined']).optional(),
+  areasOfInterest: z.array(z.string()).optional(),
+  otherAreaOfInterest: z.string().optional(),
+  opportunities: z.string().optional(),
+  
+  // Challenges
+  challenges: z.array(z.string()).optional(),
+  otherChallenge: z.string().optional(),
+  
+  // Outcomes
+  successOutcome: z.string().optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -40,9 +48,11 @@ function BookPageContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [isOrganization, setIsOrganization] = useState(false);
-  const { data: session } = useSession();
+  const [otherSectorSelected, setOtherSectorSelected] = useState(false);
+  const [otherAreaSelected, setOtherAreaSelected] = useState(false);
+  const [otherChallengeSelected, setOtherChallengeSelected] = useState(false);
+  const [otherNeuroSelected, setOtherNeuroSelected] = useState(false);
+  const [otherBarrierSelected, setOtherBarrierSelected] = useState(false);
   
   const {
     register,
@@ -53,35 +63,95 @@ function BookPageContent() {
     watch,
   } = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      areasOfInterest: [],
+      challenges: [],
+      dataProtectionAgreement: false,
+    }
   });
 
-  // Watch the service type field
-  const serviceType = watch('service_type');
+  // Watch various fields
+  const sector = watch('sector');
+  const areasOfInterest = watch('areasOfInterest') || [];
+  const challenges = watch('challenges') || [];
   
-  // Update state when service type changes
+  // Update state when watched fields change
   useEffect(() => {
-    setIsOrganization(serviceType === 'org_consulting' || serviceType === 'workshop');
-  }, [serviceType]);
+    setOtherSectorSelected(sector === 'Other');
+    setOtherAreaSelected(areasOfInterest.includes('Other'));
+    setOtherChallengeSelected(challenges.includes('Other'));
+    setOtherNeuroSelected(areasOfInterest.includes('Neurodiversity'));
+    setOtherBarrierSelected(challenges.includes('Neurodiversity'));
+  }, [sector, areasOfInterest, challenges]);
 
-  const timeSlots = [
-    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
+  // Update page title based on selected service
+  useEffect(() => {
+    let title = "Neurodiversity for Strategic Advantage";
+    let subtitle = "Leverage neurodiversity to drive innovation and competitive advantage";
+    
+    // If we wanted to dynamically update the document title
+    document.title = title;
+    
+    // We'll use these in our return statement
+    return () => {
+      // Cleanup if needed
+    };
+  }, []);
+
+  
+  const organisationSizeOptions = [
+    { value: 'micro', label: 'Micro (1–9 employees)' },
+    { value: 'small', label: 'Small (10–49 employees)' },
+    { value: 'medium', label: 'Medium SME (50–249 employees)' },
+    { value: 'large_sme', label: 'Large SME (250–499 employees)' },
+    { value: 'enterprise', label: 'Large Organisation / Enterprise (500+ employees)' },
   ];
-
-  const serviceTypes = [
-    { value: 'individual_coaching', label: 'Individual ADHD Coaching' },
-    { value: 'org_consulting', label: 'Organizational Neurodiversity Consulting' },
-    { value: 'workshop', label: 'Neurodiversity Workshop/Training' },
-    { value: 'not_sure', label: 'Not Sure Yet' },
+  
+  const sectorOptions = [
+    'Digital / Technology',
+    'Construction',
+    'Recruitment / HR',
+    'Healthcare (NHS or Private)',
+    'Education / Training',
+    'Local Government / Public Sector',
+    'Logistics / Transport',
+    'Manufacturing / Engineering',
+    'Charity / Voluntary Sector',
+    'Finance / Professional Services',
+    'Creative Industries / Media',
+    'Other'
   ];
-
-  // Set the date in the form when the date picker changes
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    if (date) {
-      setValue('date', date, { shouldValidate: true });
-    }
-  };
+  
+  const approachOptions = [
+    { value: 'exploring', label: "We're exploring the concept for the first time" },
+    { value: 'awareness', label: "We've done some awareness work but want to go deeper" },
+    { value: 'supporting', label: "We are actively supporting neurodivergent employees" },
+    { value: 'strategic', label: "We want to move beyond inclusion into strategic application" },
+    { value: 'undefined', label: "Not sure / No defined approach yet" },
+  ];
+  
+  const areasOfInterestOptions = [
+    'Leadership awareness of neurodivergent strengths',
+    'Embedding cognitive diversity into innovation strategy',
+    'Creating psychologically safe environments for original thinking',
+    'Using neurodiversity to disrupt "groupthink" and unlock new ideas',
+    'Inclusive team design & culture building',
+    'Identifying barriers to creativity in current processes',
+    'Supporting and retaining neurodivergent talent',
+    'Recruitment and onboarding practices',
+    'Workshops or keynote delivery',
+    'Other'
+  ];
+  
+  const challengeOptions = [
+    'Lack of understanding across leadership',
+    'Concerns about making adjustments',
+    'Recruitment or progression barriers',
+    'Culture of conformity / risk aversion',
+    'Limited psychological safety or openness',
+    'Difficulty identifying neurodivergent talent',
+    'Other'
+  ];
 
   // Handle form submission
   const onSubmit = async (data: BookingFormValues) => {
@@ -89,19 +159,43 @@ function BookPageContent() {
     setError('');
     
     try {
-      // Here you would typically send the data to your API
-      console.log('Form data submitted:', data);
+      // Add form type identifier based on the selected service
+      let formType = 'neurodiversity-strategic-consultation';
+      let consultationTypeLabel = 'Neurodiversity for Strategic Advantage Consultation';
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Add form type identifier
+      const formData = {
+        ...data,
+        formType,
+        consultationTypeLabel,
+        serviceType: 'neurodiversity-strategic' // Default if none selected
+      };
       
-      // Show success message
-      setSuccess('Your Neurodiversity consultation has been booked successfully!');
+      console.log('Form data submitted:', formData);
+      
+      // Send data to API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit form');
+      }
+      
+      // Show success message based on service type
+      const successMessage = 'Your Neurodiversity for Strategic Advantage consultation has been booked successfully!';
+        
+      setSuccess(successMessage);
       reset();
-      setSelectedDate(null);
     } catch (err) {
-      setError('There was an error booking your consultation. Please try again.');
       console.error('Booking error:', err);
+      setError('There was an error booking your consultation. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -153,27 +247,29 @@ function BookPageContent() {
   }, []);
 
   return (
-    <div className="min-h-screen  pb-16">
+    <div className="min-h-screen pb-16">
          
       <HeroSection
-        title="Neurodiversity for innovation and growth"
-        subtitle="Unlock your potential with psychology-informed ADHD coaching"
+        title="Neurodiversity for Strategic Advantage"
+        subtitle="Leverage neurodiversity to drive innovation and competitive advantage"
         backgroundImage="/images/services/IMG_7552.jpg"
         textPosition="left"
       />
 
       <div className="container-custom mx-auto">
-        <div className="mb-16 mt-16">
+        <div className="mb-16 mt-16 p-10">
           <Link href="/our-services/neurodiversity" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
             <FiArrowLeft className="mr-2" />
-            Back to Neurodiversity for innovation and growth
+            Back to Neurodiversity Services
           </Link>
         </div>
         
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#0B4073] p-6 text-white">
-            <h1 className="text-3xl font-bold">Book a Neurodiversity Consultation</h1>
-            <p className="mt-2 opacity-90">Schedule your free consultation session</p>
+            <h1 className="text-3xl font-bold">
+              Neurodiversity for Strategic Advantage Consultation Form
+            </h1>
+            <p className="mt-2 opacity-90">Schedule your consultation session</p>
           </div>
 
           <div className="p-6 md:p-8">
@@ -197,242 +293,403 @@ function BookPageContent() {
             )}
 
             {!success && (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div>
-                  <label htmlFor="service_type" className="block mb-2 text-sm font-medium text-gray-700">
-                    What are you interested in?*
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FiUsers size={18} className="text-gray-400" />
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                {/* Agreement Section */}
+                <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
+                  <p className="mb-2 text-sm font-medium text-gray-700">
+                    Please tick the box below to confirm you are happy to adhere to our data protection policy.
+                  </p>
+                  <div className="flex items-start mb-2">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="dataProtectionAgreement"
+                        type="checkbox"
+                        {...register("dataProtectionAgreement")}
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                      />
                     </div>
-                    <select
-                      id="service_type"
-                      {...register('service_type')}
-                      className="input-field pl-10"
-                      disabled={isLoading}
+                    <label
+                      htmlFor="dataProtectionAgreement"
+                      className="ml-2 text-sm font-medium text-gray-700"
                     >
-                      <option value="">Select an option</option>
-                      {serviceTypes.map((type) => (
-                        <option key={type.value} value={type.value}>{type.label}</option>
-                      ))}
-                    </select>
+                      I agree
+                    </label>
+                  </div>
+                  <div className="text-sm text-blue-600 hover:underline">
+                    <Link href="/privacy-policy">
+                      Click here to view policy
+                    </Link>
+                  </div>
+                  {errors.dataProtectionAgreement && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.dataProtectionAgreement.message}
+                    </p>
+                  )}
+                </div>
+                
+                {/* Personal Details Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Personal Details
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
+                        Full name (First &amp; Last)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="name"
+                          type="text"
+                          {...register('name')}
+                          className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
+                          placeholder="John Doe"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label htmlFor="organisation" className="block mb-2 text-sm font-medium text-gray-700">
+                        Organisation Name
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiBriefcase size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="organisation"
+                          type="text"
+                          {...register('organisation')}
+                          className="input-field pl-10"
+                          placeholder="Company Ltd"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="jobTitle" className="block mb-2 text-sm font-medium text-gray-700">
+                        Job Title / Role
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiUser size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="jobTitle"
+                          type="text"
+                          {...register('jobTitle')}
+                          className="input-field pl-10"
+                          placeholder="HR Manager"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
+                        Email address
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiMail size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="email"
+                          type="email"
+                          {...register('email')}
+                          className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
+                          placeholder="your@email.com"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      {errors.email && (
+                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
+                        Contact number
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiPhone size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="phone"
+                          type="tel"
+                          {...register('phone')}
+                          className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
+                          placeholder="+44 7123 456789"
+                          disabled={isLoading}
+                        />
+                      </div>
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label htmlFor="website" className="block mb-2 text-sm font-medium text-gray-700">
+                        Organisation website (if applicable)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <FiGlobe size={18} className="text-gray-400" />
+                        </div>
+                        <input
+                          id="website"
+                          type="text"
+                          {...register('website')}
+                          className="input-field pl-10"
+                          placeholder="www.example.com"
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
-                      Full Name*
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiUser size={18} className="text-gray-400" />
-                      </div>
-                      <input
-                        id="name"
-                        type="text"
-                        {...register('name')}
-                        className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
-                        placeholder="John Doe"
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
-                      Email Address*
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiMail size={18} className="text-gray-400" />
-                      </div>
-                      <input
-                        id="email"
-                        type="email"
-                        {...register('email')}
-                        className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
-                        placeholder="your@email.com"
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
-                      Phone Number*
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiPhone size={18} className="text-gray-400" />
-                      </div>
-                      <input
-                        id="phone"
-                        type="tel"
-                        {...register('phone')}
-                        className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
-                        placeholder="+1 (555) 123-4567"
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="position" className="block mb-2 text-sm font-medium text-gray-700">
-                      Position/Role
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiBriefcase size={18} className="text-gray-400" />
-                      </div>
-                      <input
-                        id="position"
-                        type="text"
-                        {...register('position')}
-                        className="input-field pl-10"
-                        placeholder="Your position or role"
-                        disabled={isLoading}
-                      />
-                    </div>
-                  </div>
-
-                  {isOrganization && (
-                    <>
-                      <div>
-                        <label htmlFor="companyName" className="block mb-2 text-sm font-medium text-gray-700">
-                          Company/Organization Name
-                        </label>
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <FiBriefcase size={18} className="text-gray-400" />
+                
+                {/* Organisation Overview Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Organisation Overview
+                  </h3>
+                  <div className="space-y-6">
+                    <div>
+                      <p className="block mb-3 text-sm font-medium text-gray-700">
+                        1. What size is your organisation?
+                      </p>
+                      <div className="space-y-2">
+                        {organisationSizeOptions.map((option) => (
+                          <div key={option.value} className="flex items-center">
+                            <input
+                              id={`size-${option.value}`}
+                              type="radio"
+                              value={option.value}
+                              {...register('organisationSize')}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                              disabled={isLoading}
+                            />
+                            <label
+                              htmlFor={`size-${option.value}`}
+                              className="ml-2 text-sm font-medium text-gray-700"
+                            >
+                              {option.label}
+                            </label>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <p className="block mb-3 text-sm font-medium text-gray-700">
+                        2. What sector best describes your organisation's work?
+                      </p>
+                      <div className="grid md:grid-cols-2 gap-2">
+                        {sectorOptions.map((sector) => (
+                          <div key={sector} className="flex items-center">
+                            <input
+                              id={`sector-${sector}`}
+                              type="radio"
+                              value={sector}
+                              {...register('sector')}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                              disabled={isLoading}
+                            />
+                            <label htmlFor={`sector-${sector}`} className="ml-2 block text-sm text-gray-700">
+                              {sector}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {otherSectorSelected && (
+                        <div className="mt-3">
                           <input
-                            id="companyName"
                             type="text"
-                            {...register('companyName')}
-                            className="input-field pl-10"
-                            placeholder="Your organization name"
+                            {...register('otherSector')}
+                            className="input-field"
+                            placeholder="Please specify other sector"
                             disabled={isLoading}
                           />
                         </div>
-                      </div>
-
-                      <div>
-                        <label htmlFor="companySize" className="block mb-2 text-sm font-medium text-gray-700">
-                          Organization Size
-                        </label>
-                        <select
-                          id="companySize"
-                          {...register('companySize')}
-                          className="input-field pl-3"
-                          disabled={isLoading}
-                        >
-                          <option value="">Select organization size</option>
-                          <option value="1-10">1-10 employees</option>
-                          <option value="11-50">11-50 employees</option>
-                          <option value="51-200">51-200 employees</option>
-                          <option value="201-500">201-500 employees</option>
-                          <option value="500+">500+ employees</option>
-                        </select>
-                      </div>
-                    </>
-                  )}
-
-                  <div>
-                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-700">
-                      Preferred Date*
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiCalendar size={18} className="text-gray-400" />
-                      </div>
-                      <DatePicker
-                        id="date"
-                        selected={selectedDate}
-                        onChange={handleDateChange}
-                        minDate={new Date()}
-                        className={`input-field pl-10 ${errors.date ? 'border-red-500' : ''}`}
-                        placeholderText="Select a date"
-                        disabled={isLoading}
-                      />
+                      )}
                     </div>
-                    {errors.date && (
-                      <p className="mt-1 text-sm text-red-600">{errors.date.message as string}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="time" className="block mb-2 text-sm font-medium text-gray-700">
-                      Preferred Time*
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiClock size={18} className="text-gray-400" />
-                      </div>
-                      <select
-                        id="time"
-                        {...register('time')}
-                        className={`input-field pl-10 ${errors.time ? 'border-red-500' : ''}`}
-                        disabled={isLoading}
-                      >
-                        <option value="">Select a time</option>
-                        {timeSlots.map((time) => (
-                          <option key={time} value={time}>{time}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {errors.time && (
-                      <p className="mt-1 text-sm text-red-600">{errors.time.message}</p>
-                    )}
                   </div>
                 </div>
-
-                <div className="flex items-center py-2">
-                  <input
-                    id="has_neurodiversity"
-                    type="checkbox"
-                    {...register('has_neurodiversity')}
-                    className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
-                    disabled={isLoading}
-                  />
-                  <label htmlFor="has_neurodiversity" className="ml-2 block text-sm text-gray-700">
-                    I have a neurodivergent condition (ADHD, Autism, Dyslexia, etc.) or suspect I might
-                  </label>
-                </div>
-
+                
+                {/* Neurodiversity & Strategic Innovation Context */}
                 <div>
-                  <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-700">
-                    What would you like to achieve from this consultation?
-                  </label>
-                  <div className="relative">
-                    <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                      <FiMessageSquare size={18} className="text-gray-400" />
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
+                    Neurodiversity & Strategic Innovation Context
+                  </h3>
+                  <div className="space-y-6">
+                    <div>
+                      <label htmlFor="interestReason" className="block mb-2 text-sm font-medium text-gray-700">
+                        3. What prompted your interest in exploring neurodiversity as part of your innovation or business strategy?
+                      </label>
+                      <div className="relative">
+                        <div className="absolute top-3 left-3 flex items-start pointer-events-none">
+                          <FiMessageSquare size={18} className="text-gray-400" />
+                        </div>
+                        <textarea
+                          id="interestReason"
+                          {...register('interestReason')}
+                          rows={4}
+                          className="input-field pl-10"
+                          placeholder="Please share what brought you to explore neurodiversity..."
+                          disabled={isLoading}
+                        ></textarea>
+                      </div>
                     </div>
-                    <textarea
-                      id="message"
-                      {...register('message')}
-                      rows={4}
-                      className="input-field pl-10"
-                      placeholder={isOrganization 
-                        ? "Tell us about your organization's needs or challenges related to neurodiversity..." 
-                        : "Tell us about your personal goals or challenges..."}
-                      disabled={isLoading}
-                    ></textarea>
+                    
+                    <div>
+                      <p className="block mb-3 text-sm font-medium text-gray-700">
+                        4. How would you currently describe your organisation's approach to neurodiversity?
+                      </p>
+                      <div className="space-y-2">
+                        {approachOptions.map((option) => (
+                          <div key={option.value} className="flex items-center">
+                            <input
+                              id={`approach-${option.value}`}
+                              type="radio"
+                              value={option.value}
+                              {...register('approachToNeurodiversity')}
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                              disabled={isLoading}
+                            />
+                            <label
+                              htmlFor={`approach-${option.value}`}
+                              className="ml-2 text-sm font-medium text-gray-700"
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <p className="block mb-3 text-sm font-medium text-gray-700">
+                        5. Which areas are you most interested in exploring?
+                      </p>
+                      <div className="grid md:grid-cols-2 gap-2">
+                        {areasOfInterestOptions.map((area) => (
+                          <div key={area} className="flex items-center">
+                            <input
+                              id={`area-${area}`}
+                              type="checkbox"
+                              value={area}
+                              {...register('areasOfInterest')}
+                              className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
+                              disabled={isLoading}
+                            />
+                            <label htmlFor={`area-${area}`} className="ml-2 block text-sm text-gray-700">
+                              {area}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {otherAreaSelected && (
+                        <div className="mt-3">
+                          <input
+                            type="text"
+                            {...register('otherAreaOfInterest')}
+                            className="input-field"
+                            placeholder="Please describe other areas of interest"
+                            disabled={isLoading}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="opportunities" className="block mb-2 text-sm font-medium text-gray-700">
+                        6. Where in your organisation do you see the greatest opportunity for neurodiverse thinking to drive innovation or transformation?
+                      </label>
+                      <div className="relative">
+                        <div className="absolute top-3 left-3 flex items-start pointer-events-none">
+                          <FiMessageSquare size={18} className="text-gray-400" />
+                        </div>
+                        <textarea
+                          id="opportunities"
+                          {...register('opportunities')}
+                          rows={3}
+                          className="input-field pl-10"
+                          placeholder="Please describe where you see opportunities..."
+                          disabled={isLoading}
+                        ></textarea>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <p className="block mb-3 text-sm font-medium text-gray-700">
+                        7. What challenges (if any) are limiting your ability to harness neurodiverse thinking?
+                      </p>
+                      <div className="grid md:grid-cols-2 gap-2">
+                        {challengeOptions.map((challenge) => (
+                          <div key={challenge} className="flex items-center">
+                            <input
+                              id={`challenge-${challenge}`}
+                              type="checkbox"
+                              value={challenge}
+                              {...register('challenges')}
+                              className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
+                              disabled={isLoading}
+                            />
+                            <label htmlFor={`challenge-${challenge}`} className="ml-2 block text-sm text-gray-700">
+                              {challenge}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {otherChallengeSelected && (
+                        <div className="mt-3">
+                          <input
+                            type="text"
+                            {...register('otherChallenge')}
+                            className="input-field"
+                            placeholder="Please specify other challenges"
+                            disabled={isLoading}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="successOutcome" className="block mb-2 text-sm font-medium text-gray-700">
+                        8. What would a successful outcome look like for your team or organisation?
+                      </label>
+                      <div className="relative">
+                        <div className="absolute top-3 left-3 flex items-start pointer-events-none">
+                          <FiMessageSquare size={18} className="text-gray-400" />
+                        </div>
+                        <textarea
+                          id="successOutcome"
+                          {...register('successOutcome')}
+                          rows={3}
+                          className="input-field pl-10"
+                          placeholder="e.g., More original thinking, stronger innovation culture, inclusive team performance, etc."
+                          disabled={isLoading}
+                        ></textarea>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md">
-                  <p>Your information is protected under our <Link href="/privacy-policy" className="text-[#0B4073] hover:underline">Privacy Policy</Link> and <Link href="/terms-of-service" className="text-[#0B4073] hover:underline">Terms of Service</Link>.</p>
+                  <p>Your privacy is important to us. All information shared is confidential and protected under our <Link href="/privacy-policy" className="text-[#0B4073] hover:underline">Privacy Policy</Link>.</p>
                 </div>
 
                 <div className="flex justify-end">
@@ -441,7 +698,7 @@ function BookPageContent() {
                     disabled={isLoading}
                     className="btn-primary"
                   >
-                    {isLoading ? 'Booking...' : 'Book Consultation'}
+                    {isLoading ? 'Submitting...' : 'Submit Form'}
                   </button>
                 </div>
               </form>
@@ -453,12 +710,4 @@ function BookPageContent() {
   );
 }
 
-export default function NeurodiversityBookPage() {
-  return (
-    <div className="font-roboto bg-gray-50">
-      <Suspense fallback={<div>Loading...</div>}>
-        <BookPageContent />
-      </Suspense>
-    </div>
-  );
-} 
+export default BookPageContent;
