@@ -3,8 +3,9 @@ import { Resend } from 'resend';
 import { render } from '@react-email/render';
 import BookingConfirmation from '@/emails/BookingConfirmation';
 
-// Initialize Resend with API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend with API key, with fallback for development
+const resendApiKey = process.env.RESEND_API_KEY || 'dummy_key_for_development';
+const resend = new Resend(resendApiKey);
 
 // Define a type for booking form data
 type BookingFormData = {
@@ -107,7 +108,7 @@ export async function POST(req: Request) {
       // Send email via Resend
       console.log(`Sending email to: ${recipientEmail}`);
       const { data, error } = await resend.emails.send({
-        from: 'Falling Upward <onboarding@resend.dev>',
+        from: 'Falling Upward <onboarding@resend.dev>', // Using Resend's default domain
         to: [recipientEmail],
         subject: `New Booking Request: ${consultationTypeLabel}`,
         html: emailHtml,
