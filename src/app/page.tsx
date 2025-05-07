@@ -551,7 +551,10 @@ export default function Home() {
       {/* Why Choose Falling Upwards Section - Clean, Polished, and Consistent */}
       <section className="section bg-white relative overflow-hidden py-20">
         <div className="container-custom mx-auto relative z-10 px-2 sm:px-4 md:px-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#0B4073] mb-10 sm:mb-14 leading-tight break-words" style={{ wordBreak: 'break-word' }}>
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#0B4073] mb-10 sm:mb-14 leading-tight break-words"
+            style={{ wordBreak: "break-word" }}
+          >
             Why Choose Falling Upwards
           </h2>
 
@@ -560,7 +563,7 @@ export default function Home() {
             <div className="flex justify-center items-center mb-6 md:mb-0">
               <div className="rounded-3xl overflow-hidden w-full max-w-[320px] sm:max-w-[400px] h-[180px] sm:h-[250px] md:w-[500px] md:h-[500px] shadow-xl border border-gray-200 transition-shadow duration-500 hover:shadow-2xl">
                 <Image
-                  src="/images/HomePage/aerial-beach.jpg"
+                  src="/images/HomePage/aerial-beach.webp"
                   alt="Aerial view of a beach"
                   width={500}
                   height={500}
@@ -639,7 +642,8 @@ export default function Home() {
               font-size: 1.5rem !important;
               margin-bottom: 1.5rem !important;
             }
-            .section .text-base, .section .text-sm {
+            .section .text-base,
+            .section .text-sm {
               font-size: 0.95rem !important;
             }
             .section .leading-relaxed {
@@ -648,7 +652,8 @@ export default function Home() {
             .section .rounded-3xl {
               border-radius: 1rem !important;
             }
-            .section .p-4, .section .p-6 {
+            .section .p-4,
+            .section .p-6 {
               padding: 0.75rem !important;
             }
           }
