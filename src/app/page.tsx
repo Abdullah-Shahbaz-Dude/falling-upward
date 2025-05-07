@@ -334,10 +334,10 @@ export default function Home() {
 
   // Demo background images - replace these with your actual images
   const backgroundImages = [
-    "/images/HomePage/IMG_7551.jpg",
-    "/images/HomePage/IMG_7552.jpg",
-    "/images/HomePage/IMG_7553.jpg",
-    "/images/HomePage/IMG_7554.jpg",
+    "/images/HomePage/IMG_7551.webp",
+    "/images/HomePage/IMG_7552.webp",
+    "/images/HomePage/IMG_7553.webp",
+    "/images/HomePage/IMG_7554.webp",
   ];
 
   // Create refs for all images
@@ -487,7 +487,7 @@ export default function Home() {
               {" "}
               {/* Adjust height as needed */}
               <Image
-                src="/images/HomePage/dji_0355.jpg"
+                src="/images/HomePage/dji_0355.webp"
                 alt="Falling Upwards"
                 width={1920} // Larger width for full-width display
                 height={200} // Matches the container height
@@ -501,9 +501,11 @@ export default function Home() {
             <div className="group bg-white p-10 md:p-12 rounded-3xl shadow-md border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-[#0B4073] text-white p-4 rounded-full text-2xl group-hover:scale-110 transition-transform duration-300">
-                  <img
+                  <Image
                     src="/favicon.ico"
                     alt="icon"
+                    width={24}
+                    height={24}
                     className="h-6 w-6 group-hover:scale-110 transition-transform"
                   />
                 </div>
@@ -523,9 +525,11 @@ export default function Home() {
             <div className="group bg-white p-10 md:p-12 rounded-3xl shadow-md border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-[#0B4073] text-white p-4 rounded-full text-2xl group-hover:scale-110 transition-transform duration-300">
-                  <img
+                  <Image
                     src="/favicon.ico"
                     alt="icon"
+                    width={24}
+                    height={24}
                     className="h-6 w-6 group-hover:scale-110 transition-transform"
                   />
                 </div>
@@ -546,32 +550,33 @@ export default function Home() {
 
       {/* Why Choose Falling Upwards Section - Clean, Polished, and Consistent */}
       <section className="section bg-white relative overflow-hidden py-20">
-        <div className="container-custom mx-auto relative z-10 px-4 md:px-6">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center text-[#0B4073] mb-14 leading-tight">
+        <div className="container-custom mx-auto relative z-10 px-2 sm:px-4 md:px-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#0B4073] mb-10 sm:mb-14 leading-tight break-words" style={{ wordBreak: 'break-word' }}>
             Why Choose Falling Upwards
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 sm:gap-x-12 gap-y-8 sm:gap-y-10 items-start">
             {/* Left side - Image */}
-            <div className="flex justify-center items-center">
-              <div className="rounded-3xl overflow-hidden w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] shadow-xl border border-gray-200 transition-shadow duration-500 hover:shadow-2xl">
+            <div className="flex justify-center items-center mb-6 md:mb-0">
+              <div className="rounded-3xl overflow-hidden w-full max-w-[320px] sm:max-w-[400px] h-[180px] sm:h-[250px] md:w-[500px] md:h-[500px] shadow-xl border border-gray-200 transition-shadow duration-500 hover:shadow-2xl">
                 <Image
                   src="/images/HomePage/aerial-beach.jpg"
                   alt="Aerial view of a beach"
                   width={500}
                   height={500}
                   className="w-full h-full object-cover rounded-3xl"
+                  priority={false}
                 />
               </div>
             </div>
 
             {/* Right side - Accordion */}
-            <div className="space-y-6">
+            <div className="w-full max-w-full space-y-4 sm:space-y-6">
               <AccordionItem
                 title="Psychology at the Core"
                 isOpen={false}
                 content={
-                  <div className="text-gray-700 text-base leading-relaxed space-y-2">
+                  <div className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-2">
                     <p>
                       We ground all our work in evidence-based psychological
                       principles, from therapy to team development, strategy to
@@ -585,7 +590,7 @@ export default function Home() {
               <AccordionItem
                 title="Compassionate and People Centred"
                 content={
-                  <div className="text-gray-700 text-base leading-relaxed space-y-2">
+                  <div className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-2">
                     <p>
                       We are unapologetically person-centred and compassionate.
                       We listen, build, challenge, and design. Whether working
@@ -599,7 +604,7 @@ export default function Home() {
               <AccordionItem
                 title="Celebrating Neurodiversity"
                 content={
-                  <div className="text-gray-700 text-base leading-relaxed space-y-2">
+                  <div className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-2">
                     <p>
                       We see neurodiversity as a strategic and creative
                       advantage, not something to be "managed," but understood,
@@ -614,7 +619,7 @@ export default function Home() {
               <AccordionItem
                 title="Human Centred AI & Data Principles"
                 content={
-                  <div className="text-gray-700 text-base leading-relaxed space-y-2">
+                  <div className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-2">
                     <p>
                       We develop AI and data efficiency from the ground up,
                       starting with people, not platforms. Using first
@@ -628,6 +633,26 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <style jsx global>{`
+          @media (max-width: 400px) {
+            .section h2 {
+              font-size: 1.5rem !important;
+              margin-bottom: 1.5rem !important;
+            }
+            .section .text-base, .section .text-sm {
+              font-size: 0.95rem !important;
+            }
+            .section .leading-relaxed {
+              line-height: 1.5 !important;
+            }
+            .section .rounded-3xl {
+              border-radius: 1rem !important;
+            }
+            .section .p-4, .section .p-6 {
+              padding: 0.75rem !important;
+            }
+          }
+        `}</style>
       </section>
       {/* What we offer? Section - Improved UI & UX */}
       <section className="section bg-white relative overflow-hidden py-20 px-10 border-t border-b border-[#D6E2EA]/30">
@@ -649,7 +674,7 @@ export default function Home() {
               >
                 <div className="w-full aspect-square relative overflow-hidden">
                   <Image
-                    src="/images/services/digital-evolution.jpg"
+                    src="/images/services/digital-evolution.webp"
                     alt="Digital evolution and AI adoption"
                     width={300}
                     height={300}
@@ -672,7 +697,7 @@ export default function Home() {
               >
                 <div className="w-full aspect-square relative overflow-hidden">
                   <Image
-                    src="/images/services/executive-mentoring.jpg"
+                    src="/images/services/executive-mentoring.webp"
                     alt="Executive Mentoring & Boardroom Support"
                     width={300}
                     height={300}
@@ -695,7 +720,7 @@ export default function Home() {
               >
                 <div className="w-full aspect-square relative overflow-hidden">
                   <Image
-                    src="/images/services/psychological-therapy.jpg"
+                    src="/images/services/psychological-therapy.webp"
                     alt="Psychological Therapy"
                     width={300}
                     height={300}
@@ -718,7 +743,7 @@ export default function Home() {
               >
                 <div className="w-full aspect-square relative overflow-hidden">
                   <Image
-                    src="/images/services/adhd-coaching.jpg"
+                    src="/images/services/adhd-coaching.webp"
                     alt="neurodiversity"
                     width={300}
                     height={300}
