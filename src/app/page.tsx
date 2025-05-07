@@ -433,8 +433,7 @@ export default function Home() {
             Falling Upwards
           </h1>
           <p className="text-white/95 text-xl md:text-2xl mt-4 tracking-wide">
-            Psychology Driven Therapy, Mentoring, Coaching and Business
-            Consultancy
+            Psychological Therapy, Mentoring, Coaching and Business Consultancy
           </p>
           <div className="mt-6 w-32 h-1 bg-white/50 rounded-full"></div>
         </div>
@@ -466,12 +465,12 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center px-4 mb-10">
             <div className="bg-white p-8 md:p-10 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition-all duration-500">
               <p className="text-lg sm:text-xl text-gray-800 leading-relaxed">
-                <span className="font-medium">Falling Upwards</span> exists to
+                <span >Falling Upwards</span> exists to
                 help individuals and organisations define a vision and direction
                 shaped by who they truly are and what they value. The only
                 certainty in life is that we move forwards. If we're lucky, we
                 have around{" "}
-                <span className="font-semibold">3 billion seconds</span> on this
+                <span>3 billion seconds</span> on this
                 earth to make that journey count.
               </p>
               <div className="w-24 h-1 bg-gradient-to-r from-[#0B4073] to-[#7094B7] mx-auto mt-6 rounded-full"></div>
@@ -697,12 +696,12 @@ export default function Home() {
             {/* Executive Mentoring & Boardroom Support */}
             <div className="flex flex-col items-center bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
               <Link
-                href="/our-services/executive-mentoring"
+                href="/our-services/psychological-therapy"
                 className="group w-full"
               >
                 <div className="w-full aspect-square relative overflow-hidden">
                   <Image
-                    src="/images/services/executive-mentoring.webp"
+                    src="/images/services/psychological-therapy.webp"
                     alt="Executive Mentoring & Boardroom Support"
                     width={300}
                     height={300}
@@ -720,13 +719,13 @@ export default function Home() {
             {/* Psychological Therapy */}
             <div className="flex flex-col items-center bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
               <Link
-                href="/our-services/psychological-therapy"
+                href="/our-services/executive-mentoring"
                 className="group w-full"
               >
                 <div className="w-full aspect-square relative overflow-hidden">
                   <Image
-                    src="/images/services/psychological-therapy.webp"
-                    alt="Psychological Therapy"
+                    src="/images/services/executive-mentoring.webp"
+                    alt="Executive Mentoring & Boardroom Support"
                     width={300}
                     height={300}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"

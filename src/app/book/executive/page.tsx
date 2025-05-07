@@ -110,7 +110,7 @@ function BookPageContent() {
       }
       
       // Show success message
-      setSuccess('Your Executive Mentoring consultation has been booked successfully!');
+      setSuccess('Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation');
       reset();
     } catch (err) {
       console.error('Booking error:', err);

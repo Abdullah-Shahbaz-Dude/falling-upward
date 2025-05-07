@@ -4,7 +4,17 @@ import { useState, useEffect, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FiArrowLeft, FiBriefcase, FiCalendar, FiCheck, FiGlobe, FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
+import {
+  FiArrowLeft,
+  FiBriefcase,
+  FiCalendar,
+  FiCheck,
+  FiGlobe,
+  FiMail,
+  FiMessageSquare,
+  FiPhone,
+  FiUser,
+} from "react-icons/fi";
 
 import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
@@ -22,7 +32,10 @@ const bookingSchema = z.object({
   company: z.string().optional(),
   website: z.string().optional(),
   projectType: z.string().optional(),
-  projectScope: z.string().min(1, "Please provide some details about your project").optional(),
+  projectScope: z
+    .string()
+    .min(1, "Please provide some details about your project")
+    .optional(),
   message: z.string().optional(),
 
   // Organisation Overview
@@ -148,19 +161,19 @@ function BookPageContent() {
         supportType: data.supportType ? data.supportType.join(", ") : "",
         barriers: data.barriers ? data.barriers.join(", ") : "",
         formType: "digital-evolution-ai-adoption",
-        consultationTypeLabel: "Digital Evolution & AI Adoption"
+        consultationTypeLabel: "Digital Evolution & AI Adoption",
       };
 
       console.log("Form data submitted:", formData);
-      
+
       // Send data to API
       let response;
       try {
-        response = await fetch('/api/send-email', {
-          method: 'POST',
+        response = await fetch("/api/send-email", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
           body: JSON.stringify(formData),
         });
@@ -174,29 +187,34 @@ function BookPageContent() {
         // Try to get the text content for debugging
         const textContent = await response.text();
         console.error("Received non-JSON response:", textContent);
-        throw new Error("Server returned non-JSON response. Please try again later.");
+        throw new Error(
+          "Server returned non-JSON response. Please try again later."
+        );
       }
-      
+
       let result;
       try {
         result = await response.json();
       } catch (jsonError) {
         throw new Error("Failed to parse server response. Please try again.");
       }
-      
+
       if (!response.ok) {
-        throw new Error(result.error || `Failed to submit form (Status ${response.status})`);
+        throw new Error(
+          result.error || `Failed to submit form (Status ${response.status})`
+        );
       }
 
       // Show success message
-      setSuccess(
-        "Your Digital Evolution & AI Adoption consultation has been booked successfully!"
-      );
+      const successMessage =
+        "Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation";
+      setSuccess(successMessage);
       reset();
     } catch (err: any) {
       console.error("Booking error:", err);
       setError(
-        err.message || "There was an error booking your consultation. Please try again."
+        err.message ||
+          "There was an error booking your consultation. Please try again."
       );
     } finally {
       setIsLoading(false);
@@ -292,9 +310,7 @@ function BookPageContent() {
                 <FiCheck className="mr-2 mt-1" />
                 <div>
                   <p className="font-medium">{success}</p>
-                  <p className="mt-1">
-                    We will contact you shortly to confirm your appointment.
-                  </p>
+
                   <Link
                     href="/"
                     className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium"
@@ -797,7 +813,10 @@ function BookPageContent() {
 
                 {/* Additional Message */}
                 <div className="mb-6">
-                  <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="message"
+                    className="block mb-2 text-sm font-medium text-gray-700"
+                  >
                     Additional Message (Optional)
                   </label>
                   <div className="relative">
@@ -806,7 +825,7 @@ function BookPageContent() {
                     </div>
                     <textarea
                       id="message"
-                      {...register('message')}
+                      {...register("message")}
                       rows={4}
                       className="input-field pl-10"
                       placeholder="Add any special requests, questions, or information you'd like us to know before the consultation..."

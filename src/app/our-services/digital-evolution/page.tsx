@@ -15,23 +15,19 @@ const accordionItems = [
   },
   {
     title: 'Workforce-Led Digital Maturity Audits Before implementing AI',
-    content: 'Content for Workforce-Led Digital Maturity Audits goes here. Provide details about the process and benefits.',
+    content: 'We assess existing workflows, data use, and employee attitudes to identify practical opportunities for human-centric AI integration.',
   },
   {
     title: 'Psychological Insights & Thematic Analysis',
-    content: 'Content for Psychological Insights & Thematic Analysis goes here. Explain how these insights are gathered and applied.',
+    content: 'We engage employees at all levels, uncovering key resistance points and opportunities for cultural change. Our reports translate workforce insights into actionable AI adoption strategies.',
   },
   {
-    title: 'Enhance Decision-Making & Self-Trust:',
-    content: 'Content for Enhancing Decision-Making & Self-Trust goes here. Describe methods and expected outcomes.',
+    title: 'Bespoke AI Implementation Roadmaps',
+    content: ' Rather than prescribing generic AI solutions, we develop tailored roadmaps that align technology with workforce needs, business goals, and long-term sustainability.',
   },
   {
-    title: 'Navigate Relationships & Boundaries:',
-    content: 'Content for Navigating Relationships & Boundaries goes here. Focus on the interpersonal aspects.',
-  },
-  {
-    title: 'Optimise Productivity & Motivation:',
-    content: 'Content for Optimising Productivity & Motivation goes here. Detail strategies and tools used.',
+    title: 'Strategic Change Management & Training',
+    content: 'We design bespoke training and support plans that help employees transition smoothly into AI-enhanced ways of working—building trust, competence, and digital confidence.',
   },
 ];
 
@@ -107,7 +103,7 @@ export default function DigitalEvolutionPage() {
             "Are 	you collecting vast amounts of data but unsure if you're leveraging 	it effectively?",
             "Do 	your employees see AI as a threat rather than a tool for 	empowerment?",
             "Are 	frontline staff disengaged because they feel technology is being 	imposed rather than designed with them in mind?",
-            "Have 	previous digital transformation projects failed due to a lack of 	workforce buy-in?",
+            "Have 	previous digital transformation projects failed due to a lack of 	workforce buy in?",
             "Are 	you looking for an approach that works with human behaviour rather 	than against it?",
           ].map((question, idx) => (
             <div
@@ -149,7 +145,7 @@ export default function DigitalEvolutionPage() {
               <p className="text-lg md:text-xl leading-relaxed">
                 Too often, digital transformation is approached as a technical challenge when, in reality, it's a psychological one. AI initiatives fail not because the technology is flawed, but because the human foundation isn't solid.
                 <br /><br />
-                At Falling Upwards, we don't believe in digital transformation—we believe in digital evolution. Transformation suggests disruption; evolution is about building sustainable, people-centred change from the ground up. Our psychology-driven approach ensures AI and digital adoption feel like a natural progression, not an imposed upheaval.
+                At Falling Upwards, we don't believe in digital transformation we believe in digital evolution. Transformation suggests disruption; evolution is about building sustainable, people-centred change from the ground up. Our psychology-driven approach ensures AI and digital adoption feel like a natural progression, not an imposed upheaval.
               </p>
             </div>
 

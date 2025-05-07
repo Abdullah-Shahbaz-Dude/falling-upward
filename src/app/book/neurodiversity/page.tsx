@@ -1,43 +1,57 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import { HeroSection } from '@/components/HeroSection';
-import { FiArrowLeft, FiBriefcase, FiCalendar, FiCheck, FiGlobe, FiMail, FiMessageSquare, FiPhone, FiUser} from 'react-icons/fi';
+import { useState, useEffect, Suspense } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { HeroSection } from "@/components/HeroSection";
+import {
+  FiArrowLeft,
+  FiBriefcase,
+  FiCalendar,
+  FiCheck,
+  FiGlobe,
+  FiMail,
+  FiMessageSquare,
+  FiPhone,
+  FiUser,
+} from "react-icons/fi";
 
 const bookingSchema = z.object({
   // Agreement
   dataProtectionAgreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to our data protection policy",
   }),
-  
+
   // Personal Details
-  name: z.string().min(2, 'Name must be at least 2 characters'),
+  name: z.string().min(2, "Name must be at least 2 characters"),
   organisation: z.string().optional(),
   jobTitle: z.string().optional(),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(10, 'Please enter a valid phone number'),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
   website: z.string().optional(),
-  
+
   // Organisation Overview
-  organisationSize: z.enum(['micro', 'small', 'medium', 'large_sme', 'enterprise']).optional(),
+  organisationSize: z
+    .enum(["micro", "small", "medium", "large_sme", "enterprise"])
+    .optional(),
   sector: z.string().optional(),
   otherSector: z.string().optional(),
-  
+
   // Neurodiversity Context
   interestReason: z.string().optional(),
-  approachToNeurodiversity: z.enum(['exploring', 'awareness', 'supporting', 'strategic', 'undefined']).optional(),
+  approachToNeurodiversity: z
+    .enum(["exploring", "awareness", "supporting", "strategic", "undefined"])
+    .optional(),
   areasOfInterest: z.array(z.string()).optional(),
   otherAreaOfInterest: z.string().optional(),
   opportunities: z.string().optional(),
-  
+
   // Challenges
   challenges: z.array(z.string()).optional(),
   otherChallenge: z.string().optional(),
-  
+
   // Outcomes
   successOutcome: z.string().optional(),
 });
@@ -46,14 +60,14 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 
 function BookPageContent() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [otherSectorSelected, setOtherSectorSelected] = useState(false);
   const [otherAreaSelected, setOtherAreaSelected] = useState(false);
   const [otherChallengeSelected, setOtherChallengeSelected] = useState(false);
   const [otherNeuroSelected, setOtherNeuroSelected] = useState(false);
   const [otherBarrierSelected, setOtherBarrierSelected] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -67,135 +81,153 @@ function BookPageContent() {
       areasOfInterest: [],
       challenges: [],
       dataProtectionAgreement: false,
-    }
+    },
   });
 
   // Watch various fields
-  const sector = watch('sector');
-  const areasOfInterest = watch('areasOfInterest') || [];
-  const challenges = watch('challenges') || [];
-  
+  const sector = watch("sector");
+  const areasOfInterest = watch("areasOfInterest") || [];
+  const challenges = watch("challenges") || [];
+
   // Update state when watched fields change
   useEffect(() => {
-    setOtherSectorSelected(sector === 'Other');
-    setOtherAreaSelected(areasOfInterest.includes('Other'));
-    setOtherChallengeSelected(challenges.includes('Other'));
-    setOtherNeuroSelected(areasOfInterest.includes('Neurodiversity'));
-    setOtherBarrierSelected(challenges.includes('Neurodiversity'));
+    setOtherSectorSelected(sector === "Other");
+    setOtherAreaSelected(areasOfInterest.includes("Other"));
+    setOtherChallengeSelected(challenges.includes("Other"));
+    setOtherNeuroSelected(areasOfInterest.includes("Neurodiversity"));
+    setOtherBarrierSelected(challenges.includes("Neurodiversity"));
   }, [sector, areasOfInterest, challenges]);
 
   // Update page title based on selected service
   useEffect(() => {
     let title = "Neurodiversity for Strategic Advantage";
-    let subtitle = "Leverage neurodiversity to drive innovation and competitive advantage";
-    
+    let subtitle =
+      "Leverage neurodiversity to drive innovation and competitive advantage";
+
     // If we wanted to dynamically update the document title
     document.title = title;
-    
+
     // We'll use these in our return statement
     return () => {
       // Cleanup if needed
     };
   }, []);
 
-  
   const organisationSizeOptions = [
-    { value: 'micro', label: 'Micro (1–9 employees)' },
-    { value: 'small', label: 'Small (10–49 employees)' },
-    { value: 'medium', label: 'Medium SME (50–249 employees)' },
-    { value: 'large_sme', label: 'Large SME (250–499 employees)' },
-    { value: 'enterprise', label: 'Large Organisation / Enterprise (500+ employees)' },
+    { value: "micro", label: "Micro (1–9 employees)" },
+    { value: "small", label: "Small (10–49 employees)" },
+    { value: "medium", label: "Medium SME (50–249 employees)" },
+    { value: "large_sme", label: "Large SME (250–499 employees)" },
+    {
+      value: "enterprise",
+      label: "Large Organisation / Enterprise (500+ employees)",
+    },
   ];
-  
+
   const sectorOptions = [
-    'Digital / Technology',
-    'Construction',
-    'Recruitment / HR',
-    'Healthcare (NHS or Private)',
-    'Education / Training',
-    'Local Government / Public Sector',
-    'Logistics / Transport',
-    'Manufacturing / Engineering',
-    'Charity / Voluntary Sector',
-    'Finance / Professional Services',
-    'Creative Industries / Media',
-    'Other'
+    "Digital / Technology",
+    "Construction",
+    "Recruitment / HR",
+    "Healthcare (NHS or Private)",
+    "Education / Training",
+    "Local Government / Public Sector",
+    "Logistics / Transport",
+    "Manufacturing / Engineering",
+    "Charity / Voluntary Sector",
+    "Finance / Professional Services",
+    "Creative Industries / Media",
+    "Other",
   ];
-  
+
   const approachOptions = [
-    { value: 'exploring', label: "We're exploring the concept for the first time" },
-    { value: 'awareness', label: "We've done some awareness work but want to go deeper" },
-    { value: 'supporting', label: "We are actively supporting neurodivergent employees" },
-    { value: 'strategic', label: "We want to move beyond inclusion into strategic application" },
-    { value: 'undefined', label: "Not sure / No defined approach yet" },
+    {
+      value: "exploring",
+      label: "We're exploring the concept for the first time",
+    },
+    {
+      value: "awareness",
+      label: "We've done some awareness work but want to go deeper",
+    },
+    {
+      value: "supporting",
+      label: "We are actively supporting neurodivergent employees",
+    },
+    {
+      value: "strategic",
+      label: "We want to move beyond inclusion into strategic application",
+    },
+    { value: "undefined", label: "Not sure / No defined approach yet" },
   ];
-  
+
   const areasOfInterestOptions = [
-    'Leadership awareness of neurodivergent strengths',
-    'Embedding cognitive diversity into innovation strategy',
-    'Creating psychologically safe environments for original thinking',
+    "Leadership awareness of neurodivergent strengths",
+    "Embedding cognitive diversity into innovation strategy",
+    "Creating psychologically safe environments for original thinking",
     'Using neurodiversity to disrupt "groupthink" and unlock new ideas',
-    'Inclusive team design & culture building',
-    'Identifying barriers to creativity in current processes',
-    'Supporting and retaining neurodivergent talent',
-    'Recruitment and onboarding practices',
-    'Workshops or keynote delivery',
-    'Other'
+    "Inclusive team design & culture building",
+    "Identifying barriers to creativity in current processes",
+    "Supporting and retaining neurodivergent talent",
+    "Recruitment and onboarding practices",
+    "Workshops or keynote delivery",
+    "Other",
   ];
-  
+
   const challengeOptions = [
-    'Lack of understanding across leadership',
-    'Concerns about making adjustments',
-    'Recruitment or progression barriers',
-    'Culture of conformity / risk aversion',
-    'Limited psychological safety or openness',
-    'Difficulty identifying neurodivergent talent',
-    'Other'
+    "Lack of understanding across leadership",
+    "Concerns about making adjustments",
+    "Recruitment or progression barriers",
+    "Culture of conformity / risk aversion",
+    "Limited psychological safety or openness",
+    "Difficulty identifying neurodivergent talent",
+    "Other",
   ];
 
   // Handle form submission
   const onSubmit = async (data: BookingFormValues) => {
     setIsLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
       // Add form type identifier based on the selected service
-      let formType = 'neurodiversity-strategic-consultation';
-      let consultationTypeLabel = 'Neurodiversity for Strategic Advantage Consultation';
-      
+      let formType = "neurodiversity-strategic-consultation";
+      let consultationTypeLabel =
+        "Neurodiversity for Strategic Advantage Consultation";
+
       // Add form type identifier
       const formData = {
         ...data,
         formType,
         consultationTypeLabel,
-        serviceType: 'neurodiversity-strategic' // Default if none selected
+        serviceType: "neurodiversity-strategic", // Default if none selected
       };
-      
-      console.log('Form data submitted:', formData);
-      
+
+      console.log("Form data submitted:", formData);
+
       // Send data to API
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
+      const response = await fetch("/api/send-email", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      
+
       const result = await response.json();
-      
+
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit form');
+        throw new Error(result.error || "Failed to submit form");
       }
-      
+
       // Show success message based on service type
-      const successMessage = 'Your Neurodiversity for Strategic Advantage consultation has been booked successfully!';
-        
+      const successMessage =
+        "Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation";
       setSuccess(successMessage);
       reset();
     } catch (err) {
-      console.error('Booking error:', err);
-      setError('There was an error booking your consultation. Please try again.');
+      console.error("Booking error:", err);
+      setError(
+        "There was an error booking your consultation. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -203,7 +235,7 @@ function BookPageContent() {
 
   // Add global styles for form inputs
   useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = `
       .input-field {
         width: 100%;
@@ -240,7 +272,7 @@ function BookPageContent() {
       }
     `;
     document.head.appendChild(style);
-    
+
     return () => {
       document.head.removeChild(style);
     };
@@ -248,7 +280,6 @@ function BookPageContent() {
 
   return (
     <div className="min-h-screen pb-16">
-         
       <HeroSection
         title="Neurodiversity for Strategic Advantage"
         subtitle="Leverage neurodiversity to drive innovation and competitive advantage"
@@ -258,18 +289,23 @@ function BookPageContent() {
 
       <div className="container-custom mx-auto">
         <div className="mb-16 mt-16 p-10">
-          <Link href="/our-services/neurodiversity" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
+          <Link
+            href="/our-services/neurodiversity"
+            className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200"
+          >
             <FiArrowLeft className="mr-2" />
             Back to Neurodiversity Services
           </Link>
         </div>
-        
+
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#0B4073] p-6 text-white">
             <h1 className="text-3xl font-bold">
               Neurodiversity for Strategic Advantage Consultation Form
             </h1>
-            <p className="mt-2 opacity-90">Schedule your consultation session</p>
+            <p className="mt-2 opacity-90">
+              Schedule your consultation session
+            </p>
           </div>
 
           <div className="p-6 md:p-8">
@@ -284,8 +320,10 @@ function BookPageContent() {
                 <FiCheck className="mr-2 mt-1" />
                 <div>
                   <p className="font-medium">{success}</p>
-                  <p className="mt-1">We will contact you shortly to confirm your appointment.</p>
-                  <Link href="/" className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium">
+                  <Link
+                    href="/"
+                    className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium"
+                  >
                     Return to Home
                   </Link>
                 </div>
@@ -297,7 +335,8 @@ function BookPageContent() {
                 {/* Agreement Section */}
                 <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
                   <p className="mb-2 text-sm font-medium text-gray-700">
-                    Please tick the box below to confirm you are happy to adhere to our data protection policy.
+                    Please tick the box below to confirm you are happy to adhere
+                    to our data protection policy.
                   </p>
                   <div className="flex items-start mb-2">
                     <div className="flex items-center h-5">
@@ -326,7 +365,7 @@ function BookPageContent() {
                     </p>
                   )}
                 </div>
-                
+
                 {/* Personal Details Section */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
@@ -334,7 +373,10 @@ function BookPageContent() {
                   </h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="name"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Full name (First &amp; Last)
                       </label>
                       <div className="relative">
@@ -344,19 +386,24 @@ function BookPageContent() {
                         <input
                           id="name"
                           type="text"
-                          {...register('name')}
-                          className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
+                          {...register("name")}
+                          className={`input-field pl-10 ${errors.name ? "border-red-500" : ""}`}
                           placeholder="John Doe"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.name && (
-                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.name.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="organisation" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="organisation"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Organisation Name
                       </label>
                       <div className="relative">
@@ -366,7 +413,7 @@ function BookPageContent() {
                         <input
                           id="organisation"
                           type="text"
-                          {...register('organisation')}
+                          {...register("organisation")}
                           className="input-field pl-10"
                           placeholder="Company Ltd"
                           disabled={isLoading}
@@ -375,7 +422,10 @@ function BookPageContent() {
                     </div>
 
                     <div>
-                      <label htmlFor="jobTitle" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="jobTitle"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Job Title / Role
                       </label>
                       <div className="relative">
@@ -385,7 +435,7 @@ function BookPageContent() {
                         <input
                           id="jobTitle"
                           type="text"
-                          {...register('jobTitle')}
+                          {...register("jobTitle")}
                           className="input-field pl-10"
                           placeholder="HR Manager"
                           disabled={isLoading}
@@ -394,7 +444,10 @@ function BookPageContent() {
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Email address
                       </label>
                       <div className="relative">
@@ -404,19 +457,24 @@ function BookPageContent() {
                         <input
                           id="email"
                           type="email"
-                          {...register('email')}
-                          className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
+                          {...register("email")}
+                          className={`input-field pl-10 ${errors.email ? "border-red-500" : ""}`}
                           placeholder="your@email.com"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.email.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="phone"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Contact number
                       </label>
                       <div className="relative">
@@ -426,19 +484,24 @@ function BookPageContent() {
                         <input
                           id="phone"
                           type="tel"
-                          {...register('phone')}
-                          className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
+                          {...register("phone")}
+                          className={`input-field pl-10 ${errors.phone ? "border-red-500" : ""}`}
                           placeholder="+44 7123 456789"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.phone && (
-                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.phone.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="website" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="website"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Organisation website (if applicable)
                       </label>
                       <div className="relative">
@@ -448,7 +511,7 @@ function BookPageContent() {
                         <input
                           id="website"
                           type="text"
-                          {...register('website')}
+                          {...register("website")}
                           className="input-field pl-10"
                           placeholder="www.example.com"
                           disabled={isLoading}
@@ -457,7 +520,7 @@ function BookPageContent() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Organisation Overview Section */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
@@ -475,7 +538,7 @@ function BookPageContent() {
                               id={`size-${option.value}`}
                               type="radio"
                               value={option.value}
-                              {...register('organisationSize')}
+                              {...register("organisationSize")}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                               disabled={isLoading}
                             />
@@ -489,7 +552,7 @@ function BookPageContent() {
                         ))}
                       </div>
                     </div>
-                    
+
                     <div>
                       <p className="block mb-3 text-sm font-medium text-gray-700">
                         2. What sector best describes your organisation's work?
@@ -501,22 +564,25 @@ function BookPageContent() {
                               id={`sector-${sector}`}
                               type="radio"
                               value={sector}
-                              {...register('sector')}
+                              {...register("sector")}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                               disabled={isLoading}
                             />
-                            <label htmlFor={`sector-${sector}`} className="ml-2 block text-sm text-gray-700">
+                            <label
+                              htmlFor={`sector-${sector}`}
+                              className="ml-2 block text-sm text-gray-700"
+                            >
                               {sector}
                             </label>
                           </div>
                         ))}
                       </div>
-                      
+
                       {otherSectorSelected && (
                         <div className="mt-3">
                           <input
                             type="text"
-                            {...register('otherSector')}
+                            {...register("otherSector")}
                             className="input-field"
                             placeholder="Please specify other sector"
                             disabled={isLoading}
@@ -526,7 +592,7 @@ function BookPageContent() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Neurodiversity & Strategic Innovation Context */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
@@ -534,16 +600,24 @@ function BookPageContent() {
                   </h3>
                   <div className="space-y-6">
                     <div>
-                      <label htmlFor="interestReason" className="block mb-2 text-sm font-medium text-gray-700">
-                        3. What prompted your interest in exploring neurodiversity as part of your innovation or business strategy?
+                      <label
+                        htmlFor="interestReason"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        3. What prompted your interest in exploring
+                        neurodiversity as part of your innovation or business
+                        strategy?
                       </label>
                       <div className="relative">
                         <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                          <FiMessageSquare size={18} className="text-gray-400" />
+                          <FiMessageSquare
+                            size={18}
+                            className="text-gray-400"
+                          />
                         </div>
                         <textarea
                           id="interestReason"
-                          {...register('interestReason')}
+                          {...register("interestReason")}
                           rows={4}
                           className="input-field pl-10"
                           placeholder="Please share what brought you to explore neurodiversity..."
@@ -551,10 +625,11 @@ function BookPageContent() {
                         ></textarea>
                       </div>
                     </div>
-                    
+
                     <div>
                       <p className="block mb-3 text-sm font-medium text-gray-700">
-                        4. How would you currently describe your organisation's approach to neurodiversity?
+                        4. How would you currently describe your organisation's
+                        approach to neurodiversity?
                       </p>
                       <div className="space-y-2">
                         {approachOptions.map((option) => (
@@ -563,7 +638,7 @@ function BookPageContent() {
                               id={`approach-${option.value}`}
                               type="radio"
                               value={option.value}
-                              {...register('approachToNeurodiversity')}
+                              {...register("approachToNeurodiversity")}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                               disabled={isLoading}
                             />
@@ -577,7 +652,7 @@ function BookPageContent() {
                         ))}
                       </div>
                     </div>
-                    
+
                     <div>
                       <p className="block mb-3 text-sm font-medium text-gray-700">
                         5. Which areas are you most interested in exploring?
@@ -589,22 +664,25 @@ function BookPageContent() {
                               id={`area-${area}`}
                               type="checkbox"
                               value={area}
-                              {...register('areasOfInterest')}
+                              {...register("areasOfInterest")}
                               className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                               disabled={isLoading}
                             />
-                            <label htmlFor={`area-${area}`} className="ml-2 block text-sm text-gray-700">
+                            <label
+                              htmlFor={`area-${area}`}
+                              className="ml-2 block text-sm text-gray-700"
+                            >
                               {area}
                             </label>
                           </div>
                         ))}
                       </div>
-                      
+
                       {otherAreaSelected && (
                         <div className="mt-3">
                           <input
                             type="text"
-                            {...register('otherAreaOfInterest')}
+                            {...register("otherAreaOfInterest")}
                             className="input-field"
                             placeholder="Please describe other areas of interest"
                             disabled={isLoading}
@@ -612,18 +690,26 @@ function BookPageContent() {
                         </div>
                       )}
                     </div>
-                    
+
                     <div>
-                      <label htmlFor="opportunities" className="block mb-2 text-sm font-medium text-gray-700">
-                        6. Where in your organisation do you see the greatest opportunity for neurodiverse thinking to drive innovation or transformation?
+                      <label
+                        htmlFor="opportunities"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        6. Where in your organisation do you see the greatest
+                        opportunity for neurodiverse thinking to drive
+                        innovation or transformation?
                       </label>
                       <div className="relative">
                         <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                          <FiMessageSquare size={18} className="text-gray-400" />
+                          <FiMessageSquare
+                            size={18}
+                            className="text-gray-400"
+                          />
                         </div>
                         <textarea
                           id="opportunities"
-                          {...register('opportunities')}
+                          {...register("opportunities")}
                           rows={3}
                           className="input-field pl-10"
                           placeholder="Please describe where you see opportunities..."
@@ -631,10 +717,11 @@ function BookPageContent() {
                         ></textarea>
                       </div>
                     </div>
-                    
+
                     <div>
                       <p className="block mb-3 text-sm font-medium text-gray-700">
-                        7. What challenges (if any) are limiting your ability to harness neurodiverse thinking?
+                        7. What challenges (if any) are limiting your ability to
+                        harness neurodiverse thinking?
                       </p>
                       <div className="grid md:grid-cols-2 gap-2">
                         {challengeOptions.map((challenge) => (
@@ -643,22 +730,25 @@ function BookPageContent() {
                               id={`challenge-${challenge}`}
                               type="checkbox"
                               value={challenge}
-                              {...register('challenges')}
+                              {...register("challenges")}
                               className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                               disabled={isLoading}
                             />
-                            <label htmlFor={`challenge-${challenge}`} className="ml-2 block text-sm text-gray-700">
+                            <label
+                              htmlFor={`challenge-${challenge}`}
+                              className="ml-2 block text-sm text-gray-700"
+                            >
                               {challenge}
                             </label>
                           </div>
                         ))}
                       </div>
-                      
+
                       {otherChallengeSelected && (
                         <div className="mt-3">
                           <input
                             type="text"
-                            {...register('otherChallenge')}
+                            {...register("otherChallenge")}
                             className="input-field"
                             placeholder="Please specify other challenges"
                             disabled={isLoading}
@@ -666,18 +756,25 @@ function BookPageContent() {
                         </div>
                       )}
                     </div>
-                    
+
                     <div>
-                      <label htmlFor="successOutcome" className="block mb-2 text-sm font-medium text-gray-700">
-                        8. What would a successful outcome look like for your team or organisation?
+                      <label
+                        htmlFor="successOutcome"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
+                        8. What would a successful outcome look like for your
+                        team or organisation?
                       </label>
                       <div className="relative">
                         <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                          <FiMessageSquare size={18} className="text-gray-400" />
+                          <FiMessageSquare
+                            size={18}
+                            className="text-gray-400"
+                          />
                         </div>
                         <textarea
                           id="successOutcome"
-                          {...register('successOutcome')}
+                          {...register("successOutcome")}
                           rows={3}
                           className="input-field pl-10"
                           placeholder="e.g., More original thinking, stronger innovation culture, inclusive team performance, etc."
@@ -689,7 +786,17 @@ function BookPageContent() {
                 </div>
 
                 <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md">
-                  <p>Your privacy is important to us. All information shared is confidential and protected under our <Link href="/privacy-policy" className="text-[#0B4073] hover:underline">Privacy Policy</Link>.</p>
+                  <p>
+                    Your privacy is important to us. All information shared is
+                    confidential and protected under our{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-[#0B4073] hover:underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
                 </div>
 
                 <div className="flex justify-end">
@@ -698,7 +805,7 @@ function BookPageContent() {
                     disabled={isLoading}
                     className="btn-primary"
                   >
-                    {isLoading ? 'Submitting...' : 'Submit Form'}
+                    {isLoading ? "Submitting..." : "Submit Form"}
                   </button>
                 </div>
               </form>

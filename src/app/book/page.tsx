@@ -35,14 +35,6 @@ const bookingOptions = [
     image: '/images/services/psychological-therapy.jpg'
   },
   {
-    id: 'walking',
-    title: 'Walking Therapy',
-    description: 'Experience therapeutic conversations in the healing space of nature while walking.',
-    icon: <FiActivity className="h-7 w-7" />,
-    href: '/book/walking',
-    image: '/images/backgrounds/consultation-bg.jpg'
-  },
-  {
     id: 'executive',
     title: 'Executive Mentoring',
     description: 'Specialized mentoring for executives to navigate complex leadership challenges.',

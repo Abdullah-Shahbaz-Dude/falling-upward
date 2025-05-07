@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FiArrowLeft, FiArrowRight, FiChevronDown } from "react-icons/fi";
+import { FiArrowLeft, FiArrowRight, FiChevronDown, FiUsers, FiBriefcase } from "react-icons/fi";
 import { HeroSection } from "@/components/HeroSection";
 import {
   FaBrain,
@@ -12,7 +12,6 @@ import {
   FaLightbulb,
   FaWalking,
   FaUserFriends,
-  FaBriefcase,
 } from "react-icons/fa";
 import { CheckCircle } from "lucide-react";
 
@@ -89,7 +88,7 @@ export default function PsychologicalTherapyPage() {
       <section className="relative pt-0 py-10 pb-0 bg-gradient-to-br from-[#EFF6FB] via-[#F7FAFC] to-white overflow-hidden">
         <div className="container-custom mx-auto pt-16">
           {/* Breadcrumb */}
-          <div className="mb-8">
+          <div className="mb-8 px-10">
             <Link
               href="/our-services"
               className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200"
@@ -102,71 +101,68 @@ export default function PsychologicalTherapyPage() {
       </section>
 
       {/* Selection Cards */}
-      <section className="py-12 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-16">
-            {/* Psychological Therapy Card */}
-            <div
+      <section className="py-16 px-6 bg-[#F7FAFC] flex items-center justify-center">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+            <button
               onClick={() => setActiveOption("psychological")}
-              className={`cursor-pointer transition-all duration-300 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 ${activeOption === "psychological"
-                  ? "bg-[#0B4073] text-white"
-                  : "bg-white text-[#0B4073] border border-[#D6E2EA]"
-                }`}
+              className={`group p-8 md:p-10 rounded-2xl transition-all duration-300 flex flex-col items-center text-center ${
+                activeOption === "psychological"
+                  ? "bg-[#0B4073] text-white shadow-xl"
+                  : "bg-white hover:bg-[#D6E2EA]/30 text-gray-700 shadow-md hover:shadow-xl"
+              }`}
             >
-              <div className="flex flex-col items-center justify-center text-center p-8">
-                <div className={`p-4 rounded-full mb-4 ${activeOption === "psychological" ? "bg-white/20" : "bg-[#EFF6FB]"
-                  }`}>
-                  <FaUserFriends className={`w-10 h-10 ${activeOption === "psychological" ? "text-white" : "text-[#0B4073]"
-                    }`} />
-                </div>
-                <h3 className="text-xl font-bold">Psychological Therapy</h3>
-                <p className={`mt-3 text-sm ${activeOption === "psychological" ? "text-white/80" : "text-gray-600"}`}>
-                  Personalized support for mental well-being
-                </p>
+              <div
+                className={`p-6 rounded-full mb-6 ${
+                  activeOption === "psychological"
+                    ? "bg-white/20"
+                    : "bg-[#D6E2EA]"
+                }`}
+              >
+                <FiUsers
+                  className={`w-12 h-12 ${
+                    activeOption === "psychological"
+                      ? "text-white"
+                      : "text-[#0B4073]"
+                  }`}
+                />
               </div>
-            </div>
+              <h3 className="text-2xl font-bold mb-3">Psychological Therapy</h3>
+              <p className={`text-base ${
+                activeOption === "psychological" ? "text-white/80" : "text-gray-600"
+              }`}>
+              </p>
+            </button>
 
-            {/* ADHD Coaching Card */}
-            <div
+            <button
               onClick={() => setActiveOption("adhd")}
-              className={`cursor-pointer transition-all duration-300 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 ${activeOption === "adhd"
-                  ? "bg-[#0B4073] text-white"
-                  : "bg-white text-[#0B4073] border border-[#D6E2EA]"
-                }`}
+              className={`group p-8 md:p-10 rounded-2xl transition-all duration-300 flex flex-col items-center text-center ${
+                activeOption === "adhd"
+                  ? "bg-[#0B4073] text-white shadow-xl"
+                  : "bg-white hover:bg-[#D6E2EA]/30 text-gray-700 shadow-md hover:shadow-xl"
+              }`}
             >
-              <div className="flex flex-col items-center justify-center text-center p-8">
-                <div className={`p-4 rounded-full mb-4 ${activeOption === "adhd" ? "bg-white/20" : "bg-[#EFF6FB]"
-                  }`}>
-                  <FaBrain className={`w-10 h-10 ${activeOption === "adhd" ? "text-white" : "text-[#0B4073]"
-                    }`} />
-                </div>
-                <h3 className="text-xl font-bold">ADHD Coaching</h3>
-                <p className={`mt-3 text-sm ${activeOption === "adhd" ? "text-white/80" : "text-gray-600"}`}>
-                  Strategies for focus, organization & productivity
-                </p>
-              </div>
-            </div>
-
-            {/* Walking Therapy Card */}
-            <div
-              onClick={() => setActiveOption("walking")}
-              className={`cursor-pointer transition-all duration-300 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 ${activeOption === "walking"
-                  ? "bg-[#0B4073] text-white"
-                  : "bg-white text-[#0B4073] border border-[#D6E2EA]"
+              <div
+                className={`p-6 rounded-full mb-6 ${
+                  activeOption === "adhd"
+                    ? "bg-white/20"
+                    : "bg-[#D6E2EA]"
                 }`}
-            >
-              <div className="flex flex-col items-center justify-center text-center p-8">
-                <div className={`p-4 rounded-full mb-4 ${activeOption === "walking" ? "bg-white/20" : "bg-[#EFF6FB]"
-                  }`}>
-                  <FaWalking className={`w-10 h-10 ${activeOption === "walking" ? "text-white" : "text-[#0B4073]"
-                    }`} />
-                </div>
-                <h3 className="text-xl font-bold">Walking Therapy</h3>
-                <p className={`mt-3 text-sm ${activeOption === "walking" ? "text-white/80" : "text-gray-600"}`}>
-                  Therapeutic conversations in nature
-                </p>
+              >
+                <FiBriefcase
+                  className={`w-12 h-12 ${
+                    activeOption === "adhd"
+                      ? "text-white"
+                      : "text-[#0B4073]"
+                  }`}
+                />
               </div>
-            </div>
+              <h3 className="text-2xl font-bold mb-3">ADHD Coaching</h3>
+              <p className={`text-base ${
+                activeOption === "adhd" ? "text-white/80" : "text-gray-600"
+              }`}>
+              </p>
+            </button>
           </div>
         </div>
       </section>
@@ -174,7 +170,7 @@ export default function PsychologicalTherapyPage() {
       {/* Content based on selection */}
       {activeOption === "psychological" && (
         <>
-          
+
 
           {/* New Content Section */}
           <section className="bg-[#0B4073] text-white py-20 px-6 md:px-12 relative mb-20">
@@ -304,49 +300,49 @@ export default function PsychologicalTherapyPage() {
             </div>
           </div> */}
 
-<section className="bg-[#F8FAFC] pt-20 px-6 md:px-12">
-  <div className="max-w-6xl mx-auto">
-    <div className="text-center mb-16">
-      <h2 className="text-4xl md:text-5xl font-bold text-[#0B4073]">
-        How Therapy Can Support You
-      </h2>
-      <p className="text-lg md:text-xl text-gray-700 mt-4 max-w-3xl mx-auto">
-        Our sessions offer a safe, non-judgemental space to explore what's going on, where it comes from, and how to move through it—with empathy, not pressure.
-      </p>
-    </div>
+          <section className="bg-[#F8FAFC] pt-20 px-6 md:px-12">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-[#0B4073]">
+                  How Therapy Can Support You
+                </h2>
+                <p className="text-lg md:text-xl text-gray-700 mt-4 max-w-3xl mx-auto">
+                  Our sessions offer a safe, non-judgemental space to explore what's going on, where it comes from, and how to move through it with empathy, not pressure.
+                </p>
+              </div>
 
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {[
-        "Feel listened to, validated, and genuinely seen",
-        "Make sense of your inner world and life experiences",
-        "Break free from patterns that no longer serve you",
-        "Feel more grounded, calm, and in control",
-        "Be kinder to yourself and reconnect with your values",
-        "Begin to accept, integrate, and heal",
-        "Move towards the life you want—not the one you've been surviving",
-      ].map((point, idx) => (
-        <div
-          key={idx}
-          className="bg-white p-6 rounded-2xl shadow hover:shadow-md transition-all duration-300 border border-gray-200 flex items-start gap-4"
-        >
-          <div className="flex-shrink-0">
-            <Image 
-              src="/favicon.ico" 
-              alt="Icon" 
-              width={32} 
-              height={32} 
-              className="object-contain" 
-            />
-          </div>
-          <p className="text-gray-700 text-base font-medium leading-relaxed">{point}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[
+                  "Feel listened to, validated, and genuinely seen",
+                  "Make sense of your inner world and life experiences",
+                  "Break free from patterns that no longer serve you",
+                  "Feel more grounded, calm, and in control",
+                  "Be kinder to yourself and reconnect with your values",
+                  "Begin to accept, integrate, and heal",
+                  "Move towards the life you want—not the one you've been surviving",
+                ].map((point, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white p-6 rounded-2xl shadow hover:shadow-md transition-all duration-300 border border-gray-200 flex items-start gap-4"
+                  >
+                    <div className="flex-shrink-0">
+                      <Image
+                        src="/favicon.ico"
+                        alt="Icon"
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                      />
+                    </div>
+                    <p className="text-gray-700 text-base font-medium leading-relaxed">{point}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {/* Our Approach Section */}
-          <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12 py-16 pt-0 ">
+          <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12 py-16 pt-0 mb-16 md:mb-0 mt-16">
             <div className="  p-8 pt-0 md:p-16 ">
               <h2 className="text-3xl md:text-4xl font-bold text-[#0B4073] mb-8 text-center">
                 Our Approach
@@ -356,33 +352,224 @@ export default function PsychologicalTherapyPage() {
                 This may include:
               </p>
               <div className="space-y-10 mt-12">
-  {[
-    "Compassion-Focused Therapy",
-    "EMDR (Eye Movement Desensitisation and Reprocessing)",
-    "Inner Child Therapy",
-    "Existential / Person-Centred Therapy",
-    "Dialectic Behaviour Therapy",
-  ].map((approach, idx) => (
-    <div
-      key={idx}
-      className="relative bg-white border-l-4 border-[#7094B7] pl-6 pr-4 py-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
-    >
-      <div className="absolute -left-4 top-6 h-8 w-8 rounded-full bg-[#7094B7] text-white flex items-center justify-center font-bold shadow-md">
-        {idx + 1}
-      </div>
-      <h3 className="text-xl font-semibold text-[#0B4073] mb-2">
-        {approach}
-      </h3>
-      
-    </div>
-  ))}
-</div>
-            
-              
-            
+                {[
+                  "Compassion-Focused Therapy",
+                  "EMDR (Eye Movement Desensitisation and Reprocessing)",
+                  "Inner Child Therapy",
+                  "Existential / Person-Centred Therapy",
+                  "Dialectic Behavioural Therapy",
+                ].map((approach, idx) => (
+                  <div
+                    key={idx}
+                    className="relative bg-white border-l-4 border-[#7094B7] pl-6 pr-4 py-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
+                  >
+                    <div className="absolute -left-4 top-6 h-8 w-8 rounded-full bg-[#7094B7] text-white flex items-center justify-center font-bold shadow-md">
+                      {idx + 1}
+                    </div>
+                    <h3 className="text-xl font-semibold text-[#0B4073] mb-2">
+                      {approach}
+                    </h3>
+
+                  </div>
+                ))}
+              </div>
+
+
+
             </div>
-         
+
+
           </div>
+          {/* Spacer for mobile only */}
+          <div className="block md:hidden h-10"></div>
+          <div >
+            <div className="relative bg-white overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-green-50 opacity-50"></div>
+
+              <div className="relative max-w-7xl mx-auto px-6 py-20 lg:px-8">
+                {/* Header section */}
+                <div className="text-center mb-16">
+                  <h1 className="text-4xl md:text-5xl font-bold text-[#0B4073] mb-4">
+                    <span className="block text-6xl mb-6">Walking Therapy:</span>
+                    <span className="text-[#0B4073]">A Different Way to Talk</span>
+                  </h1>
+                  <div className="w-24 h-1 bg-gradient-to-r from-[#0B4073] to-[#0B4073] mx-auto mt-6"></div>
+                </div>
+
+                {/* Content grid */}
+                <div className="grid lg:grid-cols-2 gap-12 items-start">
+                  {/* Left column - Description */}
+                  <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div className="prose prose-lg text-gray-700">
+                      <p>
+                        As an alternative to face-to-face or online therapy, Walking
+                        Therapy offers something a little different. Sometimes,
+                        stepping outside can help us connect more deeply, both with
+                        ourselves and with the world around us.
+                      </p>
+                      <p className="mt-6">
+                        Walking Therapy blends gentle movement with conversation,
+                        allowing the rhythm of walking and the presence of nature to
+                        support the therapeutic process. For many people, walking
+                        side-by-side makes it easier to talk, with words and feelings
+                        flowing more naturally in the open air.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right column - Benefits */}
+                  <div className="space-y-8">
+                    <div className="bg-gradient-to-br from-[#D6E2EA] to-[#D6E2EA] rounded-2xl shadow-lg p-8 border border-blue-100">
+                      <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                        The Benefits of Walking Therapy
+                      </h2>
+
+                      <ul className="space-y-6">
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
+                            <img
+                              src="/favicon.ico"
+                              alt="icon"
+                              className="h-6 w-6 group-hover:scale-110 transition-transform"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              Connection with nature
+                            </h3>
+                            <p className="text-gray-600 mt-1">
+                              Supporting emotional regulation, reducing stress, and
+                              offering a grounded sense of presence.
+                            </p>
+                          </div>
+                        </li>
+
+                        <li className="flex items-start">
+                          <div className="falex-shrink-0 mt-1 mr-4 text-blue-500">
+                            <img
+                              src="/favicon.ico"
+                              alt="icon"
+                              className="h-6 w-6 group-hover:scale-110 transition-transform"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              Movement and Mindfulness
+                            </h3>
+                            <p className="text-gray-600 mt-1">
+                              Engaging the body can foster mindfulness, release
+                              endorphins, and promote a sense of vitality.
+                            </p>
+                          </div>
+                        </li>
+
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
+                            <img
+                              src="/favicon.ico"
+                              alt="icon"
+                              className="h-6 w-6 group-hover:scale-110 transition-transform"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              Ease and Flow
+                            </h3>
+                            <p className="text-gray-600 mt-1">
+                              Walking often makes difficult conversations feel lighter
+                              and less intense, helping emotional processing unfold
+                              more organically.
+                            </p>
+                          </div>
+                        </li>
+
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
+                            <img
+                              src="/favicon.ico"
+                              alt="icon"
+                              className="h-6 w-6 group-hover:scale-110 transition-transform"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              Creativity and Insight
+                            </h3>
+                            <p className="text-gray-600 mt-1">
+                              Natural environments have been shown to boost creative
+                              thinking and emotional exploration.
+                            </p>
+                          </div>
+                        </li>
+
+                        <li className="flex items-start">
+                          <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
+                            <img
+                              src="/favicon.ico"
+                              alt="icon"
+                              className="h-6 w-6 group-hover:scale-110 transition-transform"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              Support for mood
+                            </h3>
+                            <p className="text-gray-600 mt-1">
+                              Regular time in nature has been associated with reduced
+                              symptoms of depression and anxiety.
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <section className="bg-white py-16 px-6 sm:px-8 lg:px-12">
+              <div className="max-w-7xl mx-auto border border-blue-200 rounded-2xl p-6 sm:p-8 md:p-12 bg-white shadow-xl">
+                {/* Main Title */}
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#0B4073] mb-6">
+                  How therapy can support you
+                </h2>
+
+                {/* Subtitle */}
+                <p className="text-center text-gray-700 max-w-3xl mx-auto mb-8 sm:mb-10 text-lg sm:text-xl leading-relaxed">
+                  Our sessions offer a safe, non-judgemental space to explore what's
+                  going on, where it comes from, and how to move through it—with
+                  empathy, not pressure.
+                </p>
+
+                {/* Help Box */}
+                <div className="bg-[#D6E2EA] rounded-2xl p-8 sm:p-12 md:p-16 space-y-6 border border-blue-100 shadow-inner">
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-center text-[#0B4073] mb-6">
+                    We can help you:
+                  </h3>
+
+                  <ul className="space-y-4">
+                    {[
+                      "Feel listened to, validated and genuinely seen",
+                      "Make sense of your inner world and life experiences",
+                      "Break free from patterns that no longer serve you",
+                      "Feel more grounded, calm, and in control",
+                      "Be kinder to yourself and reconnect with your values",
+                      "Begin to accept, integrate and heal",
+                      "Move towards the life you want—not the one you've been surviving",
+                    ].map((item, index) => (
+                      <li
+                        key={index}
+                        className="bg-white flex items-center text-gray-800 min-h-[80px] sm:min-h-[90px] md:min-h-[100px] text-base sm:text-lg md:text-xl leading-snug rounded-xl px-4 sm:px-5 md:px-6 py-4 sm:py-5 shadow-md border border-gray-200 hover:shadow-lg hover:border-blue-300 transition duration-300"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+
         </>
       )}
 
@@ -415,7 +602,7 @@ export default function PsychologicalTherapyPage() {
                 "Are you easily distracted by noise, visual stimuli, or your environment?",
                 "Do you find it difficult to set and maintain personal boundaries?",
                 "Do you struggle with emotional regulation, feeling intense highs and lows?",
-                "Feel shame as you think you do not fit in and repeat cycles",
+                "Do you feel shame as you think you do not fit in and repeat cycles",
                 "Do 	you analyse every interaction, worrying about how others perceive 	you?",
                 "Do 	you often procrstinate?",
                 "Have 	you felt stuck in unhealthy relationships, struggling to move on?",
@@ -445,8 +632,8 @@ export default function PsychologicalTherapyPage() {
             <div className="mt-20 text-center max-w-4xl mx-auto ">
               <p className="text-2xl md:text-2xl text-gray-700 leading-relaxed">
                 Whilst some of the above is directly assocated with{" "}
-                <span className="font-semibold text-[#0B4073]">ADHD</span>,{" "}
-                <span className="font-semibold text-[#0B4073]">
+                <span >ADHD</span>,{" "}
+                <span >
                   some of it may not be
                 </span>
                 , and{" "}
@@ -503,8 +690,9 @@ export default function PsychologicalTherapyPage() {
                   I have ADHD myself and have real-world experience of many of
                   the challenges associated with it. However, I also thrive in
                   equal measure, as I've learned how to make the most of the
-                  condition — and that's what I'd like to help you do.
+                  condition — and that's what I'd like to help you do .
                 </p>
+                <span className="font-semibold text-[#0B4073]">Alex chruch </span>
               </div>
             </div>
           </div>
@@ -586,7 +774,7 @@ export default function PsychologicalTherapyPage() {
               {/* Left: Image */}
               <div className="flex-shrink-0 w-full lg:w-1/3 flex justify-center">
                 <img
-                  src="/images/services/adhd-coaching.jpg" // Replace with your actual image path
+                  src="/images/services/adhd-coaching.webp" // Replace with your actual image path
                   alt="What You Can Expect"
                   className="w-full max-w-sm rounded-lg"
                 />
@@ -609,7 +797,7 @@ export default function PsychologicalTherapyPage() {
               </div>
             </div>
           </div>
-          <section className="mb-10 mt-20 text-center">
+          <section className="mb-10 mt-20 text-center px-10">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-xl font-bold text-[#0B4073] mb-4">
                 {" "}
@@ -622,198 +810,6 @@ export default function PsychologicalTherapyPage() {
         </div>
       )}
 
-      {/* Placeholder content for Walking Therapy */}
-      {activeOption === "walking" && (
-        <div >
-          <div className="relative bg-white overflow-hidden">
-            {/* Decorative elements */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-green-50 opacity-50"></div>
-
-            <div className="relative max-w-7xl mx-auto px-6 py-20 lg:px-8">
-              {/* Header section */}
-              <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-5xl font-bold text-[#0B4073] mb-4">
-                  <span className="block text-6xl mb-6">Walking Therapy:</span>
-                  <span className="text-[#0B4073]">A Different Way to Talk</span>
-                </h1>
-                <div className="w-24 h-1 bg-gradient-to-r from-[#0B4073] to-[#0B4073] mx-auto mt-6"></div>
-              </div>
-
-              {/* Content grid */}
-              <div className="grid lg:grid-cols-2 gap-12 items-start">
-                {/* Left column - Description */}
-                <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-                  <div className="prose prose-lg text-gray-700">
-                    <p>
-                      As an alternative to face-to-face or online therapy, Walking
-                      Therapy offers something a little different. Sometimes,
-                      stepping outside can help us connect more deeply, both with
-                      ourselves and with the world around us.
-                    </p>
-                    <p className="mt-6">
-                      Walking Therapy blends gentle movement with conversation,
-                      allowing the rhythm of walking and the presence of nature to
-                      support the therapeutic process. For many people, walking
-                      side-by-side makes it easier to talk, with words and feelings
-                      flowing more naturally in the open air.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right column - Benefits */}
-                <div className="space-y-8">
-                  <div className="bg-gradient-to-br from-[#D6E2EA] to-[#D6E2EA] rounded-2xl shadow-lg p-8 border border-blue-100">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
-                      The Benefits of Walking Therapy
-                    </h2>
-
-                    <ul className="space-y-6">
-                      <li className="flex items-start">
-                        <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
-                          <img
-                            src="/favicon.ico"
-                            alt="icon"
-                            className="h-6 w-6 group-hover:scale-110 transition-transform"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            Connection with nature
-                          </h3>
-                          <p className="text-gray-600 mt-1">
-                            Supporting emotional regulation, reducing stress, and
-                            offering a grounded sense of presence.
-                          </p>
-                        </div>
-                      </li>
-
-                      <li className="flex items-start">
-                        <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
-                          <img
-                            src="/favicon.ico"
-                            alt="icon"
-                            className="h-6 w-6 group-hover:scale-110 transition-transform"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            Movement and Mindfulness
-                          </h3>
-                          <p className="text-gray-600 mt-1">
-                            Engaging the body can foster mindfulness, release
-                            endorphins, and promote a sense of vitality.
-                          </p>
-                        </div>
-                      </li>
-
-                      <li className="flex items-start">
-                        <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
-                          <img
-                            src="/favicon.ico"
-                            alt="icon"
-                            className="h-6 w-6 group-hover:scale-110 transition-transform"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            Ease and Flow
-                          </h3>
-                          <p className="text-gray-600 mt-1">
-                            Walking often makes difficult conversations feel lighter
-                            and less intense, helping emotional processing unfold
-                            more organically.
-                          </p>
-                        </div>
-                      </li>
-
-                      <li className="flex items-start">
-                        <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
-                          <img
-                            src="/favicon.ico"
-                            alt="icon"
-                            className="h-6 w-6 group-hover:scale-110 transition-transform"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            Creativity and Insight
-                          </h3>
-                          <p className="text-gray-600 mt-1">
-                            Natural environments have been shown to boost creative
-                            thinking and emotional exploration.
-                          </p>
-                        </div>
-                      </li>
-
-                      <li className="flex items-start">
-                        <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
-                          <img
-                            src="/favicon.ico"
-                            alt="icon"
-                            className="h-6 w-6 group-hover:scale-110 transition-transform"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            Support for mood
-                          </h3>
-                          <p className="text-gray-600 mt-1">
-                            Regular time in nature has been associated with reduced
-                            symptoms of depression and anxiety.
-                          </p>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <section className="bg-white py-16 px-6 sm:px-8 lg:px-12">
-            <div className="max-w-7xl mx-auto border border-blue-200 rounded-2xl p-6 sm:p-8 md:p-12 bg-white shadow-xl">
-              {/* Main Title */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#0B4073] mb-6">
-                How therapy can support you
-              </h2>
-
-              {/* Subtitle */}
-              <p className="text-center text-gray-700 max-w-3xl mx-auto mb-8 sm:mb-10 text-lg sm:text-xl leading-relaxed">
-                Our sessions offer a safe, non-judgemental space to explore what's
-                going on, where it comes from, and how to move through it—with
-                empathy, not pressure.
-              </p>
-
-              {/* Help Box */}
-              <div className="bg-[#D6E2EA] rounded-2xl p-8 sm:p-12 md:p-16 space-y-6 border border-blue-100 shadow-inner">
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-center text-[#0B4073] mb-6">
-                  We can help you:
-                </h3>
-
-                <ul className="space-y-4">
-                  {[
-                    "Feel listened to, validated and genuinely seen",
-                    "Make sense of your inner world and life experiences",
-                    "Break free from patterns that no longer serve you",
-                    "Feel more grounded, calm, and in control",
-                    "Be kinder to yourself and reconnect with your values",
-                    "Begin to accept, integrate and heal",
-                    "Move towards the life you want—not the one you've been surviving",
-                  ].map((item, index) => (
-                    <li
-                      key={index}
-                      className="bg-white flex items-center text-gray-800 min-h-[80px] sm:min-h-[90px] md:min-h-[100px] text-base sm:text-lg md:text-xl leading-snug rounded-xl px-4 sm:px-5 md:px-6 py-4 sm:py-5 shadow-md border border-gray-200 hover:shadow-lg hover:border-blue-300 transition duration-300"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-        </div>
-      )}
-
-    
       {/* Consultation Booking Section - Refined Design */}
       <section className="relative py-20 md:py-24 px-10">
         <div className="absolute inset-0 z-0">
@@ -851,15 +847,6 @@ export default function PsychologicalTherapyPage() {
             <Link href="/book/adhd" className="w-full max-w-md">
               <div className="bg-[#0B4073] text-white rounded-full py-4 px-8 flex items-center justify-between transition-all duration-300 hover:bg-[#0B4073]/90 group">
                 <span className="font-medium text-lg">ADHD Coaching</span>
-                <div className="bg-white rounded-full p-3 text-[#0B4073]">
-                  <FiArrowRight className="w-5 h-5" />
-                </div>
-              </div>
-            </Link>
-
-            <Link href="/book/walking" className="w-full max-w-md">
-              <div className="bg-[#0B4073] text-white rounded-full py-4 px-8 flex items-center justify-between transition-all duration-300 hover:bg-[#0B4073]/90 group">
-                <span className="font-medium text-lg">Walking Therapy</span>
                 <div className="bg-white rounded-full p-3 text-[#0B4073]">
                   <FiArrowRight className="w-5 h-5" />
                 </div>

@@ -25,14 +25,14 @@ export function Footer() {
             </div>
             <div className="space-y-2">
               <h3 className="font-semibold text-[#0B4073]">Alexander Church</h3>
-              <p className="text-[#0B4073]">Psychological Therapist, Mentor & Organisational Consultant</p>
+              <p className="text-[#0B4073]">Organisational & Business Consultant, Psychological therapist & ADHD Coach</p>
               <div className="flex items-center text-[#0B4073]">
                 <span className="mr-1">E:</span>
                 <a href="mailto:alex@fallingupwards.co.uk" className="text-[#0B4073] hover:underline">alex@fallingupwards.co.uk</a>
               </div>
               <div className="flex items-center text-[#0B4073]">
                 <span className="mr-1">M:</span>
-                <a href="tel:07301261544" className="hover:underline">07301 261 544</a>
+                <a href="tel:07725780382" className="hover:underline">07725780382</a>
               </div>
               <div className="flex items-center text-[#0B4073]">
                 <a href="https://www.fallingupwards.co.uk" className="hover:underline">www.fallingupwards.co.uk</a>

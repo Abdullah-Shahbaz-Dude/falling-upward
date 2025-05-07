@@ -137,7 +137,7 @@ function BookPageContent() {
       }
       
       // Show success message
-      setSuccess('Your ADHD Coaching consultation has been booked successfully!');
+      setSuccess('Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation');
       reset();
       setSelectedDobDate(null);
     } catch (err) {

@@ -80,8 +80,8 @@ const offers = [
     title: "Psychology-informed thinking",
     description: `Grounded in organisational and behavioural psychology, we help you
     understand how your habits, thought patterns, and inner narratives
-    influence your decision making and leadership. First principles
-    thinking – we strip away assumptions and offer solutions for any
+    influence your decision making and leadership.Using first principles
+    thinking we strip away assumptions and offer solutions for any
     challenges you face.`,
     image: "/images/executive/what-we-offer/image-3.png",
     bg: "bg-indigo-100",
@@ -206,7 +206,7 @@ export default function ExecutiveMentoringPage() {
                     }`}
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Boardroom Advisor </h3>
+                <h3 className="text-xl font-bold mb-2">For Boards </h3>
               </button>
             </div>
           </div>
@@ -226,14 +226,14 @@ export default function ExecutiveMentoringPage() {
 
           <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
             {[
-              "Is masking, rejection sensitivity, or neurodivergent burnout a hidden challenge you're managing silently?",
+             
               "Do you feel like your career or business vision has become unclear, and you need to reconnect with purpose?",
               "Are you feeling stuck, 	unmotivated or burnt out—despite 	being in a role you once wanted?",
               "Do 	you struggle to switch off, 	always carrying the weight of work?",
               "Are you experiencing imposter syndrome, perfectionism, or fear of failure that's hard to shake?",
               "Are you successful on paper but still feeling unfulfilled, overwhelmed, or lost?",
               "Do you find yourself emotionally triggered, reactive, or disconnected in your leadership role?",
-              "Are youq navigating team conflict, people-pleasing, or boundary issues in the workplace?",
+              "Are you navigating team conflict, people-pleasing, or boundary issues in the workplace?",
               "Are you avoiding difficult decisions, conversations, or growth opportunities because of inner blocks?",
               "Do you want to lead with more confidence, clarity, and authenticity—without the pressure to \"perform\"?",
             ].map((question, idx) => (
@@ -260,17 +260,17 @@ export default function ExecutiveMentoringPage() {
           <div className="mt-20 text-center max-w-4xl mx-auto mb-20">
             <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               Our mentoring combines
-              <span className="font-semibold text-[#0B4073]">
+              <span >
                 {" "}
                 strategic thinking
               </span>
               ,
-              <span className="font-semibold text-[#0B4073]">
+              <span >
                 {" "}
                 first principles problem-solving
               </span>
               , and
-              <span className="font-semibold text-[#0B4073]">
+              <span >
                 {" "}
                 applied psychology{" "}
               </span>
@@ -278,7 +278,7 @@ export default function ExecutiveMentoringPage() {
               personally.
             </p>
           </div>
-          <h2 className="text-3xl xs:text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-12">
+          <h2 className="text-3xl xs:text-3xl sm:text-4xl font-bold text-center text-[#0B4073] mb-12">
             What We Offer
           </h2>
           <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-20">
@@ -307,7 +307,7 @@ export default function ExecutiveMentoringPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.2 + 0.1 }}
                 >
-                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 border-b-2 border-gray-500 mb-3 sm:mb-4 pb-2">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-[#0B4073] mb-3 sm:mb-4 pb-2">
                     {item.title}
                   </h3>
                   <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
@@ -405,7 +405,7 @@ export default function ExecutiveMentoringPage() {
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl leading-relaxed">
                   True leadership excellence isn't just about processes and
-                  expertise — it's about people, behaviour, and decision-making
+                  expertise it's about people, behaviour, and decision-making
                   at the highest levels. Boards shape the direction of an
                   organisation, but fear, bias, and resistance to challenge can
                   often limit progress.
