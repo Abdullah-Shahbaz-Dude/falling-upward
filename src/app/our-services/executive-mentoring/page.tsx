@@ -135,7 +135,7 @@ export default function ExecutiveMentoringPage() {
       <HeroSection
         title="Executive Mentoring & Boardroom Support"
         subtitle="We provide specialized mentoring and support for executives and board members, helping them navigate complex leadership challenges."
-        backgroundImage="/images/services/executive-mentoring.jpg"
+        backgroundImage="/images/services/executive-mentoring.webp"
         height="medium"
         textPosition="left"
       />
