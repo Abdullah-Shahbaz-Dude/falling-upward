@@ -205,9 +205,9 @@ function BookPageContent() {
 
       <div className="container-custom mx-auto">
         <div className="mb-16 mt-16">
-          <Link href="/our-services/neurodiversity" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
+          <Link href="/our-services/thinking-different" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
             <FiArrowLeft className="mr-2" />
-            Back to Neurodiversity Services
+            Back to Different Thinking Services
           </Link>
         </div>
         

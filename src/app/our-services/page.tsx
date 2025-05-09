@@ -11,7 +11,7 @@ const offersData = [
     id: 'digital-evolution',
     title: 'Digital Evolution and AI Adoption',
     description: 'We help organizations navigate the complex landscape of digital transformation and AI integration, ensuring technology serves human needs and enhances wellbeing rather than creating additional stress.',
-    image: '/images/services/digital-evolution.jpg',
+    image: '/images/services/digital-evolution.webp',
     benefits: [
       'Human-centered digital transformation strategies',
       'Ethical AI implementation and governance',
@@ -25,7 +25,7 @@ const offersData = [
     id: 'executive-mentoring',
     title: 'Executive Mentoring & Boardroom Support',
     description: 'We provide specialized mentoring and support for executives and board members, helping them navigate complex leadership challenges with psychological insights and evidence-based approaches.',
-    image: '/images/services/executive-mentoring.jpg',
+    image: '/images/services/executive-mentoring.webp',
     benefits: [
       'One-to-one executive mentoring',
       'Board development and effectiveness',
@@ -39,7 +39,7 @@ const offersData = [
     id: 'psychological-therapy',
     title: 'Psychological Therapy & ADHD Coaching',
     description: 'Our psychological therapy services provide a safe, confidential space for individuals to explore challenges, process difficult experiences, and develop strategies for positive change and growth.',
-    image: '/images/services/psychological-therapy.jpg',
+    image: '/images/services/psychological-therapy.webp',
     benefits: [
       'Evidence-based therapeutic approaches',
       'Trauma-informed care',
@@ -51,9 +51,9 @@ const offersData = [
   },
   {
     id: 'neurodiversity',
-    title: 'Neurodiversity as a strategic advantage',
+    title: 'Different Thinking For Different Thinkers',
     description: 'Our specialized ADHD coaching services help individuals harness their unique cognitive style, develop effective strategies, and thrive in both personal and professional environments.',
-    image: '/images/services/adhd-coaching.jpg',
+    image: '/images/services/adhd-coaching.webp',
     benefits: [
       'Personalized strategies for executive functioning',
       'Work and study environment optimization',
@@ -61,7 +61,7 @@ const offersData = [
       'Building sustainable routines and habits',
       'Developing self-advocacy skills'
     ],
-    link: '/our-services/neurodiversity'
+    link: '/our-services/thinking-different'
   }
 ];
 
@@ -178,7 +178,7 @@ export default function OurOffersPage() {
               { type: 'digital', title: 'Digital Evolution & AI Adoption' },
               { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
               { type: 'psychological', title: 'Psychological Therapy & ADHD Coaching' },
-              { type: 'neurodiversity', title: 'Neurodiversity as a strategic advantage' }
+              { type: 'neurodiversity', title: 'Different Thinking For Different Thinkers' }
             ].map(({ type, title }) => (
               <Link 
                 key={type} 

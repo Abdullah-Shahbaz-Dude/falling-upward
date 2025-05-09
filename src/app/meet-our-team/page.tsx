@@ -11,6 +11,7 @@ function WhoWeAreContent() {
   const [activeTab, setActiveTab] = useState('alexander');
   const [showQualifications, setShowQualifications] = useState(false);
   const [showMemberships, setShowMemberships] = useState(false);
+  const [showSuzanneQualifications, setShowSuzanneQualifications] = useState(false);
 
   const teamMembers = [
     {
@@ -42,10 +43,10 @@ function WhoWeAreContent() {
 
 
       bio: [
-        "Alexander Church is a strategic leader and transformation consultant with an MSc in Psychology and Forensic Psychology, specialising in digital evolution, leadership psychology, therapy, and mentoring. With a deep understanding of human behaviour, cognitive diversity, and organisational systems, he helps individuals and businesses break free from rigid frameworks, rethink challenges from first principles, and build psychologically resilient, high-performing environments.",
-        "A leader in digital health, transformation, and AI-driven strategy, Alexander has spearheaded large-scale service redesigns across the public, private, and voluntary sectors, embedding data-driven decision-making and behavioural science into complex change processes. His expertise in bridging the gap between technology and people has led to the development of digital health platforms, AI-powered workforce solutions, and strategic models for sustainable transformation, ensuring that innovation is not just technically sound but also psychologically informed and human-centred.",
-        "At the core of his work is a deep commitment to psychology, therapy, and human development. As a qualified psychological therapist and ADHD coach, he works with individuals to navigate identity, impulsivity, and executive function challenges, offering structured support that blends psychological insight with practical, strengths-based mentoring. His lived experience of ADHD and neurodivergence, combined with professional expertise, allows him to guide individuals, professionals, and organisations in optimising cognitive diversity for innovation, problem-solving, and strategic success.",
-        "His approach is rooted in first principles thinking and behavioural science, ensuring that organisations, leadership teams, and individuals do not just react to change but actively shape it. Whether advising boards on strategic decision-making, leading large-scale transformation, or working one-to-one in therapeutic practice, his focus remains on aligning growth, innovation, and resilience with the psychology of human behaviour."
+        "Alexander is a psychological therapist, ADHD coach, and an organisational and business consultant specialising in therapy, digital evolution and mentoring. With a deep understanding of human behaviour, Neurodiversity, and organisational systems, he helps both individuals and businesses break free from rigid frameworks, rethink challenges from first principles thinking, and build psychologically resilient, high performing environments.",
+        "At the core of his work is a deep commitment to psychology, therapy, and human development. He works with individuals to navigate identity, impulsivity, and executive function challenges, offering structured support that blends psychological insight with practical, strengths-based mentoring." ,
+        "A leader in digital health, transformation, and AI-driven strategy, Alexander has spearheaded large scale service redesigns across the public, private, and voluntary sectors, embedding data-driven decision-making and behavioural science into complex change processes. His expertise in bridging the gap between technology and people has led to the development of digital health platforms, AI-powered workforce solutions that at psychologically informed and human-centred.",
+        "His approach is rooted in first principles thinking and behavioural science, ensuring that organisations, leadership teams, and individuals don’t just react to change, but actively shape it. Whether advising boards on strategic decision-making, leading large-scale transformation, or working one-to-one in therapeutic practice, his focus remains on aligning growth, innovation, and resilience with the psychology of human behaviour."
       ]
     },
     {
@@ -57,7 +58,16 @@ function WhoWeAreContent() {
         { title: 'Clinical Psychology', icon: <FiHeart /> },
         { title: 'Neurodiversity', icon: <FiUsers /> },
         { title: 'Digital Evolution', icon: <FiCpu /> },
-        { title: 'Leadership', icon: <FiAward /> }
+        { title: 'Leadership', icon: <FiAward /> },
+        { title: 'Different Thinking', icon: <FiUsers /> }
+      ],
+      qualifications: [
+        { title: 'Doctorate in Clinical Psychology' },
+        { title: 'MSc - Psychology' },
+        { title: 'ADHD Clinical Interviewer (Adults)' },
+        { title: 'ADHD Diagnostic Interviewer' },
+        { title: 'Autism Clinical Interviewer (Adults)' },
+        { title: 'Diagnostic Interviewer for Social and Communication Disorders' }
       ],
       bio: [
         "Dr. Suzanne Heywood Everett is a Chartered Consultant Clinical Psychologist with over two decades of experience in both private practice and the NHS. Her career has spanned clinical leadership, service development, and staff wellbeing, working with individuals and teams across outpatient, inpatient, and high-complexity care settings. She has played a pivotal role in shaping innovative healthcare services, driving cultural change, and integrating evidence-based psychological frameworks into practice.",
@@ -215,6 +225,53 @@ function WhoWeAreContent() {
                           </div>
                         </div>
                       )}
+
+                      {member.id === 'suzanne' && (
+                        <div>
+                          {/* Qualifications & Training */}
+                          <div className="mt-10">
+                            <button
+                              onClick={() => setShowSuzanneQualifications(!showSuzanneQualifications)}
+                              className="w-full flex items-center justify-between p-4 bg-white rounded-2xl shadow-md border border-[#D6E2EA] text-[#0B4073] font-semibold text-lg hover:bg-[#EEF5FA] transition-colors"
+                            >
+                              <span>Qualifications & Training</span>
+                              <svg
+                                className={`w-5 h-5 transform transition-transform duration-30 ${
+                                  showSuzanneQualifications ? "rotate-180" : ""
+                                }`}
+                                fill="none"
+                                stroke="#0B4073"
+                                strokeWidth={2}
+                                viewBox="0 0 24 24"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
+
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: showSuzanneQualifications ? 'auto' : 0, opacity: showSuzanneQualifications ? 1 : 0 }}
+                              transition={{ duration: 0.3, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="space-y-3 mt-4">
+                                {member.qualifications?.map((item, index) => (
+                                  <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                                    className="flex items-start space-x-3 p-4 bg-white rounded-2xl shadow-sm border"
+                                  >
+                                    <span className="text-[#0B4073] text-xl leading-6 mt-1">•</span>
+                                    <span className="text-[#0B4073] text-base font-medium">{item.title}</span>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -265,7 +322,7 @@ function WhoWeAreContent() {
               { type: 'digital', title: 'Digital Evolution & AI Adoption' },
               { type: 'executive', title: 'Executive Mentoring & Boardroom Support' },
               { type: 'psychological', title: 'Psychological Therapy' },
-              { type: 'neurodiversity', title: 'Neurodiversity as a strategic advantage' }
+              { type: 'thinking-different', title: 'Different Thinking For Different Thinkers' }
             ].map(({ type, title }) => (
               <Link 
                 key={type} 

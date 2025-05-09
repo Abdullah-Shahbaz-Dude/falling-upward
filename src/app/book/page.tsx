@@ -60,10 +60,10 @@ const bookingOptions = [
   },
   {
     id: 'neurodiversity',
-    title: 'Neurodiversity for Strategic Advantage',
+    title: 'Different Thinking For Different Thinkers',
     description: 'Leverage neurodiversity to drive innovation and competitive advantage in your organization.',
     icon: <FiBookOpen className="h-7 w-7" />,
-    href: '/book/neurodiversity',
+    href: '/book/thinking-different',
     image: '/images/shutterstock_2455025455.jpg'
   }
 ];

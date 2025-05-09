@@ -446,7 +446,7 @@ export default function PsychologicalTherapyPage() {
                         </li>
 
                         <li className="flex items-start">
-                          <div className="falex-shrink-0 mt-1 mr-4 text-blue-500">
+                          <div className="flex-shrink-0 mt-1 mr-4 text-blue-500">
                             <img
                               src="/favicon.ico"
                               alt="icon"

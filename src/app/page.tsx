@@ -604,7 +604,7 @@ export default function Home() {
               />
 
               <AccordionItem
-                title="Celebrating Neurodiversity"
+                title="Different Thinking"
                 content={
                   <div className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-2">
                     <p>
@@ -742,7 +742,7 @@ export default function Home() {
             {/* neurodiversity */}
             <div className="flex flex-col items-center bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
               <Link
-                href="/our-services/neurodiversity"
+                href="/our-services/thinking-different"
                 className="group w-full"
               >
                 <div className="w-full aspect-square relative overflow-hidden">
@@ -756,7 +756,7 @@ export default function Home() {
                 </div>
                 <div className="p-6 bg-white">
                   <h3 className="text-center font-medium text-gray-800 text-lg">
-                    Neurodiversity for strategic advantage{" "}
+                    Different Thinking For Different Thinkers{" "}
                   </h3>
                 </div>
               </Link>
@@ -839,7 +839,7 @@ export default function Home() {
               },
               {
                 type: "neurodiversity",
-                title: "Neurodiversity as a strategic advantage",
+                title: "Different Thinking For Different Thinkers",
               },
             ].map(({ type, title }) => (
               <Link key={type} href={`/book/${type}`} className="group w-full">

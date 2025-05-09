@@ -84,8 +84,8 @@ export function Navbar() {
           
         },
         {
-          name: "Neurodiversity as a strategic advantage",
-          href: "/our-services/neurodiversity",
+          name: "Different Thinking For Different Thinkers",
+          href: "/our-services/thinking-different",
          
         },
       ],

@@ -13,7 +13,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: 'Falling Upwards - Psychology-Driven Solutions',
-  description: 'We provide psychology-driven solutions for individuals and organizations, including digital evolution, executive mentoring, therapy, and neurodiversity services.',
+  description: 'We provide psychology-driven solutions for individuals and organizations, including digital evolution, executive mentoring, therapy, and Different Thinking services.',
 };
 
 export const viewport: Viewport = {
