@@ -193,6 +193,19 @@ export default function PsychologicalTherapyPage() {
                 from enjoying the here and now and looking forwards to a happy future.
               </p>
             </div>
+            {/* Inserted Image */}
+            <div className="flex justify-center mt-12">
+              <div className="relative w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/services/IMG_8830.webp"
+                  alt="Therapy in nature"
+                  width={900}
+                  height={350}
+                  className="object-cover w-full h-[220px] md:h-[350px]"
+                  priority={false}
+                />
+              </div>
+            </div>
           </section>
 
           {/* <div className="bg-[#F7FAFC] py-20">
@@ -255,6 +268,19 @@ export default function PsychologicalTherapyPage() {
             <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-[#0B4073] leading-tight">
               How are things for you?
             </h2>
+          </div>
+          {/* Inserted Image after 'How are things for you?' */}
+          <div className="flex justify-center mb-12">
+            <div className="relative w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl">
+              <Image
+                src="/images/services/IMG_8426.webp"
+                alt="Therapy room"
+                width={900}
+                height={350}
+                className="object-cover w-full h-[220px] md:h-[350px]"
+                priority={false}
+              />
+            </div>
           </div>
           <div className="max-w-7xl mx-auto px-6 md:px-12 ">
             <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-2">
@@ -351,6 +377,19 @@ export default function PsychologicalTherapyPage() {
                 We use an integrative model of therapy, adapting each session to meet your unique needs.
                 This may include:
               </p>
+              {/* Inserted Image in Our Approach section */}
+              <div className="flex justify-center mb-12">
+                <div className="relative w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/images/services/DSC_1497.webp"
+                    alt="Therapy walk"
+                    width={900}
+                    height={350}
+                    className="object-cover w-full h-[220px] md:h-[350px]"
+                    priority={false}
+                  />
+                </div>
+              </div>
               <div className="space-y-10 mt-12">
                 {[
                   "Compassion-Focused Therapy",
@@ -416,6 +455,20 @@ export default function PsychologicalTherapyPage() {
                         flowing more naturally in the open air.
                       </p>
                     </div>
+                     {/* Image below the white box */}
+          <div className="flex justify-center mt-8">
+            <div className="relative w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
+              <Image
+                src="/images/services/IMG_7887.webp"
+                alt="Walking therapy in nature"
+                width={800}
+                height={300}
+                className="object-cover w-full h-[180px] md:h-[300px]"
+                priority={false}
+              />
+            </div>
+          </div>
+
                   </div>
 
                   {/* Right column - Benefits */}
@@ -570,6 +623,7 @@ export default function PsychologicalTherapyPage() {
             </section>
           </div>
 
+         
         </>
       )}
 

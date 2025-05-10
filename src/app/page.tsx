@@ -775,17 +775,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="section bg-[#7094B7] py-16 px-10">
-        <div className="container-custom mx-auto">
-          <h2 className="text-4xl font-bold text-center text-white mb-12">
-            Testimonials
-          </h2>
-
-          <TestimonialSlider />
-        </div>
-      </section>
-
       {/* Organizations We've Worked With */}
       <section className="section bg-[#F0F5F8] py-24 md:py-32">
         <div className="container-custom mx-auto">

@@ -392,7 +392,7 @@ export default function ExecutiveMentoringPage() {
               {/* Left: Image */}
               <div className="w-full md:w-1/2">
                 <img
-                  src="/images/executive/how.jpg"
+                  src="/images/services/IMG_8401.webp"
                   alt="Team discussion"
                   className="rounded-lg shadow-md w-full object-cover h-full max-h-[450px]"
                 />
