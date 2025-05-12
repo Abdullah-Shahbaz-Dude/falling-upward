@@ -768,7 +768,7 @@ export default function PsychologicalTherapyPage() {
 
                   <div className="relative w-full h-[350px] overflow-hidden rounded-xl mt-4">
                     <Image
-                      src="/images/services/adhd-coaching.jpg"
+                      src="/images/services/adhd-coaching.webp"
                       alt="Colorful forest view representing ADHD coaching"
                       fill
                       style={{ objectFit: "cover" }}

@@ -18,7 +18,7 @@ function WhoWeAreContent() {
       id: 'alexander',
       name: 'Alexander Church',
       role: 'Organisational & Business Consultant, Psychological Therapist & ADHD Coach ',
-      image: '/images/meet-our-team/alex.svg',
+      image: '/images/meet-our-team/alex.webp',
      
       qualifications: [
         { title: 'Msc Psychology' },

@@ -46,20 +46,19 @@ function LogoSlider() {
       { name: "Organization 1", src: "/images/logos/OIP.png" },
       { name: "Organization 2", src: "/images/logos/OIP-2.png" },
       { name: "Organization 3", src: "/images/logos/OIP-3.png" },
-      { name: "Organization 4", src: "/images/logos/OIP-4.png" },
       { name: "Organization 5", src: "/images/logos/OIP-5.png" },
+      { name: "Organization 6", src: "/images/logos/OIP-6.png" },
     ],
     // Second slide
     [
-      { name: "Organization 6", src: "/images/logos/OIP-6.png" },
       { name: "Organization 7", src: "/images/logos/OIP-7.png" },
       { name: "Organization 8", src: "/images/logos/OIP-8.png" },
       { name: "Organization 9", src: "/images/logos/OIP-9.png" },
       { name: "Organization 10", src: "/images/logos/download.png" },
+      { name: "Organization 11", src: "/images/logos/download-1.png" },
     ],
     // Third slide
     [
-      { name: "Organization 11", src: "/images/logos/download-1.png" },
       { name: "Organization 12", src: "/images/logos/download-1-1.png" },
       { name: "Organization 13", src: "/images/logos/download-11.png" },
       { name: "Organization 14", src: "/images/logos/thumbnail_image001.png" },
@@ -100,13 +99,13 @@ function LogoSlider() {
                       key={logoIndex}
                       className="flex flex-col justify-center items-center py-6 px-4 transition-all duration-300 group"
                     >
-                      <div className="relative h-28 md:h-36 w-full mb-4">
+                      <div className="relative h-28 md:h-36 w-full mb-4 flex items-center justify-center">
                         <Image
                           src={logo.src}
                           alt={logo.name}
                           width={500}
                           height={500}
-                          className="object-contain w-full h-full transition-all duration-300"
+                          className="object-contain max-h-24 max-w-40 transition-all duration-300"
                           priority={groupIndex === 0}
                         />
                       </div>
@@ -141,150 +140,6 @@ function LogoSlider() {
             <span className="text-white font-medium">{index + 1}</span>
           </button>
         ))}
-      </div>
-    </div>
-  );
-}
-
-// Testimonial Slider Component
-function TestimonialSlider() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 6;
-  const slidesToShow = 3;
-  const maxIndex = totalSlides - slidesToShow;
-
-  const testimonials = [
-    {
-      id: 1,
-      quote:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      name: "Shari Gutmann",
-      title: "CEO, Tech Company",
-      image: "/images/testimonials/person1.jpg",
-    },
-    {
-      id: 2,
-      quote:
-        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      name: "Shari Gutmann",
-      title: "Marketing Director",
-      image: "/images/testimonials/person2.jpg",
-    },
-    {
-      id: 3,
-      quote:
-        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-      name: "Shari Gutmann",
-      title: "HR Manager",
-      image: "/images/testimonials/person3.jpg",
-    },
-    {
-      id: 4,
-      quote:
-        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      name: "Shari Gutmann",
-      title: "Team Lead",
-      image: "/images/testimonials/person4.jpg",
-    },
-    {
-      id: 5,
-      quote:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-      name: "Shari Gutmann",
-      title: "Project Manager",
-      image: "/images/testimonials/person5.jpg",
-    },
-    {
-      id: 6,
-      quote:
-        "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.",
-      name: "Shari Gutmann",
-      title: "Department Head",
-      image: "/images/testimonials/person6.jpg",
-    },
-  ];
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => Math.min(prev + 1, maxIndex));
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => Math.max(prev - 1, 0));
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(Math.min(Math.max(index, 0), maxIndex));
-  };
-
-  const visibleTestimonials = testimonials.slice(
-    currentSlide,
-    currentSlide + slidesToShow
-  );
-
-  return (
-    <div className="relative">
-      <div className="flex flex-col items-center">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          {visibleTestimonials.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="bg-white rounded-lg shadow-lg p-6 flex flex-col"
-            >
-              <div className="text-[#6A8EA0] text-4xl font-serif mb-4">"</div>
-              <p className="text-gray-700 mb-6 flex-grow">
-                {testimonial.quote}
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <Image
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h4 className="font-medium text-[#6A8EA0]">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-sm text-gray-600">{testimonial.title}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-center space-x-4">
-          <button
-            onClick={prevSlide}
-            disabled={currentSlide === 0}
-            className={`p-2 rounded-full ${currentSlide === 0 ? "text-gray-400 bg-white/30 cursor-not-allowed" : "text-white bg-white/20 hover:bg-white/30"} transition-colors`}
-            aria-label="Previous testimonials"
-          >
-            <FiChevronLeft size={24} />
-          </button>
-
-          <div className="flex space-x-2">
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? "bg-white w-8" : "bg-white/50"}`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={nextSlide}
-            disabled={currentSlide === maxIndex}
-            className={`p-2 rounded-full ${currentSlide === maxIndex ? "text-gray-400 bg-white/30 cursor-not-allowed" : "text-white bg-white/20 hover:bg-white/30"} transition-colors`}
-            aria-label="Next testimonials"
-          >
-            <FiChevronRight size={24} />
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -364,7 +219,7 @@ export default function Home() {
       }
     }, 50);
 
-    // Rotate through images every 10 seconds (7s zoom + 3s still)
+    // Rotate through images every 6 seconds (4s zoom + 2s still)
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => {
         const nextIndex = (prevIndex + 1) % backgroundImages.length;
@@ -388,7 +243,7 @@ export default function Home() {
 
         return nextIndex;
       });
-    }, 10000);
+    }, 6000);
 
     return () => {
       clearInterval(interval);
@@ -404,7 +259,7 @@ export default function Home() {
         {backgroundImages.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 overflow-hidden transition-opacity duration-3000 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-0 overflow-hidden transition-opacity duration-300 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"}`}
           >
             <div
               ref={(el) => {
@@ -473,7 +328,6 @@ export default function Home() {
                 <span>3 billion seconds</span> on this
                 earth to make that journey count.
               </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#0B4073] to-[#7094B7] mx-auto mt-6 rounded-full"></div>
             </div>
           </div>
 
@@ -764,14 +618,14 @@ export default function Home() {
           </div>
 
           {/* See More Button */}
-          <div className="text-center mt-12">
+          {/* <div className="text-center mt-12">
             <Link
               href="/our-services"
               className="inline-flex items-center text-[#0B4073] bg-[#D6E2EA]/30 px-6 py-3 rounded-full hover:bg-[#D6E2EA]/50 transition-colors duration-300 font-medium"
             >
               <span>See More</span>
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 

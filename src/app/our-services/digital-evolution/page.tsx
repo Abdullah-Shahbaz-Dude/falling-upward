@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 const accordionItems = [
   {
     title: 'Bottom-Up Change That Works',
-    content: 'Digital transformation isn\'t just about software—it\'s about people. We engage employees from the start, ensuring AI adoption is driven by real needs rather than imposed solutions.',
+    content: 'Digital transformation isn\'t just about software, it\'s about people. We engage employees from the start, ensuring AI adoption is driven by real needs rather than imposed solutions.',
   },
   {
     title: 'Workforce-Led Digital Maturity Audits Before implementing AI',
@@ -27,7 +27,7 @@ const accordionItems = [
   },
   {
     title: 'Strategic Change Management & Training',
-    content: 'We design bespoke training and support plans that help employees transition smoothly into AI-enhanced ways of working—building trust, competence, and digital confidence.',
+    content: 'We design bespoke training and support plans that help employees transition smoothly into AI-enhanced ways of working, building trust, competence, and digital confidence.',
   },
 ];
 
