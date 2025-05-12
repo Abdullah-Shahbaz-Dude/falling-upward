@@ -134,7 +134,7 @@ export default function ExecutiveMentoringPage() {
       {/* Hero Section */}
       <HeroSection
         title="Executive Mentoring & Boardroom Support"
-        subtitle="We provide specialized mentoring and support for executives and board members, helping them navigate complex leadership challenges."
+        subtitle="We provide specialised mentoring and support for executives and board members, helping them navigate complex leadership challenges."
         backgroundImage="/images/services/executive-mentoring.webp"
         height="medium"
         textPosition="left"
@@ -447,7 +447,7 @@ export default function ExecutiveMentoringPage() {
                           {section.title}
                         </h3>
                       </div>
-                      <ul className="list-disc pl-4 sm:pl-6 text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed space-y-1 sm:space-y-2">
+                      <ul className=" pl-4 sm:pl-6 text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed space-y-1 sm:space-y-2">
                         {Array.isArray(section.description) ? (
                           section.description.map((point, index) => (
                             <motion.li

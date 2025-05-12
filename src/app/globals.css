@@ -66,3 +66,12 @@ body {
     left: 1.5rem !important;
   }
 }
+
+@media screen and (width: 2049px) and (height: 992px) {
+  .navbar-logo-img {
+    width: 300px;
+    height: 300px;
+    max-width: none;
+    max-height: none;
+  }
+}

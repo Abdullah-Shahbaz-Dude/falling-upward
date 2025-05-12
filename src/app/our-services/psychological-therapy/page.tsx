@@ -3,7 +3,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FiArrowLeft, FiArrowRight, FiChevronDown, FiUsers, FiBriefcase } from "react-icons/fi";
+import {
+  FiArrowLeft,
+  FiArrowRight,
+  FiChevronDown,
+  FiUsers,
+  FiBriefcase,
+} from "react-icons/fi";
 import { HeroSection } from "@/components/HeroSection";
 import {
   FaBrain,
@@ -14,7 +20,6 @@ import {
   FaUserFriends,
 } from "react-icons/fa";
 import { CheckCircle } from "lucide-react";
-
 
 export default function PsychologicalTherapyPage() {
   const coachingOutcomes = [
@@ -128,10 +133,13 @@ export default function PsychologicalTherapyPage() {
                 />
               </div>
               <h3 className="text-2xl font-bold mb-3">Psychological Therapy</h3>
-              <p className={`text-base ${
-                activeOption === "psychological" ? "text-white/80" : "text-gray-600"
-              }`}>
-              </p>
+              <p
+                className={`text-base ${
+                  activeOption === "psychological"
+                    ? "text-white/80"
+                    : "text-gray-600"
+                }`}
+              ></p>
             </button>
 
             <button
@@ -144,24 +152,21 @@ export default function PsychologicalTherapyPage() {
             >
               <div
                 className={`p-6 rounded-full mb-6 ${
-                  activeOption === "adhd"
-                    ? "bg-white/20"
-                    : "bg-[#D6E2EA]"
+                  activeOption === "adhd" ? "bg-white/20" : "bg-[#D6E2EA]"
                 }`}
               >
                 <FiBriefcase
                   className={`w-12 h-12 ${
-                    activeOption === "adhd"
-                      ? "text-white"
-                      : "text-[#0B4073]"
+                    activeOption === "adhd" ? "text-white" : "text-[#0B4073]"
                   }`}
                 />
               </div>
               <h3 className="text-2xl font-bold mb-3">ADHD Coaching</h3>
-              <p className={`text-base ${
-                activeOption === "adhd" ? "text-white/80" : "text-gray-600"
-              }`}>
-              </p>
+              <p
+                className={`text-base ${
+                  activeOption === "adhd" ? "text-white/80" : "text-gray-600"
+                }`}
+              ></p>
             </button>
           </div>
         </div>
@@ -170,8 +175,6 @@ export default function PsychologicalTherapyPage() {
       {/* Content based on selection */}
       {activeOption === "psychological" && (
         <>
-
-
           {/* New Content Section */}
           <section className="bg-[#0B4073] text-white py-20 px-6 md:px-12 relative mb-20">
             {/* Decorative Element */}
@@ -180,17 +183,21 @@ export default function PsychologicalTherapyPage() {
             {/* Header Section */}
             <div className="max-w-5xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-extrabold leading-tight mb-6 text-[#F5F5F5]">
-                Are your worries, negative thoughts and <span className="text-[#B7C9E9]">experiences impacting</span> the life you want to live?
+                Are your worries, negative thoughts and{" "}
+                <span>experiences impacting</span> the life you want to live?
               </h2>
             </div>
 
             {/* Content Section */}
             <div className="max-w-3xl mx-auto text-center mb-10">
-              <p className="text-xl font-semibold text-[#F5F5F5] mb-4">Let us help</p>
+              <p className="text-xl font-semibold text-[#F5F5F5] mb-4">
+                Let us help
+              </p>
               <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-                Psychological therapy can help support people live happy and healthy lives,
-                and not to feel shackled by experiences and situations that can prevent them
-                from enjoying the here and now and looking forwards to a happy future.
+                Psychological therapy can help support people live happy and
+                healthy lives, and not to feel shackled by experiences and
+                situations that can prevent them from enjoying the here and now
+                and looking forwards to a happy future.
               </p>
             </div>
             {/* Inserted Image */}
@@ -333,7 +340,9 @@ export default function PsychologicalTherapyPage() {
                   How Therapy Can Support You
                 </h2>
                 <p className="text-lg md:text-xl text-gray-700 mt-4 max-w-3xl mx-auto">
-                  Our sessions offer a safe, non-judgemental space to explore what's going on, where it comes from, and how to move through it with empathy, not pressure.
+                  Our sessions offer a safe, non-judgemental space to explore
+                  what's going on, where it comes from, and how to move through
+                  it with empathy, not pressure.
                 </p>
               </div>
 
@@ -360,7 +369,9 @@ export default function PsychologicalTherapyPage() {
                         className="object-contain"
                       />
                     </div>
-                    <p className="text-gray-700 text-base font-medium leading-relaxed">{point}</p>
+                    <p className="text-gray-700 text-base font-medium leading-relaxed">
+                      {point}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -374,8 +385,8 @@ export default function PsychologicalTherapyPage() {
                 Our Approach
               </h2>
               <p className="text-lg md:text-xl text-gray-700 mb-8 text-center">
-                We use an integrative model of therapy, adapting each session to meet your unique needs.
-                This may include:
+                We use an integrative model of therapy, adapting each session to
+                meet your unique needs. This may include:
               </p>
               {/* Inserted Image in Our Approach section */}
               <div className="flex justify-center mb-12">
@@ -408,20 +419,14 @@ export default function PsychologicalTherapyPage() {
                     <h3 className="text-xl font-semibold text-[#0B4073] mb-2">
                       {approach}
                     </h3>
-
                   </div>
                 ))}
               </div>
-
-
-
             </div>
-
-
           </div>
           {/* Spacer for mobile only */}
           <div className="block md:hidden h-10"></div>
-          <div >
+          <div>
             <div className="relative bg-white overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-green-50 opacity-50"></div>
@@ -430,8 +435,12 @@ export default function PsychologicalTherapyPage() {
                 {/* Header section */}
                 <div className="text-center mb-16">
                   <h1 className="text-4xl md:text-5xl font-bold text-[#0B4073] mb-4">
-                    <span className="block text-6xl mb-6">Walking Therapy:</span>
-                    <span className="text-[#0B4073]">A Different Way to Talk</span>
+                    <span className="block text-6xl mb-6">
+                      Walking Therapy:
+                    </span>
+                    <span className="text-[#0B4073]">
+                      A Different Way to Talk
+                    </span>
                   </h1>
                   <div className="w-24 h-1 bg-gradient-to-r from-[#0B4073] to-[#0B4073] mx-auto mt-6"></div>
                 </div>
@@ -442,33 +451,34 @@ export default function PsychologicalTherapyPage() {
                   <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                     <div className="prose prose-lg text-gray-700">
                       <p>
-                        As an alternative to face-to-face or online therapy, Walking
-                        Therapy offers something a little different. Sometimes,
-                        stepping outside can help us connect more deeply, both with
-                        ourselves and with the world around us.
+                        As an alternative to face-to-face or online therapy,
+                        Walking Therapy offers something a little different.
+                        Sometimes, stepping outside can help us connect more
+                        deeply, both with ourselves and with the world around
+                        us.
                       </p>
                       <p className="mt-6">
-                        Walking Therapy blends gentle movement with conversation,
-                        allowing the rhythm of walking and the presence of nature to
-                        support the therapeutic process. For many people, walking
-                        side-by-side makes it easier to talk, with words and feelings
-                        flowing more naturally in the open air.
+                        Walking Therapy blends gentle movement with
+                        conversation, allowing the rhythm of walking and the
+                        presence of nature to support the therapeutic process.
+                        For many people, walking side-by-side makes it easier to
+                        talk, with words and feelings flowing more naturally in
+                        the open air.
                       </p>
                     </div>
-                     {/* Image below the white box */}
-          <div className="flex justify-center mt-8">
-            <div className="relative w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/services/IMG_7887.webp"
-                alt="Walking therapy in nature"
-                width={800}
-                height={300}
-                className="object-cover w-full h-[180px] md:h-[300px]"
-                priority={false}
-              />
-            </div>
-          </div>
-
+                    {/* Image below the white box */}
+                    <div className="flex justify-center mt-8">
+                      <div className="relative w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
+                        <Image
+                          src="/images/services/IMG_7887.webp"
+                          alt="Walking therapy in nature"
+                          width={800}
+                          height={300}
+                          className="object-cover w-full h-[180px] md:h-[300px]"
+                          priority={false}
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   {/* Right column - Benefits */}
@@ -492,8 +502,8 @@ export default function PsychologicalTherapyPage() {
                               Connection with nature
                             </h3>
                             <p className="text-gray-600 mt-1">
-                              Supporting emotional regulation, reducing stress, and
-                              offering a grounded sense of presence.
+                              Supporting emotional regulation, reducing stress,
+                              and offering a grounded sense of presence.
                             </p>
                           </div>
                         </li>
@@ -530,9 +540,9 @@ export default function PsychologicalTherapyPage() {
                               Ease and Flow
                             </h3>
                             <p className="text-gray-600 mt-1">
-                              Walking often makes difficult conversations feel lighter
-                              and less intense, helping emotional processing unfold
-                              more organically.
+                              Walking often makes difficult conversations feel
+                              lighter and less intense, helping emotional
+                              processing unfold more organically.
                             </p>
                           </div>
                         </li>
@@ -550,8 +560,8 @@ export default function PsychologicalTherapyPage() {
                               Creativity and Insight
                             </h3>
                             <p className="text-gray-600 mt-1">
-                              Natural environments have been shown to boost creative
-                              thinking and emotional exploration.
+                              Natural environments have been shown to boost
+                              creative thinking and emotional exploration.
                             </p>
                           </div>
                         </li>
@@ -569,8 +579,8 @@ export default function PsychologicalTherapyPage() {
                               Support for mood
                             </h3>
                             <p className="text-gray-600 mt-1">
-                              Regular time in nature has been associated with reduced
-                              symptoms of depression and anxiety.
+                              Regular time in nature has been associated with
+                              reduced symptoms of depression and anxiety.
                             </p>
                           </div>
                         </li>
@@ -589,9 +599,9 @@ export default function PsychologicalTherapyPage() {
 
                 {/* Subtitle */}
                 <p className="text-center text-gray-700 max-w-3xl mx-auto mb-8 sm:mb-10 text-lg sm:text-xl leading-relaxed">
-                  Our sessions offer a safe, non-judgemental space to explore what's
-                  going on, where it comes from, and how to move through it—with
-                  empathy, not pressure.
+                  Our sessions offer a safe, non-judgemental space to explore
+                  what's going on, where it comes from, and how to move through
+                  it—with empathy, not pressure.
                 </p>
 
                 {/* Help Box */}
@@ -622,14 +632,12 @@ export default function PsychologicalTherapyPage() {
               </div>
             </section>
           </div>
-
-         
         </>
       )}
 
       {/* Placeholder content for ADHD Coaching */}
       {activeOption === "adhd" && (
-        <div >
+        <div>
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             {/* Heading */}
             <div className="mb-20 text-center mt-20">
@@ -686,11 +694,7 @@ export default function PsychologicalTherapyPage() {
             <div className="mt-20 text-center max-w-4xl mx-auto ">
               <p className="text-2xl md:text-2xl text-gray-700 leading-relaxed">
                 Whilst some of the above is directly assocated with{" "}
-                <span >ADHD</span>,{" "}
-                <span >
-                  some of it may not be
-                </span>
-                , and{" "}
+                <span>ADHD</span>, <span>some of it may not be</span>, and{" "}
                 <span className="font-semibold text-[#0B4073]">
                   coaching will help you understand this better and develop a
                   better understand
@@ -709,35 +713,37 @@ export default function PsychologicalTherapyPage() {
               >
                 Who Is This ADHD Coaching For?
                 <FiChevronDown
-                  className={`ml-4 text-3xl text-[#0B4073] transition-transform duration-300 ${isOpen ? "rotate-180" : ""
-                    }`}
+                  className={`ml-4 text-3xl text-[#0B4073] transition-transform duration-300 ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
               <div
                 id="coachingForContent"
-                className={`transition-all duration-500 ease-in-out bg-[#7094B7] px-8 md:px-16 ${isOpen
-                  ? "max-h-[1000px] py-8 space-y-6"
-                  : "max-h-0 overflow-hidden py-0"
-                  }`}
+                className={`transition-all duration-500 ease-in-out bg-[#7094B7] px-8 md:px-16 ${
+                  isOpen
+                    ? "max-h-[1000px] py-8 space-y-6"
+                    : "max-h-0 overflow-hidden py-0"
+                }`}
               >
                 <p className="text-white leading-relaxed">
                   Whether you are an adult navigating ADHD in the workplace, a
                   business owner struggling with focus and organisation, a
                   parent managing the complexities of family life, or someone
-                  looking to understand if they have ADHD and are unsure what
-                  to do, this coaching is for you.
+                  looking to understand if they have ADHD and are unsure what to
+                  do, this coaching is for you.
                 </p>
 
                 <p className="text-white leading-relaxed">
                   You may be struggling with focus, motivation, or feeling
                   overwhelmed in your personal or professional life. Do you
-                  often feel like your brain is working against you rather
-                  than with you? ADHD can impact various areas of life, from
-                  relationships and career success to parenting and
-                  self-esteem. My coaching is designed to help you navigate
-                  these challenges, understand yourself better, and create
-                  strategies that work for you.
+                  often feel like your brain is working against you rather than
+                  with you? ADHD can impact various areas of life, from
+                  relationships and career success to parenting and self-esteem.
+                  My coaching is designed to help you navigate these challenges,
+                  understand yourself better, and create strategies that work
+                  for you.
                 </p>
 
                 <p className="text-white leading-relaxed">
@@ -746,7 +752,9 @@ export default function PsychologicalTherapyPage() {
                   equal measure, as I've learned how to make the most of the
                   condition — and that's what I'd like to help you do .
                 </p>
-                <span className="font-semibold text-[#0B4073]">Alex chruch </span>
+                <span className="font-semibold text-[#0B4073]">
+                  Alex chruch{" "}
+                </span>
               </div>
             </div>
           </div>
@@ -797,16 +805,18 @@ export default function PsychologicalTherapyPage() {
                         >
                           <span>{item.title}</span>
                           <FiChevronDown
-                            className={`text-xl transition-transform duration-300 ${openDropdown === item.id ? "rotate-180" : ""
-                              }`}
+                            className={`text-xl transition-transform duration-300 ${
+                              openDropdown === item.id ? "rotate-180" : ""
+                            }`}
                           />
                         </button>
                         <div
                           id={`dropdown-${item.id}`}
-                          className={`transition-all duration-300 ease-in-out text-gray-700 text-base ${openDropdown === item.id
-                            ? "max-h-96 px-6 pb-6"
-                            : "max-h-0 px-6 pb-0 overflow-hidden"
-                            }`}
+                          className={`transition-all duration-300 ease-in-out text-gray-700 text-base ${
+                            openDropdown === item.id
+                              ? "max-h-96 px-6 pb-6"
+                              : "max-h-0 px-6 pb-0 overflow-hidden"
+                          }`}
                         >
                           <p>{item.content}</p>
                         </div>
@@ -856,8 +866,8 @@ export default function PsychologicalTherapyPage() {
               <h2 className="text-xl font-bold text-[#0B4073] mb-4">
                 {" "}
                 ADHD doesn't have to hold you back. With the right strategies
-                and support, you can thrive and achieve your goals in a way
-                that works for you.
+                and support, you can thrive and achieve your goals in a way that
+                works for you.
               </h2>
             </div>
           </section>
@@ -891,7 +901,9 @@ export default function PsychologicalTherapyPage() {
           <div className="w-full flex flex-col items-center space-y-4 md:space-y-6">
             <Link href="/book/psychological" className="w-full max-w-md">
               <div className="bg-[#0B4073] text-white rounded-full py-4 px-8 flex items-center justify-between transition-all duration-300 hover:bg-[#0B4073]/90 group">
-                <span className="font-medium text-lg">Psychological Therapy</span>
+                <span className="font-medium text-lg">
+                  Psychological Therapy
+                </span>
                 <div className="bg-white rounded-full p-3 text-[#0B4073]">
                   <FiArrowRight className="w-5 h-5" />
                 </div>

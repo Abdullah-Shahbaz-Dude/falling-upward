@@ -8,6 +8,7 @@ import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
+  const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOffersOpen, setIsOffersOpen] = useState(false);
@@ -16,6 +17,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       // Get the hero section height based on the page
       // For home page, use full viewport height. For other pages, use a smaller height
@@ -99,6 +101,9 @@ export function Navbar() {
   // Determine if navbar should be visible on all pages
   const shouldShowNavbar = !isHeroVisible || isScrolled;
 
+  // Prevent hydration mismatch
+  if (!mounted) return null;
+
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
@@ -121,7 +126,7 @@ export function Navbar() {
                   alt="Falling Upward Logo"
                   width={100}
                   height={100}
-                  className="h-[50px] w-auto xs:h-[55px] sm:h-[60px] md:h-[70px] lg:h-[80px]"
+                  className="h-[50px] w-auto xs:h-[55px] sm:h-[60px] md:h-[70px] lg:h-[80px] navbar-logo-img"
                   priority
                 />
               ) : (
@@ -130,7 +135,7 @@ export function Navbar() {
                   alt="Falling Upward Logo"
                   width={130}
                   height={130}
-                  className="h-[60px] w-auto xs:h-[70px] sm:h-[80px] md:h-[90px] lg:h-[100px]"
+                  className="h-[60px] w-auto xs:h-[70px] sm:h-[80px] md:h-[90px] lg:h-[100px] navbar-logo-img"
                   priority
                 />
               )}
@@ -138,7 +143,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center mt-3 space-x-4 lg:space-x-8">
+          <nav className="hidden md:flex items-center mt-3 space-x-4 lg:space-x-8 navbar-nav">
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 <div
@@ -335,6 +340,27 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      <style jsx global>{`
+        @media screen and (width: 2049px) and (height: 1152px) {
+          .navbar-logo-img {
+            width: 150px !important;
+            height: 150px !important;
+            max-width: none !important;
+            max-height: none !important;
+          }
+          .navbar-nav {
+            margin-top: 10px !important;
+          }
+        }
+        @media screen and (width: 1080px) {
+          .navbar-logo-img {
+            width: 120px !important;
+            height: 120px !important;
+            max-width: none !important;
+            max-height: none !important;
+          }
+        }
+      `}</style>
     </header>
   );
 }

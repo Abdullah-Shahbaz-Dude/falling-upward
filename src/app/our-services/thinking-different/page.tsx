@@ -183,13 +183,6 @@ function DifferentThinkingContent() {
                     ))}
                   </div>
                 </div>
-
-                <p className="mt-8">
-                  Yet too often, these capabilities go unrecognised or the
-                  environment doesn't allow them to be expressed. This tool
-                  helps teams see and activate those strengths and match them to
-                  the work that needs doing.
-                </p>
               </div>
             </div>
           </div>
@@ -354,11 +347,11 @@ function DifferentThinkingContent() {
       {/* Main Content */}
       <section className="py-10 px-6 md:px-10 lg:px-20">
         <div className="max-w-6xl mx-auto">
-          {/* Wireframe Section */}
+          {/* Key Functions Section */}
           <section className=" px-6 bg-[#F7FAFC] pt-0">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-4xl md:text-5xl font-bold text-center text-[#0B4073] mb-12">
-                WIREFRAME
+                Key Functions
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
@@ -524,7 +517,7 @@ function DifferentThinkingContent() {
                   </p>
                 </div>
 
-                {/* Adding three more wireframes from the image */}
+                {/* Adding three more Key Functionss from the image */}
                 <div className="bg-[#142d42] rounded-3xl p-8 shadow-xl text-center hover:shadow-2xl transition-all duration-300">
                   <h3 className="text-xl font-bold text-white mb-6 uppercase">
                     PERSONA EXPLORER

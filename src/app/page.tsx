@@ -510,6 +510,42 @@ export default function Home() {
               padding: 0.75rem !important;
             }
           }
+
+          /* Custom resolution for 2049x992 */
+          @media screen and (width: 2049px) and (height: 992px) {
+            .container-custom {
+              max-width: 1800px !important;
+              padding-left: 2rem !important;
+              padding-right: 2rem !important;
+            }
+            
+            .hero-section {
+              height: 80vh !important;
+            }
+
+            .hero-section h1 {
+              font-size: 6rem !important;
+            }
+
+            .hero-section p {
+              font-size: 1.5rem !important;
+            }
+
+            /* Adjust grid layouts */
+            .grid {
+              gap: 1.5rem !important;
+            }
+
+            /* Adjust card sizes */
+            .rounded-xl {
+              max-width: 400px !important;
+            }
+
+            /* Adjust logo sizes */
+            .max-w-40 {
+              max-width: 32px !important;
+            }
+          }
         `}</style>
       </section>
       {/* What we offer? Section - Improved UI & UX */}

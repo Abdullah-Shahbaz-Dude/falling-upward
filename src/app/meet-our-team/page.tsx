@@ -45,8 +45,8 @@ function WhoWeAreContent() {
       bio: [
         "Alexander is a psychological therapist, ADHD coach, and an organisational and business consultant specialising in therapy, digital evolution and mentoring. With a deep understanding of human behaviour, Neurodiversity, and organisational systems, he helps both individuals and businesses break free from rigid frameworks, rethink challenges from first principles thinking, and build psychologically resilient, high performing environments.",
         "At the core of his work is a deep commitment to psychology, therapy, and human development. He works with individuals to navigate identity, impulsivity, and executive function challenges, offering structured support that blends psychological insight with practical, strengths-based mentoring." ,
-        "A leader in digital health, transformation, and AI-driven strategy, Alexander has spearheaded large scale service redesigns across the public, private, and voluntary sectors, embedding data-driven decision-making and behavioural science into complex change processes. His expertise in bridging the gap between technology and people has led to the development of digital health platforms, AI-powered workforce solutions that at psychologically informed and human-centred.",
-        "His approach is rooted in first principles thinking and behavioural science, ensuring that organisations, leadership teams, and individuals don’t just react to change, but actively shape it. Whether advising boards on strategic decision-making, leading large-scale transformation, or working one-to-one in therapeutic practice, his focus remains on aligning growth, innovation, and resilience with the psychology of human behaviour."
+        "A leader in digital health, transformation, and AI-driven strategy, Alexander has spearheaded large scale service redesigns across the public, private, and voluntary sectors, embedding data-driven decision-making and behavioural science into complex change processes. His expertise in bridging the gap between technology and people has led to the development of digital health platforms, AI-powered workforce solutions that and psychologically informed and human-centred.",
+        "His approach is rooted in first principles thinking and behavioural science, ensuring that organisations, leadership teams, and individuals don't just react to change, but actively shape it. Whether advising boards on strategic decision-making, leading large-scale transformation, or working one-to-one in therapeutic practice, his focus remains on aligning growth, innovation, and resilience with the psychology of human behaviour."
       ]
     },
     {
@@ -126,7 +126,7 @@ function WhoWeAreContent() {
                         alt={member.name}
                         width={500}
                         height={600}
-                        className="object-cover w-full h-full"
+                        className={`object-cover w-full h-full${member.id === 'alexander' ? ' team-member-image' : ''}`}
                       />
                     </div>
                     <div className="p-6">
@@ -340,6 +340,25 @@ function WhoWeAreContent() {
           </div>
         </div>
       </section>
+
+      <style jsx global>{`
+        @media screen and (width: 1080px) {
+          .team-member-image {
+            width: 300px !important;
+            height: 300px !important; 
+            max-width: none !important;
+            max-height: none !important;
+          }
+        }
+        @media screen and (min-width: 1370px) and (max-width: 2000px) {
+          .team-member-image {
+            width: 500px !important;
+            height: 500px !important;
+            max-width: none !important;
+            max-height: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

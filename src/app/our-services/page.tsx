@@ -10,7 +10,7 @@ const offersData = [
   {
     id: 'digital-evolution',
     title: 'Digital Evolution and AI Adoption',
-    description: 'We help organizations navigate the complex landscape of digital transformation and AI integration, ensuring technology serves human needs and enhances wellbeing rather than creating additional stress.',
+    description: 'We help organisations navigate the complex landscape of digital transformation and AI integration, ensuring technology serves human needs and enhances wellbeing rather than creating additional stress.',
     image: '/images/services/digital-evolution.webp',
     benefits: [
       'Human-centered digital transformation strategies',
@@ -24,7 +24,7 @@ const offersData = [
   {
     id: 'executive-mentoring',
     title: 'Executive Mentoring & Boardroom Support',
-    description: 'We provide specialized mentoring and support for executives and board members, helping them navigate complex leadership challenges with psychological insights and evidence-based approaches.',
+    description: 'We provide specialised mentoring and support for executives and board members, helping them navigate complex leadership challenges with psychological insights and evidence-based approaches.',
     image: '/images/services/executive-mentoring.webp',
     benefits: [
       'One-to-one executive mentoring',
@@ -52,7 +52,7 @@ const offersData = [
   {
     id: 'neurodiversity',
     title: 'Different Thinking For Different Thinkers',
-    description: 'Our specialized ADHD coaching services help individuals harness their unique cognitive style, develop effective strategies, and thrive in both personal and professional environments.',
+    description: 'Our specialised ADHD coaching services help individuals harness their unique cognitive style, develop effective strategies, and thrive in both personal and professional environments.',
     image: '/images/services/adhd-coaching.webp',
     benefits: [
       'Personalized strategies for executive functioning',
