@@ -180,7 +180,7 @@ function BookPageContent() {
       <HeroSection
         title="Boardroom Advisory"
         subtitle="Specialized guidance and facilitation for boards navigating change and strategic challenges"
-        backgroundImage="/images/services/executive-mentoring.jpg"
+        backgroundImage="/images/services/executive-mentoring.webp"
         textPosition="left"
       />
 

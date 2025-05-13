@@ -171,7 +171,7 @@ function BookPageContent() {
       <HeroSection
         title="Executive Mentoring"
         subtitle="Specialized mentoring for executives to navigate complex leadership challenges"
-        backgroundImage="/images/services/executive-mentoring.jpg"
+        backgroundImage="/images/services/executive-mentoring.webp"
         height="medium"
         textPosition="left"
       />

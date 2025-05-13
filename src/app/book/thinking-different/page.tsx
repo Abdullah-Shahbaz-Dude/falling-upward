@@ -278,7 +278,7 @@ function BookPageContent() {
       <HeroSection
         title="Different Thinking For Different Thinkers"
         subtitle="Innovation doesn't come from consensus; it comes from difference"
-        backgroundImage="/images/services/IMG_7552.jpg"
+        backgroundImage="/images/services/IMG_7552.webp"
         textPosition="left"
       />
 
