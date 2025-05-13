@@ -22,7 +22,7 @@ const bookingOptions = [
     id: "digital",
     title: "Digital Evolution & AI Adoption",
     description:
-      "Schedule a consultation to explore AI integration and digital transformation strategies for your organization.",
+      "Schedule a consultation to explore AI integration and digital transformation strategies for your organisation.",
     icon: <FiCpu className="h-7 w-7" />,
     href: "/book/digital",
     image: "/images/services/digital-evolution.webp",
@@ -40,7 +40,7 @@ const bookingOptions = [
     id: "executive",
     title: "Executive Mentoring",
     description:
-      "Specialized mentoring for executives to navigate complex leadership challenges.",
+      "Specialised mentoring for executives to navigate complex leadership challenges.",
     icon: <FiBriefcase className="h-7 w-7" />,
     href: "/book/executive",
     image: "/images/services/executive-mentoring.webp",
@@ -49,7 +49,7 @@ const bookingOptions = [
     id: "boardroom",
     title: "Boardroom Advisory",
     description:
-      "Specialized guidance and facilitation for boards navigating change and strategic challenges.",
+      "Specialised guidance and facilitation for boards navigating change and strategic challenges.",
     icon: <FiUsers className="h-7 w-7" />,
     href: "/book/boardroom",
     image: "/images/shutterstock_2228606361.jpg",
@@ -67,7 +67,7 @@ const bookingOptions = [
     id: "neurodiversity",
     title: "Different Thinking For Different Thinkers",
     description:
-      "Leverage neurodiversity to drive innovation and competitive advantage in your organization.",
+      "Leverage neurodiversity to drive innovation and competitive advantage in your organisation.",
     icon: <FiBookOpen className="h-7 w-7" />,
     href: "/book/thinking-different",
     image: "/images/shutterstock_2455025455.jpg",
@@ -80,7 +80,7 @@ function BookPageContent() {
       {/* Hero Section */}
       <HeroSection
         title="Book a Consultation"
-        subtitle="Choose from our range of specialized services"
+        subtitle="Choose from our range of specialised services"
         backgroundImage="/images/backgrounds/Digital-Evolution -Ai-Adoption.JPG"
         height="medium"
         textPosition="left"
