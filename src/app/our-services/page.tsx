@@ -55,8 +55,8 @@ const offersData = [
     description: 'Our specialised ADHD coaching services help individuals harness their unique cognitive style, develop effective strategies, and thrive in both personal and professional environments.',
     image: '/images/services/adhd-coaching.webp',
     benefits: [
-      'Personalized strategies for executive functioning',
-      'Work and study environment optimization',
+      'Personalised strategies for executive functioning',
+      'Work and study environment optimisation',
       'Harnessing ADHD strengths and managing challenges',
       'Building sustainable routines and habits',
       'Developing self-advocacy skills'
@@ -73,7 +73,7 @@ export default function OurOffersPage() {
       {/* Hero Section */}
       <HeroSection
         title="Our Services"
-        subtitle="We offer a range of psychology-driven services to help individuals and organizations thrive"
+        subtitle="We offer a range of psychology-driven services to help individuals and organisations thrive"
         backgroundImage="/images/backgrounds/Digital-Evolution -Ai-Adoption.JPG"
         height="medium"
         textPosition="left"
