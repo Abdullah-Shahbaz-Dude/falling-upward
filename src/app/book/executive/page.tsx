@@ -1,34 +1,46 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import { HeroSection } from '@/components/HeroSection';
-import { FiArrowLeft, FiBriefcase, FiCalendar, FiCheck, FiGlobe, FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
+import { useState, useEffect, Suspense } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { HeroSection } from "@/components/HeroSection";
+import {
+  FiArrowLeft,
+  FiBriefcase,
+  FiCalendar,
+  FiCheck,
+  FiGlobe,
+  FiMail,
+  FiMessageSquare,
+  FiPhone,
+  FiUser,
+} from "react-icons/fi";
 
-const bookingSchema = z.object({  
+const bookingSchema = z.object({
   // Personal Details
-  name: z.string().min(2, 'Name must be at least 2 characters'),
+  name: z.string().min(2, "Name must be at least 2 characters"),
   organisation: z.string().optional(),
   jobTitle: z.string().optional(),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(10, 'Please enter a valid phone number'),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
   linkedin: z.string().optional(),
 
   // About You
   mentoringReason: z.string().optional(),
   challenges: z.array(z.string()).optional(),
   otherChallenge: z.string().optional(),
-  previousMentoring: z.enum(['Yes', 'No']).optional(),
+  previousMentoring: z.enum(["Yes", "No"]).optional(),
   expectations: z.string().optional(),
   careerGoals: z.string().optional(),
-  sessionFormat: z.enum(['Online', 'In-person', 'Hybrid / Flexible']).optional(),
+  sessionFormat: z
+    .enum(["Online", "In-person", "Hybrid / Flexible"])
+    .optional(),
 
   // Data Protection Agreement
   dataProtectionAgreement: z.boolean().refine((val) => val === true, {
-    message: 'You must agree to our data protection policy',
+    message: "You must agree to our data protection policy",
   }),
 });
 
@@ -36,8 +48,8 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 
 function BookPageContent() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [selectedChallenges, setSelectedChallenges] = useState<string[]>([]);
   const [otherChallengeSelected, setOtherChallengeSelected] = useState(false);
 
@@ -56,65 +68,64 @@ function BookPageContent() {
   });
 
   // Watch for changes in challenges array
-  const challenges = watch('challenges') || [];
-  const hasOtherChallenge = challenges.includes('Other');
-
+  const challenges = watch("challenges") || [];
+  const hasOtherChallenge = challenges.includes("Other");
 
   const challengeOptions = [
-    'Role change or promotion',
-    'Leadership under pressure',
-    'Strategic growth or vision',
-    'Team conflict or dynamics',
-    'Burnout or decision fatigue',
-    'Confidence or presence',
-    'Navigating uncertainty',
-    'Other'
+    "Role change or promotion",
+    "Leadership under pressure",
+    "Strategic growth or vision",
+    "Team conflict or dynamics",
+    "Burnout or decision fatigue",
+    "Confidence or presence",
+    "Navigating uncertainty",
+    "Other",
   ];
 
-  const sessionFormats = [
-    'Online',
-    'In-person',
-    'Hybrid / Flexible'
-  ];
+  const sessionFormats = ["Online", "In-person", "Hybrid / Flexible"];
 
   // Set the date in the form when the date picker changes
 
   // Handle form submission
   const onSubmit = async (data: BookingFormValues) => {
     setIsLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
       // Add form type identifier
       const formData = {
         ...data,
-        formType: 'executive-mentoring',
-        consultationTypeLabel: 'Executive Mentoring'
+        formType: "executive-mentoring",
+        consultationTypeLabel: "Executive Mentoring",
       };
-      
-      console.log('Form data submitted:', formData);
-      
+
+      console.log("Form data submitted:", formData);
+
       // Send data to API
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
+      const response = await fetch("/api/send-email", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      
+
       const result = await response.json();
-      
+
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit form');
+        throw new Error(result.error || "Failed to submit form");
       }
-      
+
       // Show success message
-      setSuccess('Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation');
+      setSuccess(
+        "Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation"
+      );
       reset();
     } catch (err) {
-      console.error('Booking error:', err);
-      setError('There was an error booking your consultation. Please try again.');
+      console.error("Booking error:", err);
+      setError(
+        "There was an error booking your consultation. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -122,7 +133,7 @@ function BookPageContent() {
 
   // Add global styles for form inputs
   useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = `
       .input-field {
         width: 100%;
@@ -159,7 +170,7 @@ function BookPageContent() {
       }
     `;
     document.head.appendChild(style);
-    
+
     return () => {
       document.head.removeChild(style);
     };
@@ -176,17 +187,24 @@ function BookPageContent() {
         textPosition="left"
       />
       <div className="container-custom mx-auto">
-        <div className="mb-16 mt-16">
-          <Link href="/our-services/executive-mentoring" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
+        <div className="mb-16 mt-16 ml-10">
+          <Link
+            href="/our-services/executive-mentoring"
+            className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200"
+          >
             <FiArrowLeft className="mr-2" />
             Back to Executive Mentoring
           </Link>
         </div>
-        
+
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#0B4073] p-6 text-white">
-            <h1 className="text-3xl font-bold">Executive Mentoring Consultation Form</h1>
-            <p className="mt-2 opacity-90">Schedule your consultation session</p>
+            <h1 className="text-3xl font-bold">
+              Executive Mentoring Consultation Form
+            </h1>
+            <p className="mt-2 opacity-90">
+              Schedule your consultation session
+            </p>
           </div>
 
           <div className="p-6 md:p-8">
@@ -201,8 +219,10 @@ function BookPageContent() {
                 <FiCheck className="mr-2 mt-1" />
                 <div>
                   <p className="font-medium">{success}</p>
-                  <p className="mt-1">We will contact you shortly to confirm your appointment.</p>
-                  <Link href="/" className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium">
+                  <Link
+                    href="/"
+                    className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium"
+                  >
                     Return to Home
                   </Link>
                 </div>
@@ -218,12 +238,16 @@ function BookPageContent() {
                       <input
                         id="dataProtectionAgreement"
                         type="checkbox"
-                        {...register('dataProtectionAgreement')}
+                        {...register("dataProtectionAgreement")}
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
                       />
                     </div>
-                    <label htmlFor="dataProtectionAgreement" className="ml-2 text-sm font-medium text-gray-700">
-                      Please tick the box to confirm you are happy to adhere to our data protection policy.
+                    <label
+                      htmlFor="dataProtectionAgreement"
+                      className="ml-2 text-sm font-medium text-gray-700"
+                    >
+                      Please tick the box to confirm you are happy to adhere to
+                      our data protection policy.
                     </label>
                   </div>
                   <div className="text-sm text-blue-600 hover:underline">
@@ -232,7 +256,9 @@ function BookPageContent() {
                     </Link>
                   </div>
                   {errors.dataProtectionAgreement && (
-                    <p className="mt-1 text-sm text-red-600">{errors.dataProtectionAgreement.message}</p>
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.dataProtectionAgreement.message}
+                    </p>
                   )}
                 </div>
 
@@ -243,7 +269,10 @@ function BookPageContent() {
                   </h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="name"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Full Name (First & Last)
                       </label>
                       <div className="relative">
@@ -253,19 +282,24 @@ function BookPageContent() {
                         <input
                           id="name"
                           type="text"
-                          {...register('name')}
-                          className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
+                          {...register("name")}
+                          className={`input-field pl-10 ${errors.name ? "border-red-500" : ""}`}
                           placeholder="John Doe"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.name && (
-                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.name.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="organisation" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="organisation"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Organisation
                       </label>
                       <div className="relative">
@@ -275,7 +309,7 @@ function BookPageContent() {
                         <input
                           id="organisation"
                           type="text"
-                          {...register('organisation')}
+                          {...register("organisation")}
                           className="input-field pl-10"
                           placeholder="Your Organisation"
                           disabled={isLoading}
@@ -284,7 +318,10 @@ function BookPageContent() {
                     </div>
 
                     <div>
-                      <label htmlFor="jobTitle" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="jobTitle"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Job Title / Role
                       </label>
                       <div className="relative">
@@ -294,7 +331,7 @@ function BookPageContent() {
                         <input
                           id="jobTitle"
                           type="text"
-                          {...register('jobTitle')}
+                          {...register("jobTitle")}
                           className="input-field pl-10"
                           placeholder="Your Job Title"
                           disabled={isLoading}
@@ -303,7 +340,10 @@ function BookPageContent() {
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Email Address
                       </label>
                       <div className="relative">
@@ -313,19 +353,24 @@ function BookPageContent() {
                         <input
                           id="email"
                           type="email"
-                          {...register('email')}
-                          className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
+                          {...register("email")}
+                          className={`input-field pl-10 ${errors.email ? "border-red-500" : ""}`}
                           placeholder="your@email.com"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.email.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="phone"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Contact Number
                       </label>
                       <div className="relative">
@@ -335,19 +380,24 @@ function BookPageContent() {
                         <input
                           id="phone"
                           type="tel"
-                          {...register('phone')}
-                          className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
+                          {...register("phone")}
+                          className={`input-field pl-10 ${errors.phone ? "border-red-500" : ""}`}
                           placeholder="+1 (555) 123-4567"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.phone && (
-                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.phone.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="linkedin" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="linkedin"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         LinkedIn (optional)
                       </label>
                       <div className="relative">
@@ -357,7 +407,7 @@ function BookPageContent() {
                         <input
                           id="linkedin"
                           type="text"
-                          {...register('linkedin')}
+                          {...register("linkedin")}
                           className="input-field pl-10"
                           placeholder="Your LinkedIn URL"
                           disabled={isLoading}
@@ -374,12 +424,15 @@ function BookPageContent() {
                   </h3>
 
                   <div className="mb-6">
-                    <label htmlFor="mentoringReason" className="block mb-2 text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="mentoringReason"
+                      className="block mb-2 text-sm font-medium text-gray-700"
+                    >
                       What prompted you to seek mentoring?
                     </label>
                     <textarea
                       id="mentoringReason"
-                      {...register('mentoringReason')}
+                      {...register("mentoringReason")}
                       rows={4}
                       className="input-field"
                       placeholder="Please describe your reasons for seeking mentoring..."
@@ -389,7 +442,8 @@ function BookPageContent() {
 
                   <div className="mb-6">
                     <label className="block mb-2 text-sm font-medium text-gray-700">
-                      What are the current challenges or transitions you're navigating?
+                      What are the current challenges or transitions you're
+                      navigating?
                     </label>
                     <div className="space-y-2">
                       {challengeOptions.map((challenge) => (
@@ -398,7 +452,7 @@ function BookPageContent() {
                             id={`challenge-${challenge}`}
                             type="checkbox"
                             value={challenge}
-                            {...register('challenges')}
+                            {...register("challenges")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                             disabled={isLoading}
                           />
@@ -416,7 +470,7 @@ function BookPageContent() {
                       <div className="mt-3">
                         <input
                           type="text"
-                          {...register('otherChallenge')}
+                          {...register("otherChallenge")}
                           className="input-field"
                           placeholder="Please describe other challenges"
                           disabled={isLoading}
@@ -430,28 +484,36 @@ function BookPageContent() {
                       Have you had coaching or mentoring before?
                     </label>
                     <div className="space-x-4">
-                      {['Yes', 'No'].map((option) => (
-                        <label key={option} className="inline-flex items-center">
+                      {["Yes", "No"].map((option) => (
+                        <label
+                          key={option}
+                          className="inline-flex items-center"
+                        >
                           <input
                             type="radio"
                             value={option}
-                            {...register('previousMentoring')}
+                            {...register("previousMentoring")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                             disabled={isLoading}
                           />
-                          <span className="ml-2 text-sm font-medium text-gray-700">{option}</span>
+                          <span className="ml-2 text-sm font-medium text-gray-700">
+                            {option}
+                          </span>
                         </label>
                       ))}
                     </div>
                   </div>
 
                   <div className="mb-6">
-                    <label htmlFor="expectations" className="block mb-2 text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="expectations"
+                      className="block mb-2 text-sm font-medium text-gray-700"
+                    >
                       What are your expectations or hopes for this work?
                     </label>
                     <textarea
                       id="expectations"
-                      {...register('expectations')}
+                      {...register("expectations")}
                       rows={4}
                       className="input-field"
                       placeholder="Please describe your expectations..."
@@ -460,12 +522,15 @@ function BookPageContent() {
                   </div>
 
                   <div className="mb-6">
-                    <label htmlFor="careerGoals" className="block mb-2 text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="careerGoals"
+                      className="block mb-2 text-sm font-medium text-gray-700"
+                    >
                       Where would you like to get to with your career / role?
                     </label>
                     <textarea
                       id="careerGoals"
-                      {...register('careerGoals')}
+                      {...register("careerGoals")}
                       rows={4}
                       className="input-field"
                       placeholder="Please describe your career goals..."
@@ -484,7 +549,7 @@ function BookPageContent() {
                             id={`format-${format}`}
                             type="radio"
                             value={format}
-                            {...register('sessionFormat')}
+                            {...register("sessionFormat")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                             disabled={isLoading}
                           />
@@ -506,7 +571,7 @@ function BookPageContent() {
                     disabled={isLoading}
                     className="btn-primary"
                   >
-                    {isLoading ? 'Booking...' : 'Book Consultation'}
+                    {isLoading ? "Booking..." : "Book Consultation"}
                   </button>
                 </div>
               </form>
@@ -526,4 +591,4 @@ export default function ExecutiveBookPage() {
       </Suspense>
     </div>
   );
-} 
+}

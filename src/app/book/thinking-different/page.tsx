@@ -101,7 +101,8 @@ function BookPageContent() {
   // Update page title based on selected service
   useEffect(() => {
     let title = "Different Thinking For Different Thinkers";
-    let subtitle = "Innovation doesn't come from consensus; it comes from difference";
+    let subtitle =
+      "Innovation doesn't come from consensus; it comes from difference";
 
     // If we wanted to dynamically update the document title
     document.title = title;
@@ -189,7 +190,8 @@ function BookPageContent() {
     try {
       // Add form type identifier based on the selected service
       let formType = "thinking-different-consultation";
-      let consultationTypeLabel = "Different Thinking For Different Thinkers Consultation";
+      let consultationTypeLabel =
+        "Different Thinking For Different Thinkers Consultation";
 
       // Add form type identifier
       const formData = {
@@ -217,12 +219,15 @@ function BookPageContent() {
       }
 
       // Show success message based on service type
-      const successMessage = "Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation";
+      const successMessage =
+        "Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation";
       setSuccess(successMessage);
       reset();
     } catch (err) {
       console.error("Booking error:", err);
-      setError("There was an error booking your consultation. Please try again.");
+      setError(
+        "There was an error booking your consultation. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -283,7 +288,7 @@ function BookPageContent() {
       />
 
       <div className="container-custom mx-auto">
-        <div className="mb-16 mt-16 p-10">
+        <div className="mb-16 mt-16  ml-10">
           <Link
             href="/our-services/neurodiversity"
             className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200"
@@ -591,7 +596,7 @@ function BookPageContent() {
                 {/* Different Thinking Context */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
-                  Neurodiversity & Strategic Innovation Context
+                    Neurodiversity & Strategic Innovation Context
                   </h3>
                   <div className="space-y-6">
                     <div>

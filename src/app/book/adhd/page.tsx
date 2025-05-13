@@ -1,13 +1,21 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import { HeroSection } from '@/components/HeroSection';
-import { FiArrowLeft, FiCalendar, FiCheck, FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
-import DatePicker from 'react-datepicker';
+import { useState, useEffect, Suspense } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { HeroSection } from "@/components/HeroSection";
+import {
+  FiArrowLeft,
+  FiCalendar,
+  FiCheck,
+  FiMail,
+  FiMessageSquare,
+  FiPhone,
+  FiUser,
+} from "react-icons/fi";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const bookingSchema = z.object({
@@ -15,37 +23,39 @@ const bookingSchema = z.object({
   dataProtectionAgreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to our data protection policy",
   }),
-  
+
   // Personal Details
-  name: z.string().min(2, 'Name must be at least 2 characters'),
+  name: z.string().min(2, "Name must be at least 2 characters"),
   dateOfBirth: z.date().optional(),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(10, 'Please enter a valid phone number'),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
   location: z.string().optional(),
-  
+
   // Understanding You
-  adhdStatus: z.enum(['yes', 'no', 'exploring']).optional(),
+  adhdStatus: z.enum(["yes", "no", "exploring"]).optional(),
   coachingReason: z.string().optional(),
-  
+
   // Challenges
   challenges: z.array(z.string()).optional(),
   otherChallenge: z.string().optional(),
-  
+
   // Additional Information
   goals: z.string().optional(),
   previousCoaching: z.boolean().optional(),
   previousCoachingDetails: z.string().optional(),
-  
+
   // Session Preferences
-  sessionFormat: z.enum(['online', 'phone', 'in_person', 'flexible']).optional(),
+  sessionFormat: z
+    .enum(["online", "phone", "in_person", "flexible"])
+    .optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
 
 function BookPageContent() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [selectedDobDate, setSelectedDobDate] = useState<Date | null>(null);
   const [hasPreviousCoaching, setHasPreviousCoaching] = useState(false);
   const [otherChallengeSelected, setOtherChallengeSelected] = useState(false);
@@ -63,86 +73,89 @@ function BookPageContent() {
       challenges: [],
       dataProtectionAgreement: false,
       previousCoaching: false,
-    }
+    },
   });
 
   // Watch various fields
-  const challenges = watch('challenges') || [];
-  const previousCoaching = watch('previousCoaching');
-  
+  const challenges = watch("challenges") || [];
+  const previousCoaching = watch("previousCoaching");
+
   // Update state when watched fields change
   useEffect(() => {
-    setOtherChallengeSelected(challenges.includes('Other'));
+    setOtherChallengeSelected(challenges.includes("Other"));
     setHasPreviousCoaching(previousCoaching || false);
   }, [challenges, previousCoaching]);
 
-  
   const challengeOptions = [
-    'Focus or attention difficulties',
-    'Time management / routines',
-    'Emotional regulation',
-    'Task initiation or completion',
-    'Overwhelm / burnout',
-    'Self-esteem / confidence',
-    'Relationships or communication',
-    'Executive function support',
-    'Other'
+    "Focus or attention difficulties",
+    "Time management / routines",
+    "Emotional regulation",
+    "Task initiation or completion",
+    "Overwhelm / burnout",
+    "Self-esteem / confidence",
+    "Relationships or communication",
+    "Executive function support",
+    "Other",
   ];
-  
+
   const sessionFormatOptions = [
-    { value: 'online', label: 'Online (Zoom)' },
-    { value: 'phone', label: 'Phone' },
-    { value: 'in_person', label: 'In-person' },
-    { value: 'flexible', label: 'Flexible' },
+    { value: "online", label: "Online (Zoom)" },
+    { value: "phone", label: "Phone" },
+    { value: "in_person", label: "In-person" },
+    { value: "flexible", label: "Flexible" },
   ];
 
   // Set the date in the form when the date picker changes
-  
+
   // Set the date of birth in the form when the date picker changes
   const handleDobChange = (date: Date | null) => {
     setSelectedDobDate(date);
     if (date) {
-      setValue('dateOfBirth', date, { shouldValidate: true });
+      setValue("dateOfBirth", date, { shouldValidate: true });
     }
   };
 
   // Handle form submission
   const onSubmit = async (data: BookingFormValues) => {
     setIsLoading(true);
-    setError('');
-    
+    setError("");
+
     try {
       // Add form type identifier
       const formData = {
         ...data,
-        formType: 'adhd-coaching',
-        consultationTypeLabel: 'ADHD Coaching'
+        formType: "adhd-coaching",
+        consultationTypeLabel: "ADHD Coaching",
       };
-      
-      console.log('Form data submitted:', formData);
-      
+
+      console.log("Form data submitted:", formData);
+
       // Send data to API
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
+      const response = await fetch("/api/send-email", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      
+
       const result = await response.json();
-      
+
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit form');
+        throw new Error(result.error || "Failed to submit form");
       }
-      
+
       // Show success message
-      setSuccess('Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation');
+      setSuccess(
+        "Thanks for submitting the booking form. We will be in touch ASAP to arrange your free consultation"
+      );
       reset();
       setSelectedDobDate(null);
     } catch (err) {
-      console.error('Booking error:', err);
-      setError('There was an error booking your consultation. Please try again.');
+      console.error("Booking error:", err);
+      setError(
+        "There was an error booking your consultation. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -150,7 +163,7 @@ function BookPageContent() {
 
   // Add global styles for form inputs
   useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = `
       .input-field {
         width: 100%;
@@ -187,7 +200,7 @@ function BookPageContent() {
       }
     `;
     document.head.appendChild(style);
-    
+
     return () => {
       document.head.removeChild(style);
     };
@@ -195,26 +208,32 @@ function BookPageContent() {
 
   return (
     <div className="min-h-screen  pb-16">
-         
       <HeroSection
         title="ADHD Coaching"
         subtitle="Unlock your potential with psychology-informed ADHD coaching"
-        backgroundImage="/images/services/IMG_7552.jpg"
+        backgroundImage="/images/services/IMG_7552.webp"
         textPosition="left"
       />
 
       <div className="container-custom mx-auto">
-        <div className="mb-16 mt-16">
-          <Link href="/our-services/thinking-different" className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200">
+        <div className="mb-16 mt-16 ml-10">
+          <Link
+            href="/our-services/thinking-different"
+            className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200"
+          >
             <FiArrowLeft className="mr-2" />
             Back to Different Thinking Services
           </Link>
         </div>
-        
+
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#0B4073] p-6 text-white">
-            <h1 className="text-3xl font-bold">ADHD Coaching Consultation Form</h1>
-            <p className="mt-2 opacity-90">Schedule your consultation session</p>
+            <h1 className="text-3xl font-bold">
+              ADHD Coaching Consultation Form
+            </h1>
+            <p className="mt-2 opacity-90">
+              Schedule your consultation session
+            </p>
           </div>
 
           <div className="p-6 md:p-8">
@@ -229,8 +248,13 @@ function BookPageContent() {
                 <FiCheck className="mr-2 mt-1" />
                 <div>
                   <p className="font-medium">{success}</p>
-                  <p className="mt-1">We will contact you shortly to confirm your appointment.</p>
-                  <Link href="/" className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium">
+                  <p className="mt-1">
+                    We will contact you shortly to confirm your appointment.
+                  </p>
+                  <Link
+                    href="/"
+                    className="inline-block mt-4 text-[#0B4073] hover:text-[#083056] font-medium"
+                  >
                     Return to Home
                   </Link>
                 </div>
@@ -242,7 +266,8 @@ function BookPageContent() {
                 {/* Agreement Section */}
                 <div className="bg-gray-50 p-4 rounded-md border border-gray-200">
                   <p className="mb-2 text-sm font-medium text-gray-700">
-                    Please tick the box below to confirm you are happy to adhere to our data protection policy.
+                    Please tick the box below to confirm you are happy to adhere
+                    to our data protection policy.
                   </p>
                   <div className="flex items-start mb-2">
                     <div className="flex items-center h-5">
@@ -271,7 +296,7 @@ function BookPageContent() {
                     </p>
                   )}
                 </div>
-                
+
                 {/* Personal Details Section */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
@@ -279,7 +304,10 @@ function BookPageContent() {
                   </h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="name"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Full name (First &amp; Last)
                       </label>
                       <div className="relative">
@@ -289,19 +317,24 @@ function BookPageContent() {
                         <input
                           id="name"
                           type="text"
-                          {...register('name')}
-                          className={`input-field pl-10 ${errors.name ? 'border-red-500' : ''}`}
+                          {...register("name")}
+                          className={`input-field pl-10 ${errors.name ? "border-red-500" : ""}`}
                           placeholder="John Doe"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.name && (
-                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.name.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="dateOfBirth" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="dateOfBirth"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Date of birth
                       </label>
                       <div className="relative">
@@ -322,7 +355,10 @@ function BookPageContent() {
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Email address
                       </label>
                       <div className="relative">
@@ -332,19 +368,24 @@ function BookPageContent() {
                         <input
                           id="email"
                           type="email"
-                          {...register('email')}
-                          className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
+                          {...register("email")}
+                          className={`input-field pl-10 ${errors.email ? "border-red-500" : ""}`}
                           placeholder="your@email.com"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.email.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="phone"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Contact number
                       </label>
                       <div className="relative">
@@ -354,19 +395,24 @@ function BookPageContent() {
                         <input
                           id="phone"
                           type="tel"
-                          {...register('phone')}
-                          className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
+                          {...register("phone")}
+                          className={`input-field pl-10 ${errors.phone ? "border-red-500" : ""}`}
                           placeholder="+44 7123 456789"
                           disabled={isLoading}
                         />
                       </div>
                       {errors.phone && (
-                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.phone.message}
+                        </p>
                       )}
                     </div>
 
                     <div>
-                      <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="location"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         Location (City / Region)
                       </label>
                       <div className="relative">
@@ -376,7 +422,7 @@ function BookPageContent() {
                         <input
                           id="location"
                           type="text"
-                          {...register('location')}
+                          {...register("location")}
                           className="input-field pl-10"
                           placeholder="London / South East"
                           disabled={isLoading}
@@ -385,7 +431,7 @@ function BookPageContent() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Understanding You Section */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">
@@ -402,7 +448,7 @@ function BookPageContent() {
                             id="adhd-yes"
                             type="radio"
                             value="yes"
-                            {...register('adhdStatus')}
+                            {...register("adhdStatus")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                             disabled={isLoading}
                           />
@@ -418,7 +464,7 @@ function BookPageContent() {
                             id="adhd-no"
                             type="radio"
                             value="no"
-                            {...register('adhdStatus')}
+                            {...register("adhdStatus")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                             disabled={isLoading}
                           />
@@ -434,7 +480,7 @@ function BookPageContent() {
                             id="adhd-exploring"
                             type="radio"
                             value="exploring"
-                            {...register('adhdStatus')}
+                            {...register("adhdStatus")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                             disabled={isLoading}
                           />
@@ -447,18 +493,24 @@ function BookPageContent() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div>
-                      <label htmlFor="coachingReason" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="coachingReason"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         What prompted you to seek ADHD coaching?
                       </label>
                       <div className="relative">
                         <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                          <FiMessageSquare size={18} className="text-gray-400" />
+                          <FiMessageSquare
+                            size={18}
+                            className="text-gray-400"
+                          />
                         </div>
                         <textarea
                           id="coachingReason"
-                          {...register('coachingReason')}
+                          {...register("coachingReason")}
                           rows={4}
                           className="input-field pl-10"
                           placeholder="Please share what brought you to seek coaching..."
@@ -466,10 +518,11 @@ function BookPageContent() {
                         ></textarea>
                       </div>
                     </div>
-                    
+
                     <div>
                       <p className="block mb-3 text-sm font-medium text-gray-700">
-                        What challenges are you currently facing (tick all that apply)?
+                        What challenges are you currently facing (tick all that
+                        apply)?
                       </p>
                       <div className="grid md:grid-cols-2 gap-2">
                         {challengeOptions.map((challenge) => (
@@ -478,22 +531,25 @@ function BookPageContent() {
                               id={`challenge-${challenge}`}
                               type="checkbox"
                               value={challenge}
-                              {...register('challenges')}
+                              {...register("challenges")}
                               className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                               disabled={isLoading}
                             />
-                            <label htmlFor={`challenge-${challenge}`} className="ml-2 block text-sm text-gray-700">
+                            <label
+                              htmlFor={`challenge-${challenge}`}
+                              className="ml-2 block text-sm text-gray-700"
+                            >
                               {challenge}
                             </label>
                           </div>
                         ))}
                       </div>
-                      
+
                       {otherChallengeSelected && (
                         <div className="mt-3">
                           <input
                             type="text"
-                            {...register('otherChallenge')}
+                            {...register("otherChallenge")}
                             className="input-field"
                             placeholder="Please specify other challenges"
                             disabled={isLoading}
@@ -501,18 +557,24 @@ function BookPageContent() {
                         </div>
                       )}
                     </div>
-                    
+
                     <div>
-                      <label htmlFor="goals" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="goals"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                      >
                         What goals would you like to work on?
                       </label>
                       <div className="relative">
                         <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                          <FiMessageSquare size={18} className="text-gray-400" />
+                          <FiMessageSquare
+                            size={18}
+                            className="text-gray-400"
+                          />
                         </div>
                         <textarea
                           id="goals"
-                          {...register('goals')}
+                          {...register("goals")}
                           rows={3}
                           className="input-field pl-10"
                           placeholder="Please describe your goals..."
@@ -520,33 +582,42 @@ function BookPageContent() {
                         ></textarea>
                       </div>
                     </div>
-                    
+
                     <div>
                       <div className="flex items-center mb-3">
                         <input
                           id="previousCoaching"
                           type="checkbox"
-                          {...register('previousCoaching')}
+                          {...register("previousCoaching")}
                           className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                           disabled={isLoading}
                         />
-                        <label htmlFor="previousCoaching" className="ml-2 block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="previousCoaching"
+                          className="ml-2 block text-sm font-medium text-gray-700"
+                        >
                           Have you previously had any coaching or therapy?
                         </label>
                       </div>
-                      
+
                       {hasPreviousCoaching && (
                         <div className="pl-6 border-l-2 border-gray-100">
-                          <label htmlFor="previousCoachingDetails" className="block mb-2 text-sm font-medium text-gray-700">
+                          <label
+                            htmlFor="previousCoachingDetails"
+                            className="block mb-2 text-sm font-medium text-gray-700"
+                          >
                             If yes, what kind and when?
                           </label>
                           <div className="relative">
                             <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                              <FiMessageSquare size={18} className="text-gray-400" />
+                              <FiMessageSquare
+                                size={18}
+                                className="text-gray-400"
+                              />
                             </div>
                             <textarea
                               id="previousCoachingDetails"
-                              {...register('previousCoachingDetails')}
+                              {...register("previousCoachingDetails")}
                               rows={3}
                               className="input-field pl-10"
                               placeholder="Please provide details of your previous coaching or therapy experience..."
@@ -556,7 +627,7 @@ function BookPageContent() {
                         </div>
                       )}
                     </div>
-                    
+
                     <div>
                       <p className="block mb-3 text-sm font-medium text-gray-700">
                         Preferred session format:
@@ -568,7 +639,7 @@ function BookPageContent() {
                               id={`format-${format.value}`}
                               type="radio"
                               value={format.value}
-                              {...register('sessionFormat')}
+                              {...register("sessionFormat")}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                               disabled={isLoading}
                             />
@@ -586,7 +657,17 @@ function BookPageContent() {
                 </div>
 
                 <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md">
-                  <p>Your privacy is important to us. All information shared is confidential and protected under our <Link href="/privacy-policy" className="text-[#0B4073] hover:underline">Privacy Policy</Link>.</p>
+                  <p>
+                    Your privacy is important to us. All information shared is
+                    confidential and protected under our{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-[#0B4073] hover:underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
                 </div>
 
                 <div className="flex justify-end">
@@ -595,7 +676,7 @@ function BookPageContent() {
                     disabled={isLoading}
                     className="btn-primary"
                   >
-                    {isLoading ? 'Submitting...' : 'Submit Form'}
+                    {isLoading ? "Submitting..." : "Submit Form"}
                   </button>
                 </div>
               </form>
@@ -615,4 +696,4 @@ export default function ADHDCoachingBookPage() {
       </Suspense>
     </div>
   );
-} 
+}

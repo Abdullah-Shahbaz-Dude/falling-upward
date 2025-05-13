@@ -306,15 +306,14 @@ function BookPageContent() {
   return (
     <div className="min-h-screen pb-16">
       <HeroSection
-        title="Psychological Therapies"
+        title="Psychological Therapy "
         subtitle="Our psychological therapy services provide a safe, confidential space for individuals to explore challenges and develop strategies for positive change."
-        backgroundImage="/images/backgrounds/Psychological-Therapy -Page.webp"
+        backgroundImage="/images/backgrounds/Psychological-Therapy -Page.JPG"
         height="medium"
         textPosition="left"
       />
-
       <div className="container-custom mx-auto">
-        <div className="mb-16 mt-16">
+        <div className="mb-16 mt-16 ml-10">
           <Link
             href="/our-services/psychological-therapy"
             className="text-[#0B4073] hover:text-[#072e53] inline-flex items-center transition-colors duration-200"
