@@ -338,33 +338,6 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-      <style jsx global>{`
-        /* Default styles for 1366x768 (100% zoom) are already set by Tailwind and your base CSS */
-
-        /* 90% zoom: 1517.78x853.33 */
-        @media screen and (min-width: 1370px) and (max-width: 1450px) and (min-height: 840px) and (max-height: 870px) {
-          // .navbar-logo-img {
-          //   height: 140px !important;
-          //   width: auto !important;
-          //   max-width: 180px !important;
-          }
-          .navbar {
-            font-size: 1.05rem !important;
-          }
-        }
-
-        /* 80% zoom: 1707.50x768.75 */
-        @media screen and (min-width: 1700px) and (max-width: 1720px) and (min-height: 760px) and (max-height: 780px) {
-          .navbar-logo-img {
-            height: 55px !important;
-            width: auto !important;
-            max-width: 160px !important;
-          }
-          .navbar {
-            font-size: 0.95rem !important;
-          }
-        }
-      `}</style>
     </header>
   );
 }
