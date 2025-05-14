@@ -57,8 +57,9 @@ export function HeroSection({
       {/* Content - Positioned at bottom of hero */}
       <div
         className={`
-          absolute left-0 right-0 bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-20
-          w-full max-w-7xl px-4 sm:px-6 lg:px-8
+          absolute left-0 right-0 bottom-10 sm:bottom-12 md:bottom-16 lg:bottom-20 
+          w-full max-w-7xl px-4 sm:px-6 lg:px-8 ml-4
+
           mx-auto
           flex flex-col items-start justify-end
           z-20

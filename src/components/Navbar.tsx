@@ -73,22 +73,18 @@ export function Navbar() {
         {
           name: "Digital evolution and AI adoption",
           href: "/our-services/digital-evolution",
-
         },
         {
           name: "Executive Mentoring & Boardroom Support",
           href: "/our-services/executive-mentoring",
-          
         },
         {
           name: "Psychological Therapy & ADHD Coaching",
           href: "/our-services/psychological-therapy",
-          
         },
         {
           name: "Different Thinking For Different Thinkers",
           href: "/our-services/thinking-different",
-         
         },
       ],
     },
@@ -107,18 +103,20 @@ export function Navbar() {
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md py-3 md:py-4 lg:py-6" : "bg-transparent py-4 md:py-6 lg:py-8"
+        isScrolled
+          ? "bg-white shadow-md py-3 md:py-4 lg:py-6"
+          : "bg-transparent py-4 md:py-6 lg:py-8"
       } ${
         isHeroVisible && !isScrolled
           ? "absolute top-0"
           : shouldShowNavbar
-          ? "fixed top-0"
-          : "fixed -top-24"
+            ? "fixed top-0"
+            : "fixed -top-24"
       }`}
     >
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-start">
-          <div className="flex items-start pl-0 ml-0">
+      <div className=" w-full max-w-8xl  sm:px-6 lg:px-8 navbar-container">
+        <div className="flex justify-between items-center navbar-container-inner pr-10 ">
+          <div className="flex items-start pl-0 ml-10">
             <Link href="/" className="flex items-start p-0" onClick={closeMenu}>
               {isScrolled ? (
                 <Image
@@ -135,7 +133,7 @@ export function Navbar() {
                   alt="Falling Upward Logo"
                   width={130}
                   height={130}
-                  className="h-[60px] w-auto xs:h-[70px] sm:h-[80px] md:h-[90px] lg:h-[100px] navbar-logo-img"
+                  className="h-[100px] w-auto sm:h-[120px] sm:pr-0 md:h-[130px] lg:h-[140px] xl:h-[140px] navbar-logo-img"
                   priority
                 />
               )}
@@ -143,7 +141,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center mt-3 space-x-4 lg:space-x-8 navbar-nav">
+          <nav className="hidden md:flex items-center mt-3 space-x-4 lg:space-x-8 navbar-nav pr-10 font-medium md:text-lg lg:text-lg xl:text-xl">
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 <div
@@ -160,8 +158,8 @@ export function Navbar() {
                           ? "text-[#0B4073] border-b-2 border-[#7094B7]"
                           : "text-[#D6E2EA] border-b-2 border-[#D6E2EA]"
                         : isScrolled
-                        ? "text-gray-700 hover:text-[#0B4073]"
-                        : "text-white hover:text-[#D6E2EA]"
+                          ? "text-gray-700 hover:text-[#0B4073]"
+                          : "text-white hover:text-[#D6E2EA]"
                     }`}
                   >
                     {link.name}
@@ -211,8 +209,8 @@ export function Navbar() {
                         ? "text-[#0B4073] border-b-2 border-[#7094B7]"
                         : "text-[#D6E2EA] border-b-2 border-[#D6E2EA]"
                       : isScrolled
-                      ? "text-gray-700 hover:text-[#0B4073]"
-                      : "text-white hover:text-[#D6E2EA]"
+                        ? "text-gray-700 hover:text-[#0B4073]"
+                        : "text-white hover:text-[#D6E2EA]"
                   }`}
                 >
                   {link.name}
@@ -341,23 +339,29 @@ export function Navbar() {
         )}
       </AnimatePresence>
       <style jsx global>{`
-        @media screen and (width: 2049px) and (height: 1152px) {
-          .navbar-logo-img {
-            width: 150px !important;
-            height: 150px !important;
-            max-width: none !important;
-            max-height: none !important;
+        /* Default styles for 1366x768 (100% zoom) are already set by Tailwind and your base CSS */
+
+        /* 90% zoom: 1517.78x853.33 */
+        @media screen and (min-width: 1370px) and (max-width: 1450px) and (min-height: 840px) and (max-height: 870px) {
+          // .navbar-logo-img {
+          //   height: 140px !important;
+          //   width: auto !important;
+          //   max-width: 180px !important;
           }
-          .navbar-nav {
-            margin-top: 10px !important;
+          .navbar {
+            font-size: 1.05rem !important;
           }
         }
-        @media screen and (width: 1080px) {
+
+        /* 80% zoom: 1707.50x768.75 */
+        @media screen and (min-width: 1700px) and (max-width: 1720px) and (min-height: 760px) and (max-height: 780px) {
           .navbar-logo-img {
-            width: 120px !important;
-            height: 120px !important;
-            max-width: none !important;
-            max-height: none !important;
+            height: 55px !important;
+            width: auto !important;
+            max-width: 160px !important;
+          }
+          .navbar {
+            font-size: 0.95rem !important;
           }
         }
       `}</style>
