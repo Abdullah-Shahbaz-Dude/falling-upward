@@ -22,7 +22,7 @@ function WhoWeAreContent() {
      
       qualifications: [
         { title: 'Msc Psychology' },
-        { title: 'Msc Forensic Psychology' },
+        { title: 'Msc Forensic Psychology (Ongoing)' },
         { title: 'Msc Business and Organisational Psychology (Ongoing)' },
         { title: 'Diploma In Counselling' },
         { title: 'Diploma in Psychological Therapies'},
