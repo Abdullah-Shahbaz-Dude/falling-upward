@@ -59,6 +59,9 @@ const bookingSchema = z.object({
   prescribedMedicationDetails: z.string().optional(),
   nonPrescribedMedication: z.boolean().optional(),
   nonPrescribedMedicationDetails: z.string().optional(),
+  
+  // Hidden fields for formatting
+  __displayFormat: z.string().optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -921,6 +924,13 @@ function BookPageContent() {
                     .
                   </p>
                 </div>
+
+                {/* Hidden fields to customize email display */}
+                <input 
+                  type="hidden" 
+                  name="__displayFormat"
+                  value="true" 
+                />
 
                 <div className="flex justify-end">
                   <button

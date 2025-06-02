@@ -19,6 +19,11 @@ import {
 } from "react-icons/fi";
 
 const bookingSchema = z.object({
+  // Agreement and Consent
+  dataProtectionAgreement: z.boolean().refine((val) => val === true, {
+    message: "You must agree to our data protection policy",
+  }),
+
   // Personal Details
   name: z.string().min(2, "Name must be at least 2 characters"),
   organisation: z.string().optional(),
@@ -27,21 +32,17 @@ const bookingSchema = z.object({
   phone: z.string().min(10, "Please enter a valid phone number"),
   linkedin: z.string().optional(),
 
-  // About You
+  // Mentoring Information
   mentoringReason: z.string().optional(),
   challenges: z.array(z.string()).optional(),
   otherChallenge: z.string().optional(),
-  previousMentoring: z.enum(["Yes", "No"]).optional(),
+  previousMentoring: z.string().optional(),
   expectations: z.string().optional(),
   careerGoals: z.string().optional(),
-  sessionFormat: z
-    .enum(["Online", "In-person", "Hybrid / Flexible"])
-    .optional(),
-
-  // Data Protection Agreement
-  dataProtectionAgreement: z.boolean().refine((val) => val === true, {
-    message: "You must agree to our data protection policy",
-  }),
+  sessionFormat: z.string().optional(),
+  
+  // Hidden fields for formatting
+  __displayFormat: z.string().optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -565,13 +566,34 @@ function BookPageContent() {
                   </div>
                 </div>
 
+                <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md mb-6">
+                  <p>
+                    Your privacy is important to us. All information shared is
+                    confidential and protected under our{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-[#0B4073] hover:underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
+                </div>
+
+                {/* Hidden fields to customize email display */}
+                <input 
+                  type="hidden" 
+                  {...register("__displayFormat")} 
+                  value="true" 
+                />
+
                 <div className="flex justify-end">
                   <button
                     type="submit"
                     disabled={isLoading}
                     className="btn-primary"
                   >
-                    {isLoading ? "Booking..." : "Book Consultation"}
+                    {isLoading ? "Submitting..." : "Submit Form"}
                   </button>
                 </div>
               </form>

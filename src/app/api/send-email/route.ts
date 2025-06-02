@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { render } from '@react-email/render';
 import BookingConfirmation from '@/emails/BookingConfirmation';
+import { formatValue } from '@/utils/formatting';
 
 // Initialize Resend with API key, with fallback for development
 const resendApiKey = process.env.RESEND_API_KEY || 'dummy_key_for_development';
@@ -83,9 +84,17 @@ export async function POST(req: Request) {
     const consultationTypeLabel = formData.consultationTypeLabel || 'Consultation';
     
     // Filter out standard fields to identify additional fields
-    const standardFields = ['name', 'email', 'phone', 'formType', 'consultationTypeLabel', 'message'];
+    const standardFields = ['name', 'email', 'phone', 'formType', 'consultationTypeLabel', 'message', '__displayFormat'];
     const additionalFields = Object.fromEntries(
-      Object.entries(formData).filter(([key]) => !standardFields.includes(key))
+      Object.entries(formData)
+        .filter(([key]) => !standardFields.includes(key))
+        .map(([key, value]) => {
+          // Format boolean values to display as "Yes" or "No"
+          if (typeof value === 'boolean') {
+            return [key, formatValue(value)];
+          }
+          return [key, value];
+        })
     );
     
     // Create the email content with the email component

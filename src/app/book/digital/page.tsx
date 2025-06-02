@@ -20,75 +20,42 @@ import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
 
 const bookingSchema = z.object({
+  // Agreement and Consent
+  dataProtectionAgreement: z.boolean().refine((val) => val === true, {
+    message: "You must agree to our data protection policy",
+  }),
+
   // Personal Details
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   jobTitle: z.string().optional(),
+
+  // Organization Information
   organisationName: z.string().optional(),
   organisationWebsite: z.string().optional(),
-
-  // Additional fields
   company: z.string().optional(),
   website: z.string().optional(),
-  projectType: z.string().optional(),
-  projectScope: z
-    .string()
-    .min(1, "Please provide some details about your project")
-    .optional(),
-  message: z.string().optional(),
 
-  // Organisation Overview
-  organisationSize: z
-    .enum([
-      "Micro (1–9 employees)",
-      "Small (10–49 employees)",
-      "Medium SME (50–249 employees)",
-      "Large SME (250–499 employees)",
-      "Large Organisation / Enterprise (500+ employees)",
-    ])
-    .optional(),
-  sector: z
-    .enum([
-      "Digital / Technology",
-      "Construction",
-      "Recruitment / HR",
-      "Healthcare (NHS or Private)",
-      "Education / Training",
-      "Local Government / Public Sector",
-      "Logistics / Transport",
-      "Manufacturing / Engineering",
-      "Charity / Voluntary Sector",
-      "Finance / Professional Services",
-      "Creative Industries / Media",
-      "Other",
-    ])
-    .optional(),
-  otherSector: z.string().optional(),
-
-  // Digital and AI Context
-  challenge: z.string().optional(),
-  digitalMaturity: z
-    .enum([
-      "Early-stage / Paper-based processes",
-      "Mixed digital and manual systems",
-      "Mostly digital, but lacking integration",
-      "Highly digital with established tools and data insight",
-      "Unsure / Not assessed",
-    ])
-    .optional(),
-  currentSystems: z.string().optional(),
-  supportType: z.array(z.string()).optional(),
-  otherSupportType: z.string().optional(),
-  keyPeople: z.string().optional(),
+  // Project Information
+  projectType: z.array(z.string()).optional(),
+  projectScope: z.array(z.string()).optional(),
+  otherProjectType: z.string().optional(),
+  otherProjectScope: z.string().optional(),
+  requirements: z.string().optional(),
+  timeline: z.string().optional(),
+  budget: z.string().optional(),
+  challenges: z.array(z.string()).optional(),
+  otherChallenge: z.string().optional(),
   barriers: z.array(z.string()).optional(),
   otherBarrier: z.string().optional(),
-  successOutcome: z.string().optional(),
-
-  // Agreement
-  dataProtectionAgreement: z.boolean().refine((val) => val === true, {
-    message: "You must agree to our data protection policy",
-  }),
+  additionalInfo: z.string().optional(),
+  
+  // Custom message
+  message: z.string().optional(),
+  
+  // Hidden fields
+  __displayFormat: z.string().optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -834,13 +801,34 @@ function BookPageContent() {
                   </div>
                 </div>
 
+                <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md mb-6">
+                  <p>
+                    Your privacy is important to us. All information shared is
+                    confidential and protected under our{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-[#0B4073] hover:underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
+                </div>
+
+                {/* Hidden fields to customize email display */}
+                <input 
+                  type="hidden" 
+                  name="__displayFormat"
+                  value="true" 
+                />
+
                 <div className="flex justify-end">
                   <button
                     type="submit"
                     disabled={isLoading}
                     className="btn-primary"
                   >
-                    {isLoading ? "Booking..." : "Book Consultation"}
+                    {isLoading ? "Submitting..." : "Submit Form"}
                   </button>
                 </div>
               </form>

@@ -19,7 +19,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const bookingSchema = z.object({
-  // Agreement
+  // Agreement and Consent
   dataProtectionAgreement: z.boolean().refine((val) => val === true, {
     message: "You must agree to our data protection policy",
   }),
@@ -34,12 +34,8 @@ const bookingSchema = z.object({
   // Understanding You
   adhdStatus: z.enum(["yes", "no", "exploring"]).optional(),
   coachingReason: z.string().optional(),
-
-  // Challenges
   challenges: z.array(z.string()).optional(),
   otherChallenge: z.string().optional(),
-
-  // Additional Information
   goals: z.string().optional(),
   previousCoaching: z.boolean().optional(),
   previousCoachingDetails: z.string().optional(),
@@ -48,6 +44,7 @@ const bookingSchema = z.object({
   sessionFormat: z
     .enum(["online", "phone", "in_person", "flexible"])
     .optional(),
+  coachingFrequency: z.enum(["weekly", "biweekly", "monthly", "not_sure"]).optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -656,7 +653,7 @@ function BookPageContent() {
                   </div>
                 </div>
 
-                <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md">
+                <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md mb-6">
                   <p>
                     Your privacy is important to us. All information shared is
                     confidential and protected under our{" "}
@@ -669,6 +666,13 @@ function BookPageContent() {
                     .
                   </p>
                 </div>
+
+                {/* Hidden fields to customize email display */}
+                <input 
+                  type="hidden" 
+                  name="__displayFormat"
+                  value="true" 
+                />
 
                 <div className="flex justify-end">
                   <button

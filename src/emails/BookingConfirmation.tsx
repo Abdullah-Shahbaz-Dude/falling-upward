@@ -14,6 +14,7 @@ import {
   Link,
 } from "@react-email/components";
 import React from "react";
+import { formatValue } from "@/utils/formatting";
 
 // Define the props interface for our BookingConfirmation component
 interface BookingConfirmationProps {
@@ -48,19 +49,8 @@ export const BookingConfirmation = ({
 }: BookingConfirmationProps) => {
   const previewText = `New Booking Request from ${customerName} - ${consultationType}`;
 
-  // Format additionalFields - improve spacing and presentation
-  const formatFieldValue = (value: any) => {
-    if (value === undefined || value === null) return "Not provided";
-    if (Array.isArray(value)) return value.join(", ");
-    if (typeof value === "object") {
-      try {
-        return JSON.stringify(value);
-      } catch {
-        return "Complex data";
-      }
-    }
-    return String(value);
-  };
+  // Use our utility function for formatting values
+  const formatFieldValue = formatValue;
 
   return (
     <Html>

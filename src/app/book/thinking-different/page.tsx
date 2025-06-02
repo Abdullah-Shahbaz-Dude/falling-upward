@@ -54,6 +54,9 @@ const bookingSchema = z.object({
 
   // Outcomes
   successOutcome: z.string().optional(),
+  
+  // Hidden fields
+  __displayFormat: z.string().optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -785,7 +788,7 @@ function BookPageContent() {
                   </div>
                 </div>
 
-                <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md">
+                <div className="text-sm text-gray-500 bg-gray-50 p-4 rounded-md mb-6">
                   <p>
                     Your privacy is important to us. All information shared is
                     confidential and protected under our{" "}
@@ -798,6 +801,13 @@ function BookPageContent() {
                     .
                   </p>
                 </div>
+
+                {/* Hidden fields to customize email display */}
+                <input 
+                  type="hidden" 
+                  name="__displayFormat"
+                  value="true" 
+                />
 
                 <div className="flex justify-end">
                   <button
