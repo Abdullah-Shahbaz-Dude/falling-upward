@@ -348,6 +348,7 @@ function BookPageContent() {
                         type="checkbox"
                         {...register("dataProtectionAgreement")}
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                        aria-describedby="dataProtectionAgreementHelp"
                       />
                     </div>
                     <label
@@ -357,7 +358,7 @@ function BookPageContent() {
                       I agree
                     </label>
                   </div>
-                  <div className="text-sm text-blue-600 hover:underline">
+                  <div className="text-sm text-blue-600 hover:underline" id="dataProtectionAgreementHelp">
                     <Link href="/privacy-policy">
                       Click here to view policy
                     </Link>
@@ -544,6 +545,7 @@ function BookPageContent() {
                               {...register("organisationSize")}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                               disabled={isLoading}
+                              aria-label={`Organisation size: ${option.label}`}
                             />
                             <label
                               htmlFor={`size-${option.value}`}
@@ -570,6 +572,7 @@ function BookPageContent() {
                               {...register("sector")}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                               disabled={isLoading}
+                              aria-label={`Sector: ${sector}`}
                             />
                             <label
                               htmlFor={`sector-${sector}`}
@@ -644,6 +647,7 @@ function BookPageContent() {
                               {...register("approachToNeurodiversity")}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                               disabled={isLoading}
+                              aria-label={`Approach to neurodiversity: ${option.label}`}
                             />
                             <label
                               htmlFor={`approach-${option.value}`}
@@ -670,6 +674,7 @@ function BookPageContent() {
                               {...register("areasOfInterest")}
                               className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                               disabled={isLoading}
+                              aria-label={`Area of interest: ${area}`}
                             />
                             <label
                               htmlFor={`area-${area}`}
@@ -736,6 +741,7 @@ function BookPageContent() {
                               {...register("challenges")}
                               className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                               disabled={isLoading}
+                              aria-label={`Challenge: ${challenge}`}
                             />
                             <label
                               htmlFor={`challenge-${challenge}`}

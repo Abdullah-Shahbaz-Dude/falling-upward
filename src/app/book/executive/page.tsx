@@ -241,6 +241,7 @@ function BookPageContent() {
                         type="checkbox"
                         {...register("dataProtectionAgreement")}
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                        aria-describedby="dataProtectionAgreementHelp"
                       />
                     </div>
                     <label
@@ -251,7 +252,7 @@ function BookPageContent() {
                       our data protection policy.
                     </label>
                   </div>
-                  <div className="text-sm text-blue-600 hover:underline">
+                  <div className="text-sm text-blue-600 hover:underline" id="dataProtectionAgreementHelp">
                     <Link href="/privacy-policy">
                       Click here to view policy
                     </Link>
@@ -456,6 +457,7 @@ function BookPageContent() {
                             {...register("challenges")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                             disabled={isLoading}
+                            aria-label={`Challenge: ${challenge}`}
                           />
                           <label
                             htmlFor={`challenge-${challenge}`}
@@ -471,10 +473,12 @@ function BookPageContent() {
                       <div className="mt-3">
                         <input
                           type="text"
+                          id="otherChallenge"
                           {...register("otherChallenge")}
                           className="input-field"
                           placeholder="Please describe other challenges"
                           disabled={isLoading}
+                          aria-label="Describe other challenges"
                         />
                       </div>
                     )}
@@ -492,10 +496,12 @@ function BookPageContent() {
                         >
                           <input
                             type="radio"
+                            id={`mentoring-${option}`}
                             value={option}
                             {...register("previousMentoring")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                             disabled={isLoading}
+                            aria-label={`Previous mentoring: ${option}`}
                           />
                           <span className="ml-2 text-sm font-medium text-gray-700">
                             {option}
@@ -553,6 +559,7 @@ function BookPageContent() {
                             {...register("sessionFormat")}
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                             disabled={isLoading}
+                            aria-label={`Session format: ${format}`}
                           />
                           <label
                             htmlFor={`format-${format}`}
@@ -585,6 +592,7 @@ function BookPageContent() {
                   type="hidden" 
                   {...register("__displayFormat")} 
                   value="true" 
+                  aria-hidden="true"
                 />
 
                 <div className="flex justify-end">
@@ -592,6 +600,7 @@ function BookPageContent() {
                     type="submit"
                     disabled={isLoading}
                     className="btn-primary"
+                    aria-live="polite"
                   >
                     {isLoading ? "Submitting..." : "Submit Form"}
                   </button>

@@ -374,6 +374,7 @@ function BookPageContent() {
                           type="checkbox"
                           {...register("dataProtectionAgreement")}
                           className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                          aria-describedby="dataProtectionAgreementHelp"
                         />
                       </div>
                       <label
@@ -384,7 +385,7 @@ function BookPageContent() {
                       </label>
                     </div>
                     {errors.dataProtectionAgreement && (
-                      <p className="mt-1 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600" id="dataProtectionAgreementHelp">
                         {errors.dataProtectionAgreement.message}
                       </p>
                     )}
@@ -682,6 +683,7 @@ function BookPageContent() {
                         {...register("previousTherapy")}
                         className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                         disabled={isLoading}
+                        aria-label="Previous therapy"
                       />
                       <label
                         htmlFor="previousTherapy"
@@ -767,6 +769,7 @@ function BookPageContent() {
                           {...register("presentingIssues")}
                           className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                           disabled={isLoading}
+                          aria-label={`Issue: ${issue}`}
                         />
                         <label
                           htmlFor={`issue-${issue}`}
@@ -838,6 +841,7 @@ function BookPageContent() {
                           {...register("prescribedMedication")}
                           className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                           disabled={isLoading}
+                          aria-label="Currently taking prescribed medication"
                         />
                         <label
                           htmlFor="prescribedMedication"
@@ -877,6 +881,7 @@ function BookPageContent() {
                           {...register("nonPrescribedMedication")}
                           className="h-4 w-4 text-[#0B4073] focus:ring-[#0B4073] border-gray-300 rounded"
                           disabled={isLoading}
+                          aria-label="Currently taking non-prescribed medication"
                         />
                         <label
                           htmlFor="nonPrescribedMedication"
