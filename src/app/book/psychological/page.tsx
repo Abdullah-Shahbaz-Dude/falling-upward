@@ -311,7 +311,7 @@ function BookPageContent() {
       <HeroSection
         title="Psychological Therapy "
         subtitle="Our psychological therapy services provide a safe, confidential space for individuals to explore challenges and develop strategies for positive change."
-        backgroundImage="/images/backgrounds/Psychological-Therapy -Page.JPG"
+        backgroundImage="/images/backgrounds/Psychological-Therapy-Page.JPG"
         height="medium"
         textPosition="left"
       />
